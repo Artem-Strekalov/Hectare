@@ -1,21 +1,22 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Auth from "../views/auth/Auth.vue";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Registration from '../views/auth/Registration.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Auth",
-    component: Auth,
+    path: '/registration',
+    name: 'registration',
+    component: Registration,
   },
-];
+
+]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
-});
+})
 
-export default router;
+export default router
