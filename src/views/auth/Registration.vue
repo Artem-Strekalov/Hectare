@@ -1,9 +1,6 @@
 <template>
   <div class="registration">
-    <div class="registration__header">
-      <h2 class="registration__header-name">ГЕКТАР</h2>
-      <img class="registration__header-img" src="@/assets/image/svg/logo.svg" alt="" />
-    </div>
+    <HeaderHectare :headerTitle="headerTitle.titleText"></HeaderHectare>
     <div class="registration__main">
       <div class="registration__main-content">
         <h2 class="registration__main-reg">Регистрация на ГЕКТАР</h2>
@@ -13,42 +10,43 @@
               class="registration__input"
               :nameInput="nameInput.nameCompany"
               :icon="true"
-              :showPasswordInput="true"
+              :showPasswordInput="false"
             />
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.nameCompany"
+              :nameInput="nameInput.userFirstName"
               :icon="true"
-              :showPasswordInput="true"
+              :showPasswordInput="false"
             />
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.nameCompany"
+              :nameInput="nameInput.userLastName"
               :icon="true"
-              :showPasswordInput="true"
+              :showPasswordInput="false"
             />
           </div>
           <div class="registration__block-right">
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.nameCompany"
+              :nameInput="nameInput.login"
+              :icon="true"
+              :showPasswordInput="false"
+            />
+            <AppInput
+              class="registration__input"
+              :nameInput="nameInput.password"
               :icon="true"
               :showPasswordInput="true"
             />
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.nameCompany"
-              :icon="true"
-              :showPasswordInput="true"
-            />
-            <AppInput
-              class="registration__input"
-              :nameInput="nameInput.nameCompany"
-              :icon="true"
+              :nameInput="nameInput.confirmPassword"
+              :icon="false"
               :showPasswordInput="true"
             />
           </div>
         </div>
+        <ButtonGreen :textButton="textButton.registration"></ButtonGreen>
       </div>
     </div>
   </div>
@@ -56,15 +54,30 @@
 
 <script>
 import AppInput from '@/components/AppInput'
+import ButtonGreen from '@/components/ButtonGreen'
+import HeaderHectare from '@/components/HeaderHectare'
 export default {
   components: {
     AppInput,
+    ButtonGreen,
+    HeaderHectare,
   },
   name: 'registration',
   data() {
     return {
       nameInput: {
         nameCompany: 'Введите название хозяйства/компании',
+        userFirstName: 'Введите свое имя',
+        userLastName: 'Введите свою фамилию',
+        login: 'Введите логин(email)',
+        password: 'Введите пароль',
+        confirmPassword: 'Повторите пароль',
+      },
+      textButton: {
+        registration: 'Зарегистрироваться',
+      },
+      headerTitle: {
+        titleText: 'ГЕКТАР',
       },
     }
   },
@@ -78,22 +91,6 @@ export default {
   background: #f5f5f5;
   display: flex;
   flex-direction: column;
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fff;
-    padding: 0 25px;
-    width: 100%;
-    max-height: 60px;
-    height: 100%;
-    &-name {
-      font-family: Montserrat;
-      font-size: 36px;
-      color: #5ca450;
-    }
-  }
   &__main {
     width: 100%;
     flex: 1 1 auto;
@@ -106,6 +103,11 @@ export default {
       max-height: 478px;
       height: 100%;
       background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      border-radius: 10px;
       .registration__main-block-input {
         display: flex;
         justify-content: space-between;
