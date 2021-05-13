@@ -16,8 +16,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .button {
+  max-width: 416px;
   height: 55px;
-  width: 38%;
+  width: 100%;
   padding: 18px 30px;
   background: #5ca450;
   border: 1px solid #f5f5f5;
