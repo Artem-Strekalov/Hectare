@@ -18,7 +18,7 @@
             :showPasswordInput="true"
           />
         </div>
-        <ButtonGreen :textButton="textButton.authorization"></ButtonGreen>
+        <ButtonGreen>Авторизоваться</ButtonGreen>
         <router-link to="/registration" class="registration-link"
           >Регистрация</router-link
         >
@@ -43,12 +43,6 @@ export default {
       nameInput: {
         login: 'Введите логин(email)',
         password: 'Введите пароль',
-      },
-      textButton: {
-        authorization: 'Войти',
-      },
-      headerTitle: {
-        titleText: 'ГЕКТАР',
       },
     }
   },

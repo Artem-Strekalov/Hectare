@@ -4,11 +4,6 @@
 <script>
 export default {
   name: 'ButtonGreen',
-  props: {
-    textButton: {
-      type: String,
-    },
-  },
   data() {
     return {}
   },

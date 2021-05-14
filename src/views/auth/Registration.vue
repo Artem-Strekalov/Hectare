@@ -46,7 +46,7 @@
             />
           </div>
         </div>
-        <ButtonGreen :textButton="textButton.registration"></ButtonGreen>
+        <ButtonGreen>Зарегистрироваться</ButtonGreen>
       </div>
     </div>
   </div>
@@ -72,12 +72,6 @@ export default {
         login: 'Введите логин(email)',
         password: 'Введите пароль',
         confirmPassword: 'Повторите пароль',
-      },
-      textButton: {
-        registration: 'Зарегистрироваться',
-      },
-      headerTitle: {
-        titleText: 'ГЕКТАР',
       },
     }
   },

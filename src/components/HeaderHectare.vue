@@ -1,7 +1,7 @@
 <template>
   <div class="header">
-    <h2 class="title">{{ headerTitle }}</h2>
-    <img class="header-logo" src="@/assets/image/svg/logo.svg" alt="" />
+    <h2 class="header__title">ГЕКТАР</h2>
+    <img class="header__logo" src="@/assets/image/svg/logo.svg" alt="" />
   </div>
 </template>
 <script>
@@ -27,7 +27,7 @@ export default {
   width: 100%;
   max-height: 70px;
   height: 100%;
-  .title {
+  &__title {
     font-family: Montserrat;
     font-size: 36px;
     color: #5ca450;
