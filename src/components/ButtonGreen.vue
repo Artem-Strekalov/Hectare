@@ -1,9 +1,14 @@
 <template>
-  <button class="button"></button>
+  <button class="button">{{ textButton }}</button>
 </template>
 <script>
 export default {
   name: 'ButtonGreen',
+  props: {
+    textButton: {
+      type: String,
+    },
+  },
   data() {
     return {}
   },
@@ -19,5 +24,12 @@ export default {
   border: 1px solid #f5f5f5;
   border-radius: 10px;
   color: #fff;
+  transition: 200ms;
+}
+.button:hover {
+  background: white;
+  border-color: #5ca450;
+  color: #5ca450;
+  transition: 500ms;
 }
 </style>

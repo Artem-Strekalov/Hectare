@@ -1,6 +1,6 @@
 <template>
   <div class="registration">
-    <HeaderHectare></HeaderHectare>
+    <HeaderHectare>ГЕКТАР</HeaderHectare>
     <div class="registration__main">
       <div class="registration__main-content">
         <h2 class="registration__main-reg">Регистрация на ГЕКТАР</h2>
@@ -46,7 +46,7 @@
             />
           </div>
         </div>
-        <ButtonGreen>Зарегистрироваться</ButtonGreen>
+        <ButtonGreen :textButton="textButton.registration"></ButtonGreen>
       </div>
     </div>
   </div>
@@ -72,6 +72,9 @@ export default {
         login: 'Введите логин(email)',
         password: 'Введите пароль',
         confirmPassword: 'Повторите пароль',
+      },
+      textButton: {
+        registration: 'Зарегистрироваться',
       },
     }
   },

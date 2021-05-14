@@ -1,6 +1,6 @@
 <template>
   <div class="authorization">
-    <HeaderHectare></HeaderHectare>
+    <HeaderHectare>ГЕКТАР</HeaderHectare>
     <div class="authorization__main">
       <div class="authorization__main-content">
         <h2 class="authorization__main-auth">Авторизация на ГЕКТАР</h2>
@@ -18,7 +18,7 @@
             :showPasswordInput="true"
           />
         </div>
-        <ButtonGreen>Авторизоваться</ButtonGreen>
+        <ButtonGreen :textButton="textButton.authorization"></ButtonGreen>
         <router-link to="/registration" class="registration-link"
           >Регистрация</router-link
         >
@@ -43,6 +43,9 @@ export default {
       nameInput: {
         login: 'Введите логин(email)',
         password: 'Введите пароль',
+      },
+      textButton: {
+        authorization: 'Войти',
       },
     }
   },
