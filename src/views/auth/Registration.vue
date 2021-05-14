@@ -1,6 +1,6 @@
 <template>
   <div class="registration">
-    <HeaderHectare :headerTitle="headerTitle.titleText"></HeaderHectare>
+    <HeaderHectare></HeaderHectare>
     <div class="registration__main">
       <div class="registration__main-content">
         <h2 class="registration__main-reg">Регистрация на ГЕКТАР</h2>

@@ -1,6 +1,6 @@
 <template>
   <div class="authorization">
-    <HeaderHectare :headerTitle="headerTitle.titleText"></HeaderHectare>
+    <HeaderHectare></HeaderHectare>
     <div class="authorization__main">
       <div class="authorization__main-content">
         <h2 class="authorization__main-auth">Авторизация на ГЕКТАР</h2>
