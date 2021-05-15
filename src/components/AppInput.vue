@@ -2,7 +2,11 @@
   <div class="input">
     <p class="input__name">{{ nameInput }}</p>
     <div class="input__block">
-      <input class="input__block-input" :type="icon ? 'text' : 'password'" />
+      <input
+        class="input__block-input"
+        :type="icon ? 'text' : 'password'"
+        @input="$emit('input', $event.target.value)"
+      />
       <div
         class="input__block-icon"
         v-if="showPasswordInput"
@@ -17,6 +21,10 @@
 <script>
 export default {
   name: 'AppInput',
+  model: {
+    prop: 'value',
+    event: 'input',
+  },
   props: {
     nameInput: {
       type: String,
@@ -43,7 +51,6 @@ export default {
     margin-bottom: 6px;
   }
   .input__block {
-    
     width: 100%;
     height: 55px;
     background: #f1f1f1;

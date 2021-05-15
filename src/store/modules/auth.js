@@ -5,11 +5,11 @@ const auth = {
   },
   mutation: {},
   actions: {
-    async regUser(commit, {email, password}) {
+    /* async regUser(commit, {email, password}) {
       const user = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-    },
+    }, */
   },
   getters: {
     getUser(state) {

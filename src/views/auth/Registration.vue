@@ -2,7 +2,7 @@
   <div class="registration">
     <HeaderHectare>ГЕКТАР</HeaderHectare>
     <div class="registration__main">
-      <div class="registration__main-content">
+      <form class="registration__main-content" @submit.prevent="test">
         <h2 class="registration__main-reg">Регистрация на ГЕКТАР</h2>
         <div class="registration__main-block-input">
           <div class="registration__block-left">
@@ -31,23 +31,27 @@
               :nameInput="nameInput.login"
               :icon="true"
               :showPasswordInput="false"
+              v-model="regForm.login"
             />
+            {{ regForm.login }}
             <AppInput
               class="registration__input"
               :nameInput="nameInput.password"
               :icon="true"
               :showPasswordInput="true"
+              v-model="regForm.password"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.confirmPassword"
               :icon="false"
               :showPasswordInput="true"
+              v-model="regForm.repeatPassword"
             />
           </div>
         </div>
         <ButtonGreen :textButton="textButton.registration"></ButtonGreen>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -73,10 +77,20 @@ export default {
         password: 'Введите пароль',
         confirmPassword: 'Повторите пароль',
       },
+      regForm: {
+        login: '',
+        password: '',
+        repeatPassword: '',
+      },
       textButton: {
         registration: 'Зарегистрироваться',
       },
     }
+  },
+  methods: {
+    test() {
+      console.log('test')
+    },
   },
 }
 </script>
