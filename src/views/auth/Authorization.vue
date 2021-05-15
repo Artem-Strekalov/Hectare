@@ -18,7 +18,10 @@
             :showPasswordInput="true"
           />
         </div>
-        <ButtonGreen :textButton="textButton.authorization"></ButtonGreen>
+        <ButtonGreen
+          class="authorization__main-content-btn"
+          :textButton="textButton.authorization"
+        ></ButtonGreen>
         <router-link to="/registration" class="registration-link"
           >Регистрация</router-link
         >
@@ -95,6 +98,9 @@ export default {
       }
       .registration-link:hover {
         text-decoration-line: none;
+      }
+      &-btn {
+        
       }
     }
     &-auth {

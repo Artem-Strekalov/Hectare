@@ -7,14 +7,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'authorization',
+    component: Authorization,
+  },
+  {
     path: '/registration',
     name: 'registration',
     component: Registration,
-  },
-  {
-    path: '/authorization',
-    name: 'authorization',
-    component: Authorization,
   },
 ]
 
