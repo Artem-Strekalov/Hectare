@@ -22,20 +22,36 @@
     </div>
     <div class="home__sections">
       <!-- ! поменять классы -->
-      <div class="home__sections-my-fields"></div>
-      <div class="home__sections-resources" style="display: none"></div>
+      <div class="home__sections-my-fields">
+        <FieldCard
+          :name="fieldDescription.name"
+          :status="fieldDescription.status"
+          :area="fieldDescription.area"
+        ></FieldCard>
+      </div>
+      <!-- <div class="home__sections-resources" style="display: none"></div>
       <div class="home__sections-technics" style="display: none"></div>
-      <div class="home__sections-warehouse" style="display: none"></div>
+      <div class="home__sections-warehouse" style="display: none"></div> -->
     </div>
   </div>
 </template>
 
 <script>
+import FieldCard from '@/components/FieldCard'
+
 export default {
-  components: {},
+  components: {
+    FieldCard,
+  },
   name: 'home',
   data() {
-    return {}
+    return {
+      fieldDescription: {
+        name: '2 участок',
+        status: 'посеянно',
+        area: 100,
+      },
+    }
   },
 }
 </script>
@@ -43,6 +59,7 @@ export default {
 .home {
   width: 100vw;
   height: 100vh;
+  display: flex;
   .home__sidebar {
     max-width: 240px;
     width: 100%;
@@ -97,8 +114,8 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: flex-start;
-        height: 41px;
+        align-items: center;
+        height: 46px;
         width: 100%;
         border-bottom: 1px solid #999999;
         img {
@@ -118,8 +135,11 @@ export default {
       }
     }
   }
-  &__sections {
-    &-my-fields {
+  .home__sections {
+    background: #f4f4f4;
+    flex-grow: 1;
+    .home__sections-my-fields {
+      padding: 50px;
     }
   }
 }
