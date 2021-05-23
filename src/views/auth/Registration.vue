@@ -33,7 +33,6 @@
               :showPasswordInput="false"
               v-model="regForm.login"
             />
-            {{ regForm.login }}
             <AppInput
               class="registration__input"
               :nameInput="nameInput.password"
@@ -89,7 +88,11 @@ export default {
   },
   methods: {
     test() {
-      console.log('test')
+      const user = {
+        email: this.regForm.login,
+        password: this.regForm.password,
+      }
+      this.$store.dispatch('registeredUser', user)
     },
   },
 }

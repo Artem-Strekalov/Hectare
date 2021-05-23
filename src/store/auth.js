@@ -1,21 +1,28 @@
 import firebase from 'firebase/app'
+import User from './user_help'
 const auth = {
   state: {
     user: null,
   },
-  mutation: {},
+  mutation: {
+    setUser(state, payload) {
+      state.user = payload
+    },
+  },
   actions: {
-    /* async regUser(commit, {email, password}) {
+    async registeredUser({commit}, {email, password}) {
       const user = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-    }, */
+      console.log(user)
+      commit('setUser', new User(user.user.uid))
+    },
   },
   getters: {
-    getUser(state) {
+    user(state) {
       return state.user
     },
-    checkUser() {
+    checkUser(state) {
       return state.user !== null
     },
   },
