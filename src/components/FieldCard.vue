@@ -94,6 +94,14 @@ export default {
       font-weight: 600;
       font-size: 16px;
       color: #5ca450;
+      transition: 300ms;
+    }
+    .right-block__govern:hover {
+      background: #5ca450;
+      border: 1px solid #f5f5f5;
+      border-radius: 10px;
+      color: #fff;
+      transition: 400ms;
     }
   }
 }
