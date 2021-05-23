@@ -28,6 +28,21 @@
           :status="fieldDescription.status"
           :area="fieldDescription.area"
         ></FieldCard>
+        <FieldCard
+          :name="fieldDescription.name"
+          :status="fieldDescription.status"
+          :area="fieldDescription.area"
+        ></FieldCard>
+        <FieldCard
+          :name="fieldDescription.name"
+          :status="fieldDescription.status"
+          :area="fieldDescription.area"
+        ></FieldCard>
+        <FieldCard
+          :name="fieldDescription.name"
+          :status="fieldDescription.status"
+          :area="fieldDescription.area"
+        ></FieldCard>
       </div>
       <!-- <div class="home__sections-resources" style="display: none"></div>
       <div class="home__sections-technics" style="display: none"></div>
@@ -48,7 +63,7 @@ export default {
     return {
       fieldDescription: {
         name: '2 участок',
-        status: 'посеянно',
+        status: 'Посеяно',
         area: 100,
       },
     }
@@ -137,9 +152,11 @@ export default {
   }
   .home__sections {
     background: #f4f4f4;
-    flex-grow: 1;
+      flex-grow: 1;
     .home__sections-my-fields {
-      padding: 50px;
+      padding:  0px 50px 50px 0px;
+      display: flex;
+      flex-wrap: wrap;
     }
   }
 }
