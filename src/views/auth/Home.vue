@@ -74,9 +74,8 @@ export default {
       flex-wrap: wrap;
       flex-grow: 1;
       .fields__addings-card {
-        max-width: 488px;
         height: 200px;
-        width: 100%;
+        width: 38%;
         display: flex;
         justify-content: center;
         align-items: center;

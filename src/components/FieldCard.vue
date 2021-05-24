@@ -35,9 +35,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .field-card {
-  max-width: 488px;
   height: 200px;
-  width: 100%;
+  width: 38%;
   background: #ffffff;
   border-radius: 10px;
   margin: 50px 50px 0px 50px;
@@ -53,7 +52,7 @@ export default {
       font-family: Inter;
       font-weight: 500;
       font-size: 24px;
-      line-height: 16px;
+      line-height: 25px;
       color: #5ca450;
     }
     .left-block__info {
@@ -65,7 +64,7 @@ export default {
       .info__status {
         font-family: Inter;
         font-size: 18px;
-        line-height: 16px;
+        line-height: 20px;
         color: #222222;
       }
     }
