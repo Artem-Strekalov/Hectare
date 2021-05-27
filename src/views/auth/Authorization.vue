@@ -19,7 +19,7 @@
           />
         </div>
         <ButtonGreen :textButton="textButton.authorization"></ButtonGreen>
-        <router-link to="/registration" class="registration-link"
+        <router-link to="/registration" class="authorization__registration-link"
           >Регистрация</router-link
         >
       </div>
@@ -88,13 +88,13 @@ export default {
           margin-right: 70px;
         }
       }
-      .registration-link {
+      .authorization__registration-link {
         font-size: 12px;
         text-decoration-line: underline;
         color: #5ca450;
-      }
-      .registration-link:hover {
-        text-decoration-line: none;
+        &:hover {
+          text-decoration-line: none;
+        }
       }
     }
     &-auth {
