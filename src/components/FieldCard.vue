@@ -1,15 +1,15 @@
 <template>
-  <div class="field-card">
-    <div class="field-card__left-block">
-      <h2 class="left-block__title">{{ name }}</h2>
-      <div class="left-block__info">
+  <div class="card">
+    <div class="card__left-block">
+      <h2 class="card__title">{{ name }}</h2>
+      <div class="card__info">
         <span class="info__area">Площадь: {{ area }} га</span>
         <span class="info__status">Состояние: {{ status }}</span>
       </div>
     </div>
-    <div class="field-card__right-block">
-      <div class="right-block__label"></div>
-      <button class="right-block__govern">Управление</button>
+    <div class="card__right-block">
+      <div class="card__label"></div>
+      <button class="card__govern">Управление</button>
     </div>
   </div>
 </template>
@@ -34,28 +34,28 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.field-card {
+.card {
   height: 200px;
-  width: 38%;
+  width: 48%;
   background: #ffffff;
   border-radius: 10px;
-  margin: 50px 50px 0px 50px;
+  margin: 50px 0px 0px 0px;
   display: flex;
   justify-content: space-between;
-  .field-card__left-block {
+  .card__left-block {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     height: 100%;
     padding: 5px 0px 23px 23px;
-    .left-block__title {
+    .card__title {
       font-family: Inter;
       font-weight: 500;
       font-size: 24px;
       line-height: 25px;
       color: #5ca450;
     }
-    .left-block__info {
+    .card__info {
       height: 54px;
       display: flex;
       flex-direction: column;
@@ -69,20 +69,20 @@ export default {
       }
     }
   }
-  .field-card__right-block {
+  .card__right-block {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-end;
     height: 100%;
     padding: 23px 22px 20px 0px;
-    .right-block__label {
+    .card__label {
       width: 50px;
       height: 10px;
       border-radius: 50px;
       background: #663300;
     }
-    .right-block__govern {
+    .card__govern {
       align-items: center;
       vertical-align: middle;
       padding: 18px 30px;
@@ -95,7 +95,7 @@ export default {
       color: #5ca450;
       transition: 300ms;
     }
-    .right-block__govern:hover {
+    .card__govern:hover {
       background: #5ca450;
       border: 1px solid #f5f5f5;
       border-radius: 10px;

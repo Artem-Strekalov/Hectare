@@ -1,7 +1,7 @@
 <template>
-  <div class="home__sidebar">
+  <div class="sidebar">
     <div class="sidebar__header">
-      <h1 class="header-title">ГЕКТАР</h1>
+      <h1 class="header__title">ГЕКТАР</h1>
     </div>
 
     <ul class="sidebar__menu">
@@ -42,7 +42,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.home__sidebar {
+.sidebar {
   max-width: 240px;
   width: 100%;
   height: 100%;
@@ -60,7 +60,7 @@ export default {
     max-height: 70px;
     height: 100%;
     border-bottom: 1px solid #999999;
-    .header-title {
+    .header__title {
       font-family: Montserrat;
       font-size: 36px;
       color: #5ca450;
