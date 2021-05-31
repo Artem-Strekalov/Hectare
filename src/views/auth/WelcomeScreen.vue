@@ -1,14 +1,15 @@
 <template>
   <div class="welcome">
     <div class="welcome__wrapper">
+      <div class="welcome__hidden-block"></div>
+      <div class="welcome__title">
+        Добро пожаловать на<span class="welcome__hectare"> ГЕКТАР!</span>
+      </div>
       <div class="welcome__animation">
         <div class="welcome__harvester">
           <img src="@/assets/image/svg/harvester.svg" alt="" />
         </div>
         <div class="welcome__line"></div>
-      </div>
-      <div class="welcome__title">
-        Добро пожаловать на<span class="welcome__hectare"> ГЕКТАР!</span>
       </div>
     </div>
   </div>
@@ -35,8 +36,12 @@ export default {
   justify-content: center;
   overflow: hidden;
   &__wrapper {
+    height: 100%;
+    width: 100%;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
   &__title {
     font-family: Inter;
@@ -51,22 +56,23 @@ export default {
   &__animation {
     display: flex;
     align-items: flex-end;
+    width: 100%;
   }
   &__harvester {
     display: flex;
     justify-content: flex-end;
-    width: 380px;
+    width: 100%;
     background: white;
     animation: harvester;
-    animation-duration: 3s;
+    animation-duration: 10s;
     animation-iteration-count: 1;
     animation-delay: 0;
     z-index: 100;
   }
   &__line {
-    width: 380px;
-    height: 30px;
-    background-image: url('~@/assets/image/svg/koloski.png');
+    width: 100vw;
+    height: 28px;
+    background-image: url('~@/assets/image/svg/koloski.jpg');
     background-position: center;
     background-repeat: repeat-x;
     background-size: contain;
@@ -74,10 +80,10 @@ export default {
   }
   @keyframes harvester {
     0% {
-      transform: translateX(-600px);
+      transform: translateX(-100vw);
     }
     100% {
-      transform: none;
+      transform: none;    
     }
   }
 }
