@@ -1,4 +1,5 @@
-const common = {
+export default {
+  namespaced: true,
   state: {
     loading: false,
     error: null,
@@ -34,4 +35,3 @@ const common = {
     },
   },
 }
-export default common

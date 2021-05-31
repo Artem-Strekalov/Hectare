@@ -92,7 +92,14 @@ export default {
         email: this.regForm.login,
         password: this.regForm.password,
       }
-      this.$store.dispatch('registeredUser', user)
+      this.$store
+        .dispatch('registeredUser', user)
+        .then(() => {
+          console.log('Registered')
+        })
+        .catch(err => {
+          console.log(err.message)
+        })
     },
   },
 }
