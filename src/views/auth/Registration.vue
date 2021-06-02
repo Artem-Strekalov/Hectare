@@ -2,49 +2,48 @@
   <div class="registration">
     <HeaderHectare>ГЕКТАР</HeaderHectare>
     <div class="registration__main">
-      <form class="registration__main-content" @submit.prevent="test">
+      <form class="registration__main-content" @submit.prevent="registration">
         <h2 class="registration__main-reg">Регистрация на ГЕКТАР</h2>
         <div class="registration__main-block-input">
           <div class="registration__block-left">
             <AppInput
               class="registration__input"
               :nameInput="nameInput.nameCompany"
-              :icon="true"
               :showPasswordInput="false"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.userFirstName"
-              :icon="true"
               :showPasswordInput="false"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.userLastName"
-              :icon="true"
               :showPasswordInput="false"
             />
           </div>
           <div class="registration__block-right">
             <AppInput
               class="registration__input"
+              :errorInput="errorEmail"
               :nameInput="nameInput.login"
-              :icon="true"
               :showPasswordInput="false"
               v-model="regForm.login"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.password"
-              :icon="true"
+              :errorInput="errorMessage"
               :showPasswordInput="true"
               v-model="regForm.password"
+              :typeText="false"
             />
             <AppInput
               class="registration__input"
+              :errorInput="errorMessage"
               :nameInput="nameInput.confirmPassword"
-              :icon="false"
               :showPasswordInput="true"
+              :typeText="false"
               v-model="regForm.repeatPassword"
             />
           </div>
@@ -68,6 +67,8 @@ export default {
   name: 'registration',
   data() {
     return {
+      errorEmail: '',
+      errorMessage: '',
       nameInput: {
         nameCompany: 'Введите название хозяйства/компании',
         userFirstName: 'Введите свое имя',
@@ -87,19 +88,27 @@ export default {
     }
   },
   methods: {
-    test() {
-      const user = {
-        email: this.regForm.login,
-        password: this.regForm.password,
+    registration() {
+      let user
+      if (this.regForm.password === this.regForm.repeatPassword) {
+        user = {
+          email: this.regForm.login,
+          password: this.regForm.password,
+        }
+        this.$store
+          .dispatch('registeredUser', user)
+          .then(() => {
+            console.log('Registered')
+          })
+          .catch((err) => {
+            if (err.message === 'The email address is badly formatted.') {
+              this.errorEmail = 'Неверный формат e-mail'
+            }
+          })
+      } else {
+        this.errorMessage = 'Введенные пароли не совпадают'
+        return
       }
-      this.$store
-        .dispatch('registeredUser', user)
-        .then(() => {
-          console.log('Registered')
-        })
-        .catch(err => {
-          console.log(err.message)
-        })
     },
   },
 }
