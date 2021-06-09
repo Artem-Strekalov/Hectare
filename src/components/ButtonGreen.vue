@@ -1,17 +1,9 @@
 <template>
-  <button class="button">{{ textButton }}</button>
+  <button class="button"><slot /></button>
 </template>
 <script>
 export default {
   name: 'ButtonGreen',
-  props: {
-    textButton: {
-      type: String,
-    },
-  },
-  data() {
-    return {}
-  },
 }
 </script>
 <style lang="scss" scoped>

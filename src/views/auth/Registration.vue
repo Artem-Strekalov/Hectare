@@ -48,7 +48,7 @@
             />
           </div>
         </div>
-        <ButtonGreen :textButton="textButton.registration"></ButtonGreen>
+        <ButtonGreen>Зарегистрироваться</ButtonGreen>
       </form>
     </div>
   </div>
@@ -81,9 +81,6 @@ export default {
         nameCompany: '',
         userLastName: '',
         userFirstName: '',
-      },
-      textButton: {
-        registration: 'Зарегистрироваться',
       },
     }
   },

@@ -21,10 +21,7 @@
           />
         </div>
 
-        <ButtonGreen
-          class="authorization__main-content-btn"
-          :textButton="textButton.authorization"
-        ></ButtonGreen>
+        <ButtonGreen>Войти</ButtonGreen>
         <router-link to="/registration" class="registration-link"
           >Регистрация</router-link
         >
@@ -51,9 +48,6 @@ export default {
       nameInput: {
         login: 'Введите логин(email)',
         password: 'Введите пароль',
-      },
-      textButton: {
-        authorization: 'Войти',
       },
     }
   },
