@@ -10,6 +10,8 @@ Vue.config.productionTip = false
 firebase.initializeApp({
   apiKey: 'AIzaSyDX7FaQ08Mo1TTPoi3wnncK3Zdfg4NFS4g',
   authDomain: 'hectare-cb91a.firebaseapp.com',
+  databaseURL:
+    'https://hectare-cb91a-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'hectare-cb91a',
   storageBucket: 'hectare-cb91a.appspot.com',
   messagingSenderId: '819835781964',

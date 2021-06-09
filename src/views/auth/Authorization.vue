@@ -26,6 +26,8 @@
           :textButton="textButton.authorization"
         ></ButtonGreen>
         <router-link to="/registration" class="registration-link"
+          >Регистрация</router-link
+        >
       </form>
     </div>
   </div>
@@ -61,7 +63,12 @@ export default {
         email: this.email,
         password: this.password,
       }
-      await this.$store.dispatch('login', formData)
+      try {
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/home')
+      } catch (e) {
+        console.log(e.message)
+      }
     },
   },
 }

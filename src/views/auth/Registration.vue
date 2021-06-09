@@ -10,37 +10,37 @@
               class="registration__input"
               :nameInput="nameInput.nameCompany"
               :showPasswordInput="false"
+              v-model="regForm.nameCompany"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.userFirstName"
               :showPasswordInput="false"
+              v-model="regForm.userFirstName"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.userLastName"
               :showPasswordInput="false"
+              v-model="regForm.userLastName"
             />
           </div>
           <div class="registration__block-right">
             <AppInput
               class="registration__input"
-              :errorInput="errorEmail"
               :nameInput="nameInput.login"
               :showPasswordInput="false"
-              v-model="regForm.login"
+              v-model="regForm.email"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.password"
-              :errorInput="errorMessage"
               :showPasswordInput="true"
               v-model="regForm.password"
               :typeText="false"
             />
             <AppInput
               class="registration__input"
-              :errorInput="errorMessage"
               :nameInput="nameInput.confirmPassword"
               :showPasswordInput="true"
               :typeText="false"
@@ -67,8 +67,6 @@ export default {
   name: 'registration',
   data() {
     return {
-      errorEmail: '',
-      errorMessage: '',
       nameInput: {
         nameCompany: 'Введите название хозяйства/компании',
         userFirstName: 'Введите свое имя',
@@ -78,9 +76,11 @@ export default {
         confirmPassword: 'Повторите пароль',
       },
       regForm: {
-        login: '',
+        email: '',
         password: '',
-        repeatPassword: '',
+        nameCompany: '',
+        userLastName: '',
+        userFirstName: '',
       },
       textButton: {
         registration: 'Зарегистрироваться',
@@ -88,8 +88,18 @@ export default {
     }
   },
   methods: {
-    registration() {
-      
+    async registration() {
+      const formData = {
+        email: this.regForm.email,
+        password: this.regForm.password,
+        userFirstName: this.regForm.userFirstName,
+        userLastName: this.regForm.userLastName,
+        nameCompany: this.regForm.nameCompany,
+      }
+      try {
+        await this.$store.dispatch('registered', formData)
+        this.$router.push('/home')
+      } catch (e) {}
     },
   },
 }
