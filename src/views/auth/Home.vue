@@ -1,71 +1,60 @@
 <template>
   <div class="home">
-    <div class="home__sidebar">
-      <div class="sidebar__header">
-        <h1 class="header-title">ГЕКТАР</h1>
-      </div>
-
-      <ul class="sidebar__menu">
-        <li class="menu__item menu__item-active">Мои поля</li>
-        <li class="menu__item">Ресурсы</li>
-        <li class="menu__item">Техника</li>
-        <li class="menu__item">Склад</li>
-      </ul>
-
-      <div class="sidebar__footer">
-        <div class="footer__profile">
-          <img src="@/assets/image/svg/userFoto.png" alt="" />
-          <span class="profile__name-company">ИП КФХ Стрекалов</span>
-        </div>
-        <div class="footer__exit">Выйти</div>
-      </div>
+    <div class="home__sidebar-wrapper">
+      <Sidebar activeLink="fields"></Sidebar>
     </div>
     <div class="home__sections">
       <!-- ! поменять классы -->
-      <div class="home__sections-my-fields">
+      <div class="home__fields">
         <FieldCard
-          :name="fieldDescription.name"
-          :status="fieldDescription.status"
-          :area="fieldDescription.area"
+          v-for="card in fieldsDescription"
+          :key="card.id"
+          :name="card.name"
+          :status="card.status"
+          :area="card.area"
         ></FieldCard>
-        <FieldCard
-          :name="fieldDescription.name"
-          :status="fieldDescription.status"
-          :area="fieldDescription.area"
-        ></FieldCard>
-        <FieldCard
-          :name="fieldDescription.name"
-          :status="fieldDescription.status"
-          :area="fieldDescription.area"
-        ></FieldCard>
-        <FieldCard
-          :name="fieldDescription.name"
-          :status="fieldDescription.status"
-          :area="fieldDescription.area"
-        ></FieldCard>
+        <div class="home__addings-card">
+          <img src="@/assets/image/svg/plus.png" alt="" /> Добавить поле
+        </div>
       </div>
-      <!-- <div class="home__sections-resources" style="display: none"></div>
-      <div class="home__sections-technics" style="display: none"></div>
-      <div class="home__sections-warehouse" style="display: none"></div> -->
     </div>
   </div>
 </template>
 
 <script>
-import FieldCard from '@/components/FieldCard'
 
+import Sidebar from '@/components/Sidebar'
+import FieldCard from '@/components/FieldCard'
 export default {
   components: {
     FieldCard,
+    Sidebar,
   },
   name: 'home',
   data() {
     return {
-      fieldDescription: {
-        name: '2 участок',
-        status: 'Посеяно',
-        area: 100,
-      },
+
+      fieldsDescription: [
+        {id: 1, name: 'Ромашка', status: 'Посеяно', area: 8},
+        {
+          id: 2,
+          name: 'Кирпичный  60га',
+          status: 'Пары',
+          area: 60,
+        },
+        {
+          id: 3,
+          name: 'Западная',
+          status: 'Посеяно',
+          area: 7,
+        },
+        {
+          id: 4,
+          name: 'Западная',
+          status: 'Посеяно',
+          area: 7,
+        },
+      ],
     }
   },
 }
@@ -75,88 +64,49 @@ export default {
   width: 100vw;
   height: 100vh;
   display: flex;
-  .home__sidebar {
-    max-width: 240px;
+  &__sidebar-wrapper {
+    max-width: 261px;
     width: 100%;
     height: 100%;
-    padding: 0 15px 15px 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    .sidebar__header {
-      text-align: center;
-      padding: 10px;
-      width: 100%;
-      max-height: 70px;
-      height: 100%;
-      border-bottom: 1px solid #999999;
-      .header-title {
-        font-family: Montserrat;
-        font-size: 36px;
-        color: #5ca450;
-      }
-    }
-    .sidebar__menu {
-      max-width: 124px;
-      max-height: 211px;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: left;
-      .menu__item {
-        font-family: Inter;
-        font-size: 24px;
-        line-height: 16px;
-        color: #999999;
-      }
-      .menu__item-active {
-        color: #5ca450;
-      }
-    }
-    .sidebar__footer {
-      max-height: 100px;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-
-      .footer__profile {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 46px;
-        width: 100%;
-        border-bottom: 1px solid #999999;
-        img {
-        }
-        .profile__name-company {
-          font-family: Inter;
-          font-size: 18px;
-          line-height: 16px;
-          color: #999999;
-        }
-      }
-      .footer__exit {
-        font-family: Inter;
-        font-size: 18px;
-        line-height: 16px;
-        color: #999999;
-      }
-    }
   }
-  .home__sections {
+  &__sections {
+    min-height: 100vh;
     background: #f4f4f4;
-      flex-grow: 1;
-    .home__sections-my-fields {
-      padding:  0px 50px 50px 0px;
-      display: flex;
-      flex-wrap: wrap;
+    height: auto;
+  }
+  &__fields {
+    padding: 0px 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+  &__addings-card {
+    height: 200px;
+    width: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #5ca450;
+    border-radius: 10px;
+    font-family: Inter;
+    font-size: 24px;
+    line-height: 16px;
+    color: #5ca450;
+    margin: 50px 50px 0px 0px;
+    transition: 500ms;
+    &:hover {
+      transform: scale(0.95);
+      transition: 400ms;
+      img {
+        transform: rotate(90deg);
+        transition: 400ms;
+      }
+    }
+    img {
+      margin-right: 5px;
+      transition: 400ms;
     }
   }
 }
