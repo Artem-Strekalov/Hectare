@@ -25,6 +25,8 @@ export default {
   border-radius: 10px;
   color: #fff;
   transition: 200ms;
+  font-weight: 600;
+  font-size: 16px;
 }
 .button:hover {
   background: white;

@@ -2,52 +2,54 @@
   <div class="registration">
     <HeaderHectare>ГЕКТАР</HeaderHectare>
     <div class="registration__main">
-      <div class="registration__main-content">
+      <form class="registration__main-content" @submit.prevent="registration">
         <h2 class="registration__main-reg">Регистрация на ГЕКТАР</h2>
         <div class="registration__main-block-input">
           <div class="registration__block-left">
             <AppInput
               class="registration__input"
               :nameInput="nameInput.nameCompany"
-              :icon="true"
               :showPasswordInput="false"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.userFirstName"
-              :icon="true"
               :showPasswordInput="false"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.userLastName"
-              :icon="true"
               :showPasswordInput="false"
             />
           </div>
           <div class="registration__block-right">
             <AppInput
               class="registration__input"
+              :errorInput="errorEmail"
               :nameInput="nameInput.login"
-              :icon="true"
               :showPasswordInput="false"
+              v-model="regForm.login"
             />
             <AppInput
               class="registration__input"
               :nameInput="nameInput.password"
-              :icon="true"
+              :errorInput="errorMessage"
               :showPasswordInput="true"
+              v-model="regForm.password"
+              :typeText="false"
             />
             <AppInput
               class="registration__input"
+              :errorInput="errorMessage"
               :nameInput="nameInput.confirmPassword"
-              :icon="false"
               :showPasswordInput="true"
+              :typeText="false"
+              v-model="regForm.repeatPassword"
             />
           </div>
         </div>
         <ButtonGreen :textButton="textButton.registration"></ButtonGreen>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -65,6 +67,8 @@ export default {
   name: 'registration',
   data() {
     return {
+      errorEmail: '',
+      errorMessage: '',
       nameInput: {
         nameCompany: 'Введите название хозяйства/компании',
         userFirstName: 'Введите свое имя',
@@ -73,10 +77,20 @@ export default {
         password: 'Введите пароль',
         confirmPassword: 'Повторите пароль',
       },
+      regForm: {
+        login: '',
+        password: '',
+        repeatPassword: '',
+      },
       textButton: {
         registration: 'Зарегистрироваться',
       },
     }
+  },
+  methods: {
+    registration() {
+      
+    },
   },
 }
 </script>

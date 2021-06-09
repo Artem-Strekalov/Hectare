@@ -1,8 +1,16 @@
 <template>
   <div class="input">
-    <p class="input__name">{{ nameInput }}</p>
+    <div class="input__name-block">
+      <p class="input__name">{{ nameInput }}</p>
+      <p class="input__error" :class="{error: errorInput}">{{ errorInput }}</p>
+    </div>
+
     <div class="input__block">
-      <input class="input__block-input" :type="icon ? 'text' : 'password'" />
+      <input
+        class="input__block-input"
+        :type="icon || typeText ? 'text' : 'password'"
+        @input="$emit('input', $event.target.value)"
+      />
       <div
         class="input__block-icon"
         v-if="showPasswordInput"
@@ -17,19 +25,29 @@
 <script>
 export default {
   name: 'AppInput',
+  model: {
+    prop: 'value',
+    event: 'input',
+  },
   props: {
-    nameInput: {
+    typeText: {
+      type: Boolean,
+      default: true,
+    },
+    errorInput: {
       type: String,
     },
-    icon: {
-      type: Boolean,
+    nameInput: {
+      type: String,
     },
     showPasswordInput: {
       type: Boolean,
     },
   },
   data() {
-    return {}
+    return {
+      icon: false,
+    }
   },
 }
 </script>
@@ -37,13 +55,21 @@ export default {
 .input {
   width: 100%;
   font-family: Inter;
-  .input__name {
+  .input__name-block {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__error {
+    font-size: 12px;
+    color: red;
+    margin-bottom: 6px;
+  }
+  &__name {
     font-size: 12px;
     color: #999999;
     margin-bottom: 6px;
   }
-  .input__block {
-    
+  &__block {
     width: 100%;
     height: 55px;
     background: #f1f1f1;

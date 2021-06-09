@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 import Sidebar from '@/components/Sidebar'
 import FieldCard from '@/components/FieldCard'
 export default {
@@ -32,6 +33,7 @@ export default {
   name: 'home',
   data() {
     return {
+
       fieldsDescription: [
         {id: 1, name: 'Ромашка', status: 'Посеяно', area: 8},
         {

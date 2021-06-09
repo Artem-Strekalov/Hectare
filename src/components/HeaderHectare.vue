@@ -31,7 +31,7 @@ export default {
     font-family: Montserrat;
     font-size: 36px;
     color: #5ca450;
-    letter-spacing: 0.4em;
+    letter-spacing: 9px;
   }
 }
 </style>
