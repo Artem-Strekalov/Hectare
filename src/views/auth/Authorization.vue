@@ -2,20 +2,22 @@
   <div class="authorization">
     <HeaderHectare>ГЕКТАР</HeaderHectare>
     <div class="authorization__main">
-      <div class="authorization__main-content">
+      <form class="authorization__main-content" @submit.prevent="signIn">
         <h2 class="authorization__main-auth">Авторизация на ГЕКТАР</h2>
         <div class="authorization__main-block-input">
           <AppInput
             class="authorization__input"
+            v-model="email"
             :nameInput="nameInput.login"
             :icon="true"
             :showPasswordInput="false"
           />
           <AppInput
             class="authorization__input"
+            v-model="password"
             :nameInput="nameInput.password"
-            :icon="true"
             :showPasswordInput="true"
+            :typeText="false"
           />
         </div>
         <ButtonGreen
@@ -25,7 +27,7 @@
         <router-link to="/registration" class="registration-link"
           >Регистрация</router-link
         >
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -43,6 +45,8 @@ export default {
   name: 'authorization',
   data() {
     return {
+      email: '',
+      password: '',
       nameInput: {
         login: 'Введите логин(email)',
         password: 'Введите пароль',
@@ -51,6 +55,15 @@ export default {
         authorization: 'Войти',
       },
     }
+  },
+  methods: {
+    async signIn() {
+      const formData = {
+        email: this.email,
+        password: this.password,
+      }
+      await this.$store.dispatch('login', formData)
+    },
   },
 }
 </script>
@@ -100,7 +113,6 @@ export default {
         text-decoration-line: none;
       }
       &-btn {
-        
       }
     }
     &-auth {

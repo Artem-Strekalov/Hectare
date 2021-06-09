@@ -89,26 +89,7 @@ export default {
   },
   methods: {
     registration() {
-      let user
-      if (this.regForm.password === this.regForm.repeatPassword) {
-        user = {
-          email: this.regForm.login,
-          password: this.regForm.password,
-        }
-        this.$store
-          .dispatch('registeredUser', user)
-          .then(() => {
-            console.log('Registered')
-          })
-          .catch((err) => {
-            if (err.message === 'The email address is badly formatted.') {
-              this.errorEmail = 'Неверный формат e-mail'
-            }
-          })
-      } else {
-        this.errorMessage = 'Введенные пароли не совпадают'
-        return
-      }
+      
     },
   },
 }
