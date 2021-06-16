@@ -1,8 +1,22 @@
 <template>
   <div id="app">
-    <router-view />
+    <WelcomeScreen v-if="helloPage" />
+    <router-view v-else />
   </div>
 </template>
+<script>
+import WelcomeScreen from './views/auth/WelcomeScreen.vue'
+export default {
+  components: {
+    WelcomeScreen,
+  },
+  computed: {
+    helloPage() {
+      return this.$store.getters['statusHelloPage']
+    },
+  },
+}
+</script>
 
 <style lang="scss">
 @import 'null-style.scss';

@@ -1,12 +1,21 @@
 import firebase from 'firebase/app'
 export default {
+  state: {
+    helloPage: false,
+  },
+  mutations: {
+    changeHelloPage(state, payload) {
+      state.helloPage = payload
+    },
+  },
   actions: {
     // Регистрация
     async registered(
-      {dispatch},
+      {dispatch, commit},
       {email, password, userFirstName, userLastName, nameCompany},
     ) {
       try {
+        commit('changeHelloPage', true)
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         const uid = await dispatch('getUid')
         await firebase
@@ -17,7 +26,9 @@ export default {
             userLastName,
             nameCompany,
           })
+        commit('changeHelloPage', false)
       } catch (e) {
+        commit('changeHelloPage', false)
         throw e
       }
     },
@@ -28,9 +39,12 @@ export default {
     },
     // Авторизация
     async login({dispatch, commit}, {email, password}) {
+      commit('changeHelloPage', true)
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password)
+        commit('changeHelloPage', false)
       } catch (e) {
+        commit('changeHelloPage', false)
         throw e
       }
     },
@@ -38,6 +52,11 @@ export default {
     async logout({commit}) {
       await firebase.auth().signOut()
       commit('clearInfo')
+    },
+  },
+  getters: {
+    statusHelloPage(state) {
+      return state.helloPage
     },
   },
 }
