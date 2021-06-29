@@ -30,7 +30,7 @@
         <img src="@/assets/image/svg/userFoto.png" alt="" />
         <span class="sidebar__name-company">ИП КФХ Стрекалов</span>
       </div>
-      <div class="sidebar__exit">Выйти</div>
+      <div class="sidebar__exit" @click.prevent="logout">Выйти</div>
     </div>
   </div>
 </template>
@@ -44,6 +44,12 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch('logout')
+      this.$router.push('/')
+    },
   },
 }
 </script>

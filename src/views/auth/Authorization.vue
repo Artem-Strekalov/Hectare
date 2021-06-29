@@ -21,11 +21,10 @@
           />
         </div>
 
-        <ButtonGreen
-          class="authorization__main-content-btn"
-          :textButton="textButton.authorization"
-        ></ButtonGreen>
+        <ButtonGreen>Войти</ButtonGreen>
         <router-link to="/registration" class="registration-link"
+          >Регистрация</router-link
+        >
       </form>
     </div>
   </div>
@@ -50,9 +49,6 @@ export default {
         login: 'Введите логин(email)',
         password: 'Введите пароль',
       },
-      textButton: {
-        authorization: 'Войти',
-      },
     }
   },
   methods: {
@@ -61,7 +57,12 @@ export default {
         email: this.email,
         password: this.password,
       }
-      await this.$store.dispatch('login', formData)
+      try {
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/home')
+      } catch (e) {
+        console.log(e.message)
+      }
     },
   },
 }

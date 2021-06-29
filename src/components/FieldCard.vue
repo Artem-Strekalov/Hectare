@@ -9,13 +9,17 @@
     </div>
     <div class="card__right-block">
       <div class="card__label"></div>
-      <button class="card__govern">Управление</button>
+      <ButtonGreen class="card__govern">Управление</ButtonGreen>
     </div>
   </div>
 </template>
 <script>
+import ButtonGreen from '@/components/ButtonGreen'
 export default {
   name: 'FieldCard',
+  components: {
+    ButtonGreen,
+  },
   props: {
     // ДОБАВИТЬ ID
     name: {
