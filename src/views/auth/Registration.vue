@@ -49,8 +49,24 @@
           </div>
         </div>
         <ButtonGreen>Зарегистрироваться</ButtonGreen>
+        <router-link to="/" class="registration-link"
+          >У меня уже есть аккаунт</router-link
+        >
       </form>
     </div>
+    <v-snackbar
+      v-model="showError"
+      :centered="true"
+      color="#ED4949"
+      timeout="15000"
+    >
+      {{ textError }}
+      <template v-slot:action="{attrs}">
+        <v-btn color="red" text v-bind="attrs" @click="closeError">
+          Закрыть
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -97,6 +113,18 @@ export default {
         await this.$store.dispatch('registered', formData)
         this.$router.push('/home')
       } catch (e) {}
+    },
+    closeError() {
+      this.$store.commit('showWindowError', false)
+    },
+  },
+  computed: {
+    textError() {
+      return this.$store.getters['getError']
+    },
+
+    showError() {
+      return this.$store.getters['getWindowError']
     },
   },
 }
