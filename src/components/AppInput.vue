@@ -35,7 +35,7 @@ export default {
       default: true,
     },
     errorInput: {
-      type: String,
+      type: String, Object
     },
     nameInput: {
       type: String,
