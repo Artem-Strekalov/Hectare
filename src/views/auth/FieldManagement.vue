@@ -10,14 +10,16 @@
     <div class="content__field">
       <p class="content__field-name">4 участок</p>
       <div class="content__field-year">
-        <p class="content__year-name"></p>
-        <v-select :items="items" label="Solo field" solo></v-select>
+        <p class="content__year-name">Выберите год:</p>
+        <div class="content__year-block">
+          <img src="@/assets/image/svg/arrowDown.svg" alt="" />
+        </div>
       </div>
     </div>
-    <div class="content__add">
+    <!-- <div class="content__add">
       <img src="@/assets/image/svg/addIcon.svg" alt="" />
       <p class="content__add-name">Добавить работу</p>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -57,7 +59,7 @@ export default {
       letter-spacing: 9px;
     }
   }
-  &__add {
+  /* &__add {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,6 +74,33 @@ export default {
       color: #222222;
       margin-left: 10px;
     }
+  } */
+  &__field {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    &-year {
+      max-width: 325px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+  &__year-name {
+    white-space: nowrap;
+    margin-right: 11px;
+  }
+  &__year-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 100%;
+    height: 55px;
+    background: #f5f5f5;
+    border-radius: 10px;
   }
 }
 </style>
