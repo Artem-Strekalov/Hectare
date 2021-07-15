@@ -4,8 +4,7 @@ import Registration from '../views/auth/Registration.vue'
 import Authorization from '../views/auth/Authorization.vue'
 import Home from '../views/auth/Home.vue'
 import WelcomeScreen from '../views/auth/WelcomeScreen.vue'
-import FieldRedaction from '../views/auth/FieldRedaction.vue'
-
+import FieldManagement from '../views/auth/FieldManagement.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -30,9 +29,10 @@ const routes = [
     component: WelcomeScreen,
   },
   {
-    path: '/fieldRedaction',
-    name: 'fieldRedaction',
-    component: FieldRedaction,
+    path: '/field-management',
+    name: 'fieldManagement',
+    component: FieldManagement,
+
   },
 ]
 
