@@ -5,7 +5,6 @@ import Authorization from '../views/auth/Authorization.vue'
 import Home from '../views/auth/Home.vue'
 import WelcomeScreen from '../views/auth/WelcomeScreen.vue'
 import FieldManagement from '../views/auth/FieldManagement.vue'
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,6 +32,7 @@ const routes = [
     path: '/field-management',
     name: 'fieldManagement',
     component: FieldManagement,
+
   },
 ]
 
