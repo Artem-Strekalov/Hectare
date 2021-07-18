@@ -12,19 +12,61 @@
       <div class="content__field-year">
         <p class="content__year-name">Выберите год:</p>
         <div class="content__year-block">
+          <VueDatePicker
+            v-model="dateYear"
+            min-date="1980"
+            max-date="2020"
+            type="year"
+            placeholder=""
+            no-calendar-icon
+            :color="colorCalendar"
+          />
           <img src="@/assets/image/svg/arrowDown.svg" alt="" />
         </div>
       </div>
     </div>
     <div class="content__nav">
-      <span class="content__nav-item content__nav-itemOne"
+      <span
+        class="content__nav-item content__nav-itemOne"
+        :class="{content__active: showBlock === 'tillage'}"
+        @click="showBlock = 'tillage'"
         >Подготовка почвы</span
       >
-      <span class="content__nav-item">Сев</span>
-      <span class="content__nav-item">Дополнительные работы</span>
-      <span class="content__nav-item">Уборка урожая</span>
+      <span
+        class="content__nav-item"
+        :class="{content__active: showBlock === 'sowing'}"
+        @click="showBlock = 'sowing'"
+        >Сев</span
+      >
+      <span
+        class="content__nav-item"
+        :class="{content__active: showBlock === 'additional'}"
+        @click="showBlock = 'additional'"
+        >Дополнительные работы</span
+      >
+      <span
+        class="content__nav-item"
+        :class="{content__active: showBlock === 'harvest'}"
+        @click="showBlock = 'harvest'"
+        >Уборка урожая</span
+      >
     </div>
-    <div class="content__form">
+    <div class="content__cart" v-if="showBlock === 'tillage'">
+      <div class="content__cart-left">
+        <p class="content__cart-name">Дискование</p>
+        <p class="content__cart-p">
+          Период обработки: c 10.08.2021 по 20.08.2021
+        </p>
+        <p class="content__cart-p">Погодные условия: Сухая погода</p>
+        <p class="content__cart-p">Используемая техника: МТЗ-1021, БДТ-3</p>
+        <p class="content__cart-p">Обработано: 100 га</p>
+      </div>
+      <div class="content__cart-right">
+        <p class="content__cart-p">Ваши заметки:</p>
+        <ButtonGreen>Редактировать</ButtonGreen>
+      </div>
+    </div>
+    <div class="content__form" v-if="showForm">
       <div class="content__form-main">
         <div class="content__form-left">
           <div class="content__form-type">
@@ -45,10 +87,24 @@
           <div class="content__form-calendar">
             <p class="content__form-name">Период:</p>
             <div class="content__form-data">
+              <VueDatePicker
+                v-model="dateStart"
+                format="DD-MM-YYYY"
+                :color="colorCalendar"
+                placeholder="Дата начала работ"
+                no-calendar-icon
+              />
               <img src="@/assets/image/svg/arrowDown.svg" alt="" />
             </div>
             <hr />
             <div class="content__form-data">
+              <VueDatePicker
+                v-model="dateEnd"
+                format="DD-MM-YYYY"
+                :color="colorCalendar"
+                placeholder="Дата окончания работ"
+                no-calendar-icon
+              />
               <img src="@/assets/image/svg/arrowDown.svg" alt="" />
             </div>
           </div>
@@ -62,12 +118,19 @@
         <p class="content__form-name">Ваши заметки:</p>
         <textarea name="" id="" cols="30" rows="10"></textarea>
       </div>
-      <ButtonGreen>Добавить</ButtonGreen>
+      <div class="content__form-btn">
+        <ButtonGreen>Добавить</ButtonGreen>
+        <ButtonGreen @click.native="showForm = false">Закрыть</ButtonGreen>
+      </div>
     </div>
-    <!-- <div class="content__add">
+    <div
+      class="content__add"
+      v-if="showBlock === 'tillage'"
+      @click.prevent="showForm = true"
+    >
       <img src="@/assets/image/svg/addIcon.svg" alt="" />
       <p class="content__add-name">Добавить работу</p>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -78,6 +141,12 @@ export default {
   },
   name: 'FieldManagement',
   data: () => ({
+    showBlock: 'tillage',
+    showForm: false,
+    dateYear: null,
+    dateStart: null,
+    dateEnd: null,
+    colorCalendar: '#5ca450',
     ex1: {label: 'color', val: 0, color: '#5ca450'},
   }),
 }
@@ -85,8 +154,7 @@ export default {
 <style lang="scss" scoped>
 .content {
   font-family: Inter;
-  padding: 0 25px;
-  height: 100vh;
+  padding: 25px;
   &__header {
     display: flex;
     justify-content: space-between;
@@ -111,13 +179,13 @@ export default {
       letter-spacing: 9px;
     }
   }
-  /* &__add {
+  &__add {
+    margin-top: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-height: 200px;
-    height: 100%;
+    height: 200px;
     cursor: pointer;
     border: 1px solid #5ca450;
     border-radius: 10px;
@@ -126,7 +194,7 @@ export default {
       color: #222222;
       margin-left: 10px;
     }
-  } */
+  }
   &__field {
     width: 100%;
     display: flex;
@@ -140,7 +208,7 @@ export default {
       align-items: center;
     }
     &-name {
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 600;
     }
   }
@@ -176,8 +244,45 @@ export default {
     }
     &-item:hover {
       color: #5ca450;
-
       border-bottom: 2px solid #5ca450;
+    }
+    .content__active {
+      color: #5ca450;
+      border-bottom: 2px solid #5ca450;
+    }
+  }
+  &__cart {
+    width: 100%;
+    height: max-content;
+    border-radius: 10px;
+    margin-top: 30px;
+    border: 1px solid #5ca450;
+    padding: 25px;
+    display: flex;
+    &-name {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+    &-left,
+    &-right {
+      width: 50%;
+    }
+    &-right {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      button {
+        margin-left: auto;
+        max-width: 190px;
+        width: 100%;
+      }
+    }
+    &-p {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #999999;
     }
   }
   &__form {
@@ -264,9 +369,14 @@ export default {
         padding: 10px;
       }
     }
-    button {
+    &-btn {
       margin-top: 37px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    button {
       max-width: 197px;
+      margin-left: 20px;
       align-self: flex-end;
     }
   }

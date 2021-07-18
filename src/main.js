@@ -6,6 +6,12 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import vuetify from './plugins/vuetify'
+import VueDatePicker from '@mathieustan/vue-datepicker'
+import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css'
+
+Vue.use(VueDatePicker)
+
+
 Vue.config.productionTip = false
 
 firebase.initializeApp({
@@ -27,7 +33,7 @@ firebase.auth().onAuthStateChanged(() => {
       router,
       store,
       vuetify,
-      render: h => h(App)
+      render: h => h(App),
     }).$mount('#app')
   }
 })
