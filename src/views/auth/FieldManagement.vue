@@ -75,7 +75,7 @@
           </div>
           <div class="content__form-cultivation">
             <p class="content__form-p">Обработано:</p>
-            <input type="number" v-model="area" />
+            <input type="number" min='0' v-model="area" />
           </div>
         </div>
         <div class="content__form-right">
@@ -142,7 +142,6 @@ export default {
     showForm: false,
     dateYear: null,
     colorCalendar: '#5ca450',
-    ex1: {label: 'color', val: 0, color: '#5ca450'},
     dateStart: null,
     dateEnd: null,
     processingType: '',
@@ -152,7 +151,17 @@ export default {
     notes: '',
     workCards: [],
   }),
+
   methods: {
+    clearForm() {
+      this.processingType = ''
+      this.dateStart = null
+      this.dateEnd = null
+      this.weather = ''
+      this.technique = ''
+      this.area = ''
+      this.notes = ''
+    },
     getID() {
       let id
       if (this.workCards.lenght === 0) {
@@ -175,7 +184,7 @@ export default {
         id: this.getID(),
       })
       this.showForm = false
-      console.log(this.workCards)
+      this.clearForm()
     },
   },
 }
