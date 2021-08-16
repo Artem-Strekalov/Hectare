@@ -51,36 +51,31 @@
         >Уборка урожая</span
       >
     </div>
-    <div class="content__cart" v-if="showBlock === 'tillage'">
-      <div class="content__cart-left">
-        <p class="content__cart-name">Дискование</p>
-        <p class="content__cart-p">
-          Период обработки: c 10.08.2021 по 20.08.2021
-        </p>
-        <p class="content__cart-p">Погодные условия: Сухая погода</p>
-        <p class="content__cart-p">Используемая техника: МТЗ-1021, БДТ-3</p>
-        <p class="content__cart-p">Обработано: 100 га</p>
-      </div>
-      <div class="content__cart-right">
-        <p class="content__cart-p">Ваши заметки:</p>
-        <ButtonGreen>Редактировать</ButtonGreen>
-      </div>
-    </div>
+    <WorkCard
+      v-for="card in workCards"
+      :key="card.id"
+      :processingType="card.processingType"
+      :dateStart="card.dateStart"
+      :dateEnd="card.dateEnd"
+      :weather="card.weather"
+      :technique="card.technique"
+      :area="card.area"
+      :notes="card.notes"
+    />
     <div class="content__form" v-if="showForm">
       <div class="content__form-main">
         <div class="content__form-left">
           <div class="content__form-type">
             <p class="content__form-name">Укажите тип обработки:</p>
-            <input type="text" />
+            <input type="text" v-model="processingType" />
           </div>
           <div class="content__form-weather">
             <p class="content__form-name">Погодные условия:</p>
-            <input type="text" />
+            <input type="text" v-model="weather" />
           </div>
           <div class="content__form-cultivation">
             <p class="content__form-p">Обработано:</p>
-            <v-slider v-model="ex1.val" :color="ex1.color"></v-slider>
-            <p class="content__form-ga">{{ ex1.val }} га</p>
+            <input type="number" v-model="area" />
           </div>
         </div>
         <div class="content__form-right">
@@ -110,16 +105,16 @@
           </div>
           <div class="content__form-technics">
             <p class="content__form-name">Используемая техника:</p>
-            <input type="text" />
+            <input type="text" v-model="technique" />
           </div>
         </div>
       </div>
       <div class="content__form-notes">
         <p class="content__form-name">Ваши заметки:</p>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <textarea name="" id="" cols="30" rows="10" v-model="notes"></textarea>
       </div>
       <div class="content__form-btn">
-        <ButtonGreen>Добавить</ButtonGreen>
+        <ButtonGreen @click.native="addWork()">Добавить</ButtonGreen>
         <ButtonGreen @click.native="showForm = false">Закрыть</ButtonGreen>
       </div>
     </div>
@@ -135,20 +130,54 @@
 </template>
 <script>
 import ButtonGreen from '@/components/ButtonGreen'
+import WorkCard from '@/components/WorkCard'
 export default {
   components: {
     ButtonGreen,
+    WorkCard,
   },
   name: 'FieldManagement',
   data: () => ({
     showBlock: 'tillage',
     showForm: false,
     dateYear: null,
-    dateStart: null,
-    dateEnd: null,
     colorCalendar: '#5ca450',
     ex1: {label: 'color', val: 0, color: '#5ca450'},
+    dateStart: null,
+    dateEnd: null,
+    processingType: '',
+    weather: '',
+    technique: '',
+    area: '',
+    notes: '',
+    workCards: [],
   }),
+  methods: {
+    getID() {
+      let id
+      if (this.workCards.lenght === 0) {
+        id = 1
+      } else {
+        const workCardsIds = this.workCards.map(item => item.id)
+        id = Math.max.apply(null, workCardsIds) + 1
+      }
+      return id
+    },
+    addWork() {
+      this.workCards.push({
+        processingType: this.processingType,
+        dateStart: this.dateStart,
+        dateEnd: this.dateEnd,
+        weather: this.weather,
+        technique: this.technique,
+        area: this.area,
+        notes: this.notes,
+        id: this.getID(),
+      })
+      this.showForm = false
+      console.log(this.workCards)
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
