@@ -152,9 +152,7 @@ export default {
     notes: '',
     workCards: [],
   }),
-  mounted() {
-    console.log(uuidv4())
-  },
+  
   methods: {
     clearForm() {
       this.processingType = ''
@@ -165,16 +163,6 @@ export default {
       this.area = ''
       this.notes = ''
     },
-    getID() {
-      let id
-      if (this.workCards.lenght === 0) {
-        id = 1
-      } else {
-        const workCardsIds = this.workCards.map(item => item.id)
-        id = Math.max.apply(null, workCardsIds) + 1
-      }
-      return id
-    },
     addWork() {
       this.workCards.push({
         processingType: this.processingType,
@@ -184,7 +172,8 @@ export default {
         technique: this.technique,
         area: this.area,
         notes: this.notes,
-        id: this.getID(),
+        id: uuidv4(),
+        workYear: '',
       })
       this.showForm = false
       this.clearForm()
