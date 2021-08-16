@@ -75,7 +75,7 @@
           </div>
           <div class="content__form-cultivation">
             <p class="content__form-p">Обработано:</p>
-            <input type="number" min='0' v-model="area" />
+            <input type="number" min="0" v-model="area" />
           </div>
         </div>
         <div class="content__form-right">
@@ -131,6 +131,7 @@
 <script>
 import ButtonGreen from '@/components/ButtonGreen'
 import WorkCard from '@/components/WorkCard'
+import {v4 as uuidv4} from 'uuid'
 export default {
   components: {
     ButtonGreen,
@@ -151,7 +152,9 @@ export default {
     notes: '',
     workCards: [],
   }),
-
+  mounted() {
+    console.log(uuidv4())
+  },
   methods: {
     clearForm() {
       this.processingType = ''
