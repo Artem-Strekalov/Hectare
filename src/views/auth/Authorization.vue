@@ -8,6 +8,7 @@
           <AppInput
             class="authorization__input"
             v-model="email"
+            :errorInput="emailError"
             :nameInput="nameInput.login"
             :icon="true"
             :showPasswordInput="false"
@@ -15,12 +16,12 @@
           <AppInput
             class="authorization__input"
             v-model="password"
+            :errorInput="passwordError"
             :nameInput="nameInput.password"
             :showPasswordInput="true"
             :typeText="false"
           />
         </div>
-
         <ButtonGreen>Войти</ButtonGreen>
         <router-link to="/registration" class="registration-link"
           >Регистрация</router-link
@@ -35,7 +36,7 @@
     >
       {{ textError }}
       <template v-slot:action="{attrs}">
-        <v-btn color="red" text v-bind="attrs" @click="closeError">
+        <v-btn color="red" text v-bind="attrs" @click="showError = false">
           Закрыть
         </v-btn>
       </template>
@@ -44,6 +45,7 @@
 </template>
 
 <script>
+import error from '@/utils/error'
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
 import HeaderHectare from '@/components/HeaderHectare'
@@ -56,6 +58,10 @@ export default {
   name: 'authorization',
   data() {
     return {
+      passwordError: '',
+      emailError: '',
+      showError: false,
+      textError: '',
       email: '',
       password: '',
       nameInput: {
@@ -75,17 +81,41 @@ export default {
         this.$router.push('/home')
       } catch (e) {}
     },
-    closeError() {
-      this.$store.commit('showWindowError', false)
+    clearError() {
+      this.$store.commit.clearError
+      this.emailError = ''
+      this.passwordError = ''
     },
   },
   computed: {
-    textError() {
-      return this.$store.getters['getError']
+    errorMessage() {
+      return this.$store.getters.error
     },
+  },
+  watch: {
+    //обрабатываем ошибки
+    errorMessage(fbError) {
+      this.clearError()
+      console.log(fbError.code)
+      switch (fbError.code) {
+        case 'auth/user-not-found':
+          this.emailError = 'E-mail не существует'
+          break
+        case 'auth/invalid-email':
+          this.emailError = 'Неверный E-mail'
+          break
 
-    showError() {
-      return this.$store.getters['getWindowError']
+        case 'auth/wrong-password':
+          this.passwordError = 'Неверный пароль'
+          break
+        case 'auth/too-many-requests':
+          this.textError = 'Ошибка сервера. Обновите страницу.'
+          this.showError = true
+          break
+        default:
+          this.textError = 'Упс... Что-то пошло не так'
+          this.showError = true
+      }
     },
   },
 }

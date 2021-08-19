@@ -62,7 +62,7 @@
     >
       {{ textError }}
       <template v-slot:action="{attrs}">
-        <v-btn color="red" text v-bind="attrs" @click="closeError">
+        <v-btn color="red" text v-bind="attrs" @click="showError = false">
           Закрыть
         </v-btn>
       </template>
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import error from '@/utils/error'
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
 import HeaderHectare from '@/components/HeaderHectare'
@@ -83,6 +84,8 @@ export default {
   name: 'registration',
   data() {
     return {
+      showError: false,
+      textError: '',
       nameInput: {
         nameCompany: 'Введите название хозяйства/компании',
         userFirstName: 'Введите свое имя',
@@ -109,22 +112,23 @@ export default {
         userLastName: this.regForm.userLastName,
         nameCompany: this.regForm.nameCompany,
       }
+   
       try {
-        await this.$store.dispatch('registered', formData)
+        await this.$store.dispatch('register', formData)
         this.$router.push('/home')
       } catch (e) {}
     },
-    closeError() {
-      this.$store.commit('showWindowError', false)
-    },
   },
   computed: {
-    textError() {
-      return this.$store.getters['getError']
+    errorMessage() {
+      return this.$store.getters.error
     },
+  },
+  watch: {
+    errorMessage(fbError) {
 
-    showError() {
-      return this.$store.getters['getWindowError']
+      /* this.textError = error(fbError.code)
+      this.showError = true */
     },
   },
 }

@@ -5,7 +5,7 @@
       <p class="input__error" :class="{error: errorInput}">{{ errorInput }}</p>
     </div>
 
-    <div class="input__block">
+    <div class="input__block" :class="{errorInput: errorInput}">
       <input
         class="input__block-input"
         :type="icon || typeText ? 'text' : 'password'"
@@ -35,7 +35,8 @@ export default {
       default: true,
     },
     errorInput: {
-      type: String, Object
+      type: String,
+      Object,
     },
     nameInput: {
       type: String,
@@ -94,6 +95,9 @@ input:-webkit-autofill:active {
     &-icon {
       cursor: pointer;
     }
+  }
+  .errorInput {
+    border: 1px solid red;
   }
 }
 </style>
