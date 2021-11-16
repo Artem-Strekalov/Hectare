@@ -4,18 +4,18 @@
       <Sidebar activeLink="fields"></Sidebar>
     </div>
     <div class="home__sections">
-      <!-- ! поменять классы -->
+      <FieldCard></FieldCard>
       <div class="home__fields">
-        <FieldCard
+        <!--  <FieldCard
           v-for="card in fieldsDescription"
           :key="card.id"
           :name="card.name"
           :status="card.status"
           :area="card.area"
-        ></FieldCard>
-        <div class="home__addings-card">
+        ></FieldCard> -->
+        <!-- <div class="home__addings-card">
           <img src="@/assets/image/svg/plus.png" alt="" /> Добавить поле
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -64,9 +64,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+* {
+  box-sizing: border-box;
+}
 .home {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   &__sidebar-wrapper {
     max-width: 261px;
@@ -74,44 +77,11 @@ export default {
     height: 100%;
   }
   &__sections {
-    min-height: 100vh;
-    background: #f4f4f4;
+    width: 100%;
+    height: 100%;
+    background: grey;
     height: auto;
   }
-  &__fields {
-    padding: 0px 50px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    flex-grow: 1;
-  }
-  &__addings-card {
-    height: 200px;
-    width: 48%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffffff;
-    border: 1px solid #5ca450;
-    border-radius: 10px;
-    font-family: Inter;
-    font-size: 24px;
-    line-height: 16px;
-    color: #5ca450;
-    margin: 50px 50px 0px 0px;
-    transition: 500ms;
-    &:hover {
-      transform: scale(0.95);
-      transition: 400ms;
-      img {
-        transform: rotate(90deg);
-        transition: 400ms;
-      }
-    }
-    img {
-      margin-right: 5px;
-      transition: 400ms;
-    }
-  }
+  /*  */
 }
 </style>

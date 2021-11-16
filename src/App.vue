@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import WelcomeScreen from './views/auth/WelcomeScreen.vue'
+import WelcomeScreen from './views/WelcomeScreen.vue'
 export default {
   components: {
     WelcomeScreen,
