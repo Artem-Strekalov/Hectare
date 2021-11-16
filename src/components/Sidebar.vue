@@ -27,7 +27,7 @@
 
     <div class="sidebar__footer">
       <div class="sidebar__profile">
-        <img src="@/assets/image/svg/userFoto.png" alt="" />
+        <img src="@/assets/image/userFoto.png" alt="" />
         <span class="sidebar__name-company">ИП КФХ Стрекалов</span>
       </div>
       <div class="sidebar__exit" @click.prevent="logout">Выйти</div>
@@ -59,12 +59,11 @@ export default {
   width: 100%;
   height: 100%;
   padding: 0 15px 15px 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   float: left;
+  display: flex;
+  flex-direction: column;
+
   &__header {
     text-align: center;
     padding: 10px;
@@ -79,22 +78,22 @@ export default {
     color: #5ca450;
   }
   &__menu {
-    max-height: 211px;
+    max-height: 150px;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 0 0 0 15px;
-
+    padding-left: 15px;
+    margin-top: 70px;
     .active {
       color: #5ca450;
     }
   }
   &__menu-item {
-    font-family: Inter;
-    font-size: 24px;
+    font-family: 'Inter';
+    font-size: 22px;
     line-height: 16px;
     color: #999999;
     display: flex;
@@ -108,6 +107,7 @@ export default {
       transition: 500ms;
     }
     img {
+      width: 19px;
       margin-right: 10px;
     }
   }
@@ -119,6 +119,7 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    margin-top: auto;
   }
   &__profile {
     display: flex;
@@ -133,7 +134,7 @@ export default {
     font-family: Inter;
     font-size: 18px;
     line-height: 16px;
-    color: #999999;
+    color: #222;
   }
   &__exit {
     font-family: Inter;

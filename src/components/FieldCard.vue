@@ -1,21 +1,32 @@
 <template>
   <div class="card">
-    <div class="card__block">
-      <h2 class="card__block-name">Участок №1</h2>
-      <p class="card__block-square">Площадь: 60га</p>
-      <p class="cars__block-status">Состояние: Пахота</p>
+    <div class="content">
+      <div class="content__block">
+        <h2 class="content__block-name">{{ name }}</h2>
+        <p class="content__block-square">Площадь: {{ square }} га</p>
+        <p class="cars__block-status">Состояние: {{ status }}</p>
+      </div>
+      <button class="content__btn">Управление</button>
     </div>
-    <button class="card__btn">Управление</button>
   </div>
 </template>
 <script>
-import ButtonGreen from '@/components/ButtonGreen'
 export default {
-  name: 'FieldCard',
-  components: {
-    ButtonGreen,
+  name: 'Fieldcontent',
+  props: {
+    name: {
+      type: String,
+      default: 'Ваш Участок',
+    },
+    square: {
+      type: Number,
+      default: 0,
+    },
+    status: {
+      type: String,
+      default: '',
+    },
   },
-
   data() {
     return {}
   },
@@ -23,35 +34,49 @@ export default {
 </script>
 <style lang="scss" scoped>
 .card {
-  box-sizing: border-box;
-  font-family: 'Montserrat';
-  max-width: 400px;
-  width: 100%;
+  min-width: 328px;
+  /* измени здесь ширину на 100% когда будешь делать адаптив */
+  width: 33.3333333%;
   height: 200px;
+  background: #e3e8e2;
+  border: 10px solid #e3e8e2;
+  position: relative;
+}
+.content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   background: #ffffff;
+  border: 10px solid #ffffff;
   border-radius: 10px;
-  padding: 30px;
-  display: flex;
-  justify-content: space-between;
+  padding: 10px;
   &__block {
-    width: 50%;
+    width: 100%;
     height: 100%;
     &-name {
       font-size: 18px;
     }
     &-square {
-      margin: 40px 0 5px 0;
+      margin: 25px 0 5px 0;
+    }
+    &__status {
+      white-space: nowrap;
     }
   }
   &__btn {
-    max-width: 120px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    max-width: 110px;
     width: 100%;
-    height: 50px;
+    height: 40px;
     background: #5ca450;
     border-radius: 10px;
     color: #fff;
     margin-top: auto;
-    opacity: 0.9;
+    opacity: 0.8;
   }
   &__btn:hover {
     opacity: 1;

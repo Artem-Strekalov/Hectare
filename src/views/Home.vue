@@ -1,21 +1,21 @@
 <template>
   <div class="home">
-    <div class="home__sidebar-wrapper">
+    <div class="home__sidebar">
       <Sidebar activeLink="fields"></Sidebar>
     </div>
-    <div class="home__sections">
-      <FieldCard></FieldCard>
-      <div class="home__fields">
-        <!--  <FieldCard
-          v-for="card in fieldsDescription"
-          :key="card.id"
-          :name="card.name"
-          :status="card.status"
-          :area="card.area"
-        ></FieldCard> -->
-        <!-- <div class="home__addings-card">
-          <img src="@/assets/image/svg/plus.png" alt="" /> Добавить поле
-        </div> -->
+    <div class="home__main">
+      <div class="testе">
+        <FieldCard
+          v-for="field in dataFields"
+          :key="field.id"
+          :name="field.name"
+          :square="field.square"
+          :status="field.status"
+        />
+        <div class="home__addField">
+          <img src="@/assets/image/plus.png" alt="" />
+          <p>Добавить участок</p>
+        </div>
       </div>
     </div>
   </div>
@@ -32,26 +32,11 @@ export default {
   name: 'home',
   data() {
     return {
-      fieldsDescription: [
-        {id: 1, name: 'Ромашка', status: 'Посеяно', area: 8},
-        {
-          id: 2,
-          name: 'Кирпичный  60га',
-          status: 'Пары',
-          area: 60,
-        },
-        {
-          id: 3,
-          name: 'Западная',
-          status: 'Посеяно',
-          area: 7,
-        },
-        {
-          id: 4,
-          name: 'Западная',
-          status: 'Посеяно',
-          area: 7,
-        },
+      dataFields: [
+        {id: 1, name: 'Участок № 1', status: 'Задисковано', square: 100},
+        {id: 2, name: 'Участок № 2', status: 'Пары', square: 200},
+        {id: 3, name: 'Участок № 3', status: 'Посеяно', square: 15},
+        {id: 4, name: 'Участок № 4', status: 'Пахота', square: 75},
       ],
     }
   },
@@ -64,24 +49,51 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-* {
-  box-sizing: border-box;
-}
 .home {
+  font-family: 'Montserrat';
   width: 100%;
   min-height: 100vh;
   display: flex;
-  &__sidebar-wrapper {
-    max-width: 261px;
-    width: 100%;
+  &__sidebar {
+    min-width: 261px;
     height: 100%;
   }
-  &__sections {
+  &__main {
     width: 100%;
-    height: 100%;
-    background: grey;
-    height: auto;
+    /*  background: #EFF2E7; */
+    padding: 10px;
+    background: #e3e8e2;
+
+    .testе {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
   }
-  /*  */
+  &__addField {
+    cursor: pointer;
+    margin: 15px;
+    max-width: 400px;
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      margin-left: 5px;
+      font-size: 18px;
+    }
+  }
+  &__addField:hover {
+    p {
+      font-size: 20px;
+    }
+    img {
+      width: 20px;
+    }
+  }
 }
 </style>
