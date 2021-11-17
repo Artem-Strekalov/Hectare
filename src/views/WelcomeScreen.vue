@@ -7,7 +7,7 @@
       </div>
       <div class="welcome__animation">
         <div class="welcome__harvester">
-          <img src="@/assets/image/svg/harvester.svg" alt="" />
+        <!--   <img src="@/assets/svg/harvester.svg" alt="" /> -->
         </div>
         <div class="welcome__line"></div>
       </div>
@@ -72,7 +72,7 @@ export default {
   &__line {
     width: 100vw;
     height: 28px;
-    background-image: url('~@/assets/image/svg/koloski.jpg');
+    background-image: url('~@/assets/image/koloski.jpg');
     background-position: center;
     background-repeat: repeat-x;
     background-size: contain;

@@ -1,35 +1,30 @@
 <template>
   <div class="card">
-    <div class="card__left-block">
-      <h2 class="card__title">{{ name }}</h2>
-      <div class="card__info">
-        <span class="card__area">Площадь: {{ area }} га</span>
-        <span class="card__status">Состояние: {{ status }}</span>
+    <div class="content">
+      <div class="content__block">
+        <h2 class="content__block-name">{{ name }}</h2>
+        <p class="content__block-square">Площадь: {{ square }} га</p>
+        <p class="cars__block-status">Состояние: {{ status }}</p>
       </div>
-    </div>
-    <div class="card__right-block">
-      <div class="card__label"></div>
-      <ButtonGreen class="card__govern">Управление</ButtonGreen>
+      <button class="content__btn">Управление</button>
     </div>
   </div>
 </template>
 <script>
-import ButtonGreen from '@/components/ButtonGreen'
 export default {
-  name: 'FieldCard',
-  components: {
-    ButtonGreen,
-  },
+  name: 'Fieldcontent',
   props: {
-    // ДОБАВИТЬ ID
     name: {
       type: String,
+      default: 'Ваш Участок',
+    },
+    square: {
+      type: Number,
+      default: 0,
     },
     status: {
       type: String,
-    },
-    area: {
-      type: Number,
+      default: '',
     },
   },
   data() {
@@ -39,73 +34,52 @@ export default {
 </script>
 <style lang="scss" scoped>
 .card {
+  min-width: 328px;
+  /* измени здесь ширину на 100% когда будешь делать адаптив */
+  width: 33.3333333%;
   height: 200px;
-  width: 48%;
+  background: #e3e8e2;
+  border: 10px solid #e3e8e2;
+  position: relative;
+}
+.content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   background: #ffffff;
+  border: 10px solid #ffffff;
   border-radius: 10px;
-  margin: 50px 0px 0px 0px;
-  display: flex;
-  justify-content: space-between;
-  &__left-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  padding: 10px;
+  &__block {
+    width: 100%;
     height: 100%;
-    padding: 5px 0px 23px 23px;
-  }
-  &__title {
-    font-family: Inter;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 25px;
-    color: #5ca450;
-  }
-  &__info {
-    height: 54px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  &__area,
-  &__status {
-    font-family: Inter;
-    font-size: 18px;
-    line-height: 20px;
-    color: #222222;
-  }
-  &__right-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 100%;
-    padding: 23px 22px 20px 0px;
-  }
-  &__label {
-    width: 50px;
-    height: 10px;
-    border-radius: 50px;
-    background: #663300;
-  }
-  &__govern {
-    align-items: center;
-    vertical-align: middle;
-    padding: 18px 30px;
-    background: #ffffff;
-    border: 1px solid #5ca450;
-    border-radius: 10px;
-    font-family: Inter;
-    font-weight: 600;
-    font-size: 16px;
-    color: #5ca450;
-    transition: 300ms;
-    &:hover {
-      background: #5ca450;
-      border: 1px solid #f5f5f5;
-      border-radius: 10px;
-      color: #fff;
-      transition: 400ms;
+    &-name {
+      font-size: 18px;
     }
+    &-square {
+      margin: 25px 0 5px 0;
+    }
+    &__status {
+      white-space: nowrap;
+    }
+  }
+  &__btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    max-width: 110px;
+    width: 100%;
+    height: 40px;
+    background: #5ca450;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: auto;
+    opacity: 0.8;
+  }
+  &__btn:hover {
+    opacity: 1;
   }
 }
 </style>

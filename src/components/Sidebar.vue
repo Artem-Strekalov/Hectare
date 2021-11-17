@@ -23,11 +23,17 @@
       >
         <img src="@/assets/image/svg/warehouse-icon.svg" alt="" />Склад
       </li>
+      <li
+        class="sidebar__menu-item"
+        :class="{active: activeLink === 'warehouse'}"
+      >
+        <img src="@/assets/image/svg/infoMenu.svg" alt="" />О портале
+      </li>
     </ul>
 
     <div class="sidebar__footer">
       <div class="sidebar__profile">
-        <img src="@/assets/image/svg/userFoto.png" alt="" />
+        <img src="@/assets/image/userFoto.png" alt="" />
         <span class="sidebar__name-company">ИП КФХ Стрекалов</span>
       </div>
       <div class="sidebar__exit" @click.prevent="logout">Выйти</div>
@@ -59,18 +65,16 @@ export default {
   width: 100%;
   height: 100%;
   padding: 0 15px 15px 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   float: left;
+  display: flex;
+  flex-direction: column;
+
   &__header {
     text-align: center;
     padding: 10px;
     width: 100%;
-    max-height: 70px;
-    height: 100%;
+    height: 55px;
     border-bottom: 1px solid #999999;
   }
   &__title {
@@ -79,22 +83,21 @@ export default {
     color: #5ca450;
   }
   &__menu {
-    max-height: 211px;
+    height: 200px;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 0 0 0 15px;
-
+    padding-left: 15px;
+    margin-top: 70px;
     .active {
       color: #5ca450;
     }
   }
   &__menu-item {
-    font-family: Inter;
-    font-size: 24px;
+    font-family: 'Inter';
+    font-size: 20px;
     line-height: 16px;
     color: #999999;
     display: flex;
@@ -108,6 +111,7 @@ export default {
       transition: 500ms;
     }
     img {
+      width: 18px;
       margin-right: 10px;
     }
   }
@@ -119,11 +123,11 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    margin-top: auto;
   }
   &__profile {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     height: 46px;
     width: 100%;
@@ -131,9 +135,10 @@ export default {
   }
   &__name-company {
     font-family: Inter;
-    font-size: 18px;
+    margin-left: 10px;
+    font-size: 16px;
     line-height: 16px;
-    color: #999999;
+    color: #222;
   }
   &__exit {
     font-family: Inter;
