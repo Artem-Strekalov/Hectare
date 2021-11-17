@@ -6,18 +6,22 @@
     <div class="home__main">
       <div class="home__main-content">
         <FieldCard
-          v-for="field in dataFields"
+          v-for="field in fieldData"
           :key="field.id"
           :name="field.name"
           :square="field.square"
           :status="field.status"
         />
         <div class="home__addField">
-          <div class="home__addField-content">
+          <div class="home__addField-content" @click="showModalWindow">
             <img src="@/assets/image/plus.png" alt="" />
           </div>
         </div>
       </div>
+      <HomeModal
+        v-if="isVisibleModalWindow"
+        :closeModalWindow="closeModalWindow"
+      ></HomeModal>
     </div>
   </div>
 </template>
@@ -25,15 +29,23 @@
 <script>
 import Sidebar from '@/components/Sidebar'
 import FieldCard from '@/components/FieldCard'
+import Modal from '../components/modal/Modal.vue'
+import HomeModal from '../components/modal/HomeModal.vue'
 export default {
   components: {
     FieldCard,
     Sidebar,
+    Modal,
+    HomeModal,
   },
   name: 'home',
   data() {
     return {
-      dataFields: [
+      fieldName: '',
+      fieldStatus: '',
+      fieldSquare: null,
+      isVisibleModalWindow: false,
+      fieldData: [
         {id: 1, name: 'Участок № 1', status: 'Задисковано', square: 100},
         {id: 2, name: 'Участок № 2', status: 'Пары', square: 200},
         {id: 3, name: 'Участок № 3', status: 'Посеяно', square: 15},
@@ -48,12 +60,18 @@ export default {
       await this.$store.dispatch('fetchInfo')
     }
   },
-  methods: {},
+  methods: {
+    showModalWindow() {
+      this.isVisibleModalWindow = true
+    },
+    closeModalWindow() {
+      this.isVisibleModalWindow = false
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
 .home {
-  
   font-family: 'Montserrat';
   width: 100%;
   min-height: 100vh;
@@ -99,6 +117,5 @@ export default {
       border-radius: 10px;
     }
   }
- 
 }
 </style>

@@ -21,7 +21,6 @@ export default {
             .ref(`/users/${uid}/info`)
             .once('value')
         ).val
-        console.log(info)
         commit('setInfo', info)
       } catch (error) {}
     },
