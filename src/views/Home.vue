@@ -13,11 +13,12 @@
           :status="field.status"
         />
         <div class="home__addField">
-          <div class="home__addField-content">
+          <div class="home__addField-content" @click="show">
             <img src="@/assets/image/plus.png" alt="" />
           </div>
         </div>
       </div>
+      <Modal @closeModal="closeModal" v-if="isVisibleModal"> </Modal>
     </div>
   </div>
 </template>
@@ -25,14 +26,17 @@
 <script>
 import Sidebar from '@/components/Sidebar'
 import FieldCard from '@/components/FieldCard'
+import Modal from '../components/modal/Modal.vue'
 export default {
   components: {
     FieldCard,
     Sidebar,
+    Modal,
   },
   name: 'home',
   data() {
     return {
+      isVisibleModal: false,
       dataFields: [
         {id: 1, name: 'Участок № 1', status: 'Задисковано', square: 100},
         {id: 2, name: 'Участок № 2', status: 'Пары', square: 200},
@@ -48,12 +52,18 @@ export default {
       await this.$store.dispatch('fetchInfo')
     }
   },
-  methods: {},
+  methods: {
+    show() {
+      this.isVisibleModal = true
+    },
+    closeModal() {
+      this.isVisibleModal = false
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
 .home {
-  
   font-family: 'Montserrat';
   width: 100%;
   min-height: 100vh;
@@ -99,6 +109,5 @@ export default {
       border-radius: 10px;
     }
   }
- 
 }
 </style>

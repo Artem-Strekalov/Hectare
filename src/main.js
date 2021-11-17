@@ -8,9 +8,9 @@ import 'firebase/database'
 import vuetify from './plugins/vuetify'
 import VueDatePicker from '@mathieustan/vue-datepicker'
 import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css'
+import 'material-design-icons-iconfont'
 
 Vue.use(VueDatePicker)
-
 
 Vue.config.productionTip = false
 
