@@ -7,7 +7,7 @@
       </div>
       <div class="welcome__animation">
         <div class="welcome__harvester">
-          <img src="@/assets/image/harvester.svg" alt="" />
+        <!--   <img src="@/assets/svg/harvester.svg" alt="" /> -->
         </div>
         <div class="welcome__line"></div>
       </div>

@@ -23,6 +23,12 @@
       >
         <img src="@/assets/image/svg/warehouse-icon.svg" alt="" />Склад
       </li>
+      <li
+        class="sidebar__menu-item"
+        :class="{active: activeLink === 'warehouse'}"
+      >
+        <img src="@/assets/image/svg/infoMenu.svg" alt="" />О портале
+      </li>
     </ul>
 
     <div class="sidebar__footer">
@@ -68,8 +74,7 @@ export default {
     text-align: center;
     padding: 10px;
     width: 100%;
-    max-height: 70px;
-    height: 100%;
+    height: 55px;
     border-bottom: 1px solid #999999;
   }
   &__title {
@@ -78,9 +83,8 @@ export default {
     color: #5ca450;
   }
   &__menu {
-    max-height: 150px;
+    height: 200px;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -93,7 +97,7 @@ export default {
   }
   &__menu-item {
     font-family: 'Inter';
-    font-size: 22px;
+    font-size: 20px;
     line-height: 16px;
     color: #999999;
     display: flex;
@@ -107,7 +111,7 @@ export default {
       transition: 500ms;
     }
     img {
-      width: 19px;
+      width: 18px;
       margin-right: 10px;
     }
   }
@@ -124,7 +128,6 @@ export default {
   &__profile {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     height: 46px;
     width: 100%;
@@ -132,7 +135,8 @@ export default {
   }
   &__name-company {
     font-family: Inter;
-    font-size: 18px;
+    margin-left: 10px;
+    font-size: 16px;
     line-height: 16px;
     color: #222;
   }

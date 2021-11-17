@@ -4,7 +4,7 @@
       <Sidebar activeLink="fields"></Sidebar>
     </div>
     <div class="home__main">
-      <div class="testе">
+      <div class="home__main-content">
         <FieldCard
           v-for="field in dataFields"
           :key="field.id"
@@ -13,8 +13,9 @@
           :status="field.status"
         />
         <div class="home__addField">
-          <img src="@/assets/image/plus.png" alt="" />
-          <p>Добавить участок</p>
+          <div class="home__addField-content">
+            <img src="@/assets/image/plus.png" alt="" />
+          </div>
         </div>
       </div>
     </div>
@@ -37,6 +38,8 @@ export default {
         {id: 2, name: 'Участок № 2', status: 'Пары', square: 200},
         {id: 3, name: 'Участок № 3', status: 'Посеяно', square: 15},
         {id: 4, name: 'Участок № 4', status: 'Пахота', square: 75},
+        {id: 5, name: 'Участок № 4', status: 'Пахота', square: 75},
+        {id: 7, name: 'Участок № 4', status: 'Пахота', square: 75},
       ],
     }
   },
@@ -50,6 +53,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home {
+  
   font-family: 'Montserrat';
   width: 100%;
   min-height: 100vh;
@@ -64,7 +68,7 @@ export default {
     padding: 10px;
     background: #e3e8e2;
 
-    .testе {
+    &-content {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
@@ -73,27 +77,28 @@ export default {
   }
   &__addField {
     cursor: pointer;
-    margin: 15px;
-    max-width: 400px;
-    width: 100%;
+    position: relative;
+    border: 10px solid #e3e8e2;
+    width: 33.3333333%;
     height: 200px;
-    border-radius: 10px;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: #e3e8e2;
     p {
       margin-left: 5px;
       font-size: 18px;
     }
-  }
-  &__addField:hover {
-    p {
-      font-size: 20px;
+    &-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: #fff;
+      border-radius: 10px;
     }
-    img {
-      width: 20px;
-    }
   }
+ 
 }
 </style>
