@@ -45,12 +45,10 @@ export default {
 
   &__content {
     position: fixed;
-    top: 50px;
-    max-width: 600px;
-    width: 100%;
     padding: 16px;
     background: #fff;
     box-shadow: 0 0 2px 0 #fff;
+    border-radius: 10px;
     &-header {
       display: flex;
       justify-content: flex-end;

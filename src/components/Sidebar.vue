@@ -124,6 +124,9 @@ export default {
     justify-content: space-around;
     align-items: center;
     margin-top: auto;
+    img{
+      width: 16px;
+    }
   }
   &__profile {
     display: flex;
@@ -136,7 +139,7 @@ export default {
   &__name-company {
     font-family: Inter;
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 16px;
     color: #222;
   }
