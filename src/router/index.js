@@ -4,7 +4,6 @@ import Registration from '../views/auth/Registration'
 import Authorization from '../views/auth/Authorization.vue'
 import Home from '../views/Home.vue'
 import WelcomeScreen from '../views/WelcomeScreen.vue'
-import FieldManagement from '../views/FieldManagement.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,11 +26,6 @@ const routes = [
     path: '/welcome',
     name: 'welcome',
     component: WelcomeScreen,
-  },
-  {
-    path: '/field-management',
-    name: 'fieldManagement',
-    component: FieldManagement,
   },
 ]
 

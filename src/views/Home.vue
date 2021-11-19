@@ -6,11 +6,9 @@
     <div class="home__main">
       <div class="home__main-content">
         <FieldCard
-          v-for="field in fieldData"
+          v-for="field in getFieldData"
           :key="field.id"
-          :name="field.name"
-          :square="field.square"
-          :status="field.status"
+          :field="field"
         />
         <div class="home__addField">
           <div class="home__addField-content" @click="showModalWindow">
@@ -66,6 +64,11 @@ export default {
     },
     closeModalWindow() {
       this.isVisibleModalWindow = false
+    },
+  },
+  computed: {
+    getFieldData() {
+      return this.$store.getters.getData
     },
   },
 }
