@@ -9,8 +9,9 @@ import vuetify from './plugins/vuetify'
 import VueDatePicker from '@mathieustan/vue-datepicker'
 import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css'
 import 'material-design-icons-iconfont'
+import Vuelidate from 'vuelidate'
 
-Vue.use(VueDatePicker)
+Vue.use(VueDatePicker, Vuelidate)
 
 Vue.config.productionTip = false
 

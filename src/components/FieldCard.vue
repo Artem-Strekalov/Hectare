@@ -2,9 +2,9 @@
   <div class="card">
     <div class="content">
       <div class="content__block">
-        <h2 class="content__block-name">{{ name }}</h2>
-        <p class="content__block-square">Площадь: {{ square }} га</p>
-        <p class="cars__block-status">Состояние: {{ status }}</p>
+        <h2 class="content__block-name">{{ field.name }}</h2>
+        <p class="content__block-square">Площадь: {{ field.square }} га</p>
+        <p class="cars__block-status">Состояние: {{ field.status }}</p>
       </div>
       <button class="content__btn">Управление</button>
     </div>
@@ -14,17 +14,8 @@
 export default {
   name: 'Fieldcontent',
   props: {
-    name: {
-      type: String,
-      default: 'Ваш Участок',
-    },
-    square: {
-      type: Number,
-      default: 0,
-    },
-    status: {
-      type: String,
-      default: '',
+    field: {
+      type: Object,
     },
   },
   data() {

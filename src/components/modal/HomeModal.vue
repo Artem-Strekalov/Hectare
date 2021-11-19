@@ -1,10 +1,11 @@
 <template>
   <Modal @closeModal="closeModalWindow">
-    <div class="form">
+    <form class="form" @submit.prevent="addNewField">
       <div class="form__name">
         <p>Название участка:</p>
         <input
-          v-model="fieldName"
+          v-model="name"
+          :class="{errorInput: $v.form.name.$error}"
           class="form__input"
           type="text"
           placeholder="Введите название участка"
@@ -13,7 +14,8 @@
       <div class="form__name">
         <p>Площадь:</p>
         <input
-          v-model="fieldSquare"
+          v-model="square"
+          :class="{errorInput: $v.form.square.$error}"
           class="form__input"
           type="Number"
           placeholder="Введите площадь"
@@ -23,18 +25,21 @@
         <p>Состояние:</p>
         <input
           min="0"
-          v-model="fieldStatus"
+          v-model="status"
+          :class="{errorInput: $v.form.status.$error}"
           class="form__input"
           type="text"
           placeholder="Укажите состояние участка"
         />
       </div>
-      <button class="form__btn">Добавить</button>
-    </div>
+      <button type="submit" class="form__btn">Добавить</button>
+    </form>
   </Modal>
 </template>
 <script>
+import {v4 as uuidv4} from 'uuid'
 import Modal from './Modal.vue'
+import {required} from 'vuelidate/lib/validators'
 export default {
   props: {
     closeModalWindow: {
@@ -46,13 +51,31 @@ export default {
   },
   data() {
     return {
-      fieldName: '',
-      fieldStatus: '',
-      fieldSquare: null,
+      form: {
+        name: null,
+        status: null,
+        square: null,
+      },
     }
   },
   methods: {
-    createNewField() {},
+    addNewField() {
+      let field = {
+        id: uuidv4(),
+        name: this.form.name,
+        status: this.form.status,
+        square: this.form.square,
+      }
+      this.$store.dispatch('fetchData', field)
+      this.closeModalWindow()
+    },
+  },
+  vuelidate: {
+    from: {
+      name: {required},
+      status: {required},
+      square: {required},
+    },
   },
 }
 </script>
@@ -80,6 +103,9 @@ export default {
     border-radius: 10px;
     padding: 0 10px;
     border: 1px solid #999;
+  }
+  .errorInput {
+    border: 1px solid red;
   }
 }
 </style>
