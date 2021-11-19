@@ -4,7 +4,7 @@
       <div class="form__name">
         <p>Название участка:</p>
         <input
-          v-model="name"
+          v-model="form.name"
           :class="{errorInput: $v.form.name.$error}"
           class="form__input"
           type="text"
@@ -14,7 +14,7 @@
       <div class="form__name">
         <p>Площадь:</p>
         <input
-          v-model="square"
+          v-model="form.square"
           :class="{errorInput: $v.form.square.$error}"
           class="form__input"
           type="Number"
@@ -25,7 +25,7 @@
         <p>Состояние:</p>
         <input
           min="0"
-          v-model="status"
+          v-model="form.status"
           :class="{errorInput: $v.form.status.$error}"
           class="form__input"
           type="text"
@@ -60,6 +60,8 @@ export default {
   },
   methods: {
     addNewField() {
+       this.$v.form.$touch();
+      if(this.$v.form.$error) return
       let field = {
         id: uuidv4(),
         name: this.form.name,
@@ -70,8 +72,8 @@ export default {
       this.closeModalWindow()
     },
   },
-  vuelidate: {
-    from: {
+  validations: {
+    form: {
       name: {required},
       status: {required},
       square: {required},

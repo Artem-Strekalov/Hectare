@@ -11,7 +11,8 @@ import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css'
 import 'material-design-icons-iconfont'
 import Vuelidate from 'vuelidate'
 
-Vue.use(VueDatePicker, Vuelidate)
+Vue.use(VueDatePicker)
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 
