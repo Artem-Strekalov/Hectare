@@ -60,8 +60,8 @@ export default {
   },
   methods: {
     addNewField() {
-       this.$v.form.$touch();
-      if(this.$v.form.$error) return
+      this.$v.form.$touch()
+      if (this.$v.form.$error) return
       let field = {
         id: uuidv4(),
         name: this.form.name,

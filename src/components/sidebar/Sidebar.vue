@@ -43,6 +43,7 @@
 <script>
 export default {
   name: 'Sidebar',
+
   props: {
     activeLink: {
       type: String,
@@ -61,6 +62,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sidebar {
+  box-sizing: border-box;
   max-width: 240px;
   width: 100%;
   height: 100%;
@@ -124,7 +126,7 @@ export default {
     justify-content: space-around;
     align-items: center;
     margin-top: auto;
-    img{
+    img {
       width: 16px;
     }
   }
