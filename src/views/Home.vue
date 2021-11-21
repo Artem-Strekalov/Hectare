@@ -27,8 +27,8 @@
 <script>
 import Sidebar from '@/components/sidebar/Sidebar'
 import FieldCard from '@/components/FieldCard'
-import Modal from '../components/modal/Modal.vue'
-import HomeModal from '../components/modal/HomeModal.vue'
+import Modal from '@/components/modal/Modal.vue'
+import HomeModal from '@/components/modal/HomeModal.vue'
 export default {
   components: {
     FieldCard,
@@ -43,7 +43,6 @@ export default {
       fieldStatus: '',
       fieldSquare: null,
       isVisibleModalWindow: false,
-
     }
   },
   async mounted() {
@@ -74,7 +73,7 @@ export default {
   min-height: 100vh;
   display: flex;
   &__sidebar {
-    min-width: 261px;
+    min-width: 260px;
     height: 100%;
   }
   &__main {

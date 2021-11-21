@@ -63,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
   box-sizing: border-box;
-  max-width: 240px;
+  max-width: 260px;
   width: 100%;
   height: 100%;
   padding: 0 15px 15px 15px;
