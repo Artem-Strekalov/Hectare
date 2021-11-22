@@ -84,6 +84,7 @@ export default {
     &-nav {
       width: 100%;
       border-bottom: 1px solid #f1f1f1;
+      margin-bottom: 20px;
       &-list {
         display: flex;
         height: 25px;
