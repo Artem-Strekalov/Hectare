@@ -13,13 +13,37 @@
     <div class="mgt__main">
       <div class="mgt__main-nav">
         <ul class="mgt__main-nav-list">
-          <li class="mgt__main-nav-item mgt__first-item">Подготовка почвы</li>
-          <li class="mgt__main-nav-item">Сев</li>
-          <li class="mgt__main-nav-item">Дополнительные работы</li>
-          <li class="mgt__main-nav-item">Уборка урожая</li>
+          <li
+            class="mgt__main-nav-item mgt__first-item"
+            :class="{mgt__itemActive: navItem === 'tillage'}"
+            @click.prevent="navItem = 'tillage'"
+          >
+            Подготовка почвы
+          </li>
+          <li
+            class="mgt__main-nav-item"
+            :class="{mgt__itemActive: navItem === 'sawing'}"
+            @click.prevent="navItem = 'sawing'"
+          >
+            Сев
+          </li>
+          <li
+            class="mgt__main-nav-item"
+            :class="{mgt__itemActive: navItem === 'additionally'}"
+            @click.prevent="navItem = 'additionally'"
+          >
+            Дополнительные работы
+          </li>
+          <li
+            class="mgt__main-nav-item"
+            :class="{mgt__itemActive: navItem === 'harvest'}"
+            @click.prevent="navItem = 'harvest'"
+          >
+            Уборка урожая
+          </li>
         </ul>
       </div>
-      <Tillage></Tillage>
+      <Tillage v-if="navItem === 'tillage'"></Tillage>
     </div>
   </div>
 </template>
@@ -28,6 +52,11 @@ import Tillage from '@/components/management/Tillage.vue'
 export default {
   components: {
     Tillage,
+  },
+  data() {
+    return {
+      navItem: 'tillage',
+    }
   },
 }
 </script>
@@ -77,7 +106,7 @@ export default {
   &__main {
     margin-top: 10px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 60px);
     background: #fff;
     border-radius: 10px;
     padding: 25px;
@@ -95,8 +124,13 @@ export default {
         font-size: 16px;
         cursor: pointer;
         margin: 0 20px;
+        white-space: nowrap;
       }
       &-item:hover {
+        color: #5ca450;
+        border-bottom: 2px solid #5ca450;
+      }
+      .mgt__itemActive {
         color: #5ca450;
         border-bottom: 2px solid #5ca450;
       }
