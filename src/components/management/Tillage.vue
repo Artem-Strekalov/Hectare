@@ -1,52 +1,63 @@
 <template>
-  <div class="sowing">
-    <div class="sowing__cart">
-      <h2 class="sowing__cart-name">Дискование</h2>
-      <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">
+  <div class="tillage">
+    <div class="tillage__cart">
+      <h2 class="tillage__cart-name">Дискование</h2>
+      <div class="tillage__cart-content">
+        <p class="tillage__cart-content-item">
           Период обработки: c 15.08.2021 по 20.08.2021
         </p>
-        <p class="sowing__cart-content-item">Погодные условия: Сухая погода</p>
-        <p class="sowing__cart-content-item">
+        <p class="tillage__cart-content-item">Погодные условия: Сухая погода</p>
+        <p class="tillage__cart-content-item">
           Используемая техника: Трактор МТЗ, бдт-2,5
         </p>
-        <p class="sowing__cart-content-item">Глубина обработки: 10см</p>
+        <p class="tillage__cart-content-item">Глубина обработки: 10см</p>
       </div>
-      <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">Ваши заметки:</p>
-        <div class="sowing__cart-area">
+      <div class="tillage__cart-content">
+        <p class="tillage__cart-content-item">Ваши заметки:</p>
+        <div class="tillage__cart-area">
           Обработка происходила в сырую погоду, глубина обработки 10см
         </div>
-        <button class="sowing__btn sowing__btnCart">Редактировать</button>
+        <button class="tillage__btn tillage__btnCart">Редактировать</button>
       </div>
     </div>
-    <div class="sowing__form" v-if="showForm">
-      <div class="sowing__form-content-left">
-        <Hinput class="sowing__form-left" name="Укажите тип обработки"></Hinput>
-        <div class="sowing__form-section">
-          <Hinput class="sowing__form-left" name="Погодные условия"></Hinput>
-          <div class="sowing__dashCart"></div>
-          <Hinput class="sowing__form-left" name="Глубина обработки"></Hinput>
+    <form class="tillage__form" v-if="showForm">
+      <div class="tillage__form-content-left">
+        <Hinput
+          class="tillage__form-left"
+          name="Укажите тип обработки"
+        ></Hinput>
+        <div class="tillage__form-section">
+          <Hinput class="tillage__form-left" name="Погодные условия"></Hinput>
+          <div class="tillage__dashCart"></div>
+          <Hinput class="tillage__form-left" name="Глубина обработки"></Hinput>
         </div>
       </div>
-      <div class="sowing__form-content-right">
+      <div class="tillage__form-content-right">
         <Hinput
-          class="sowing__form-left"
+          class="tillage__form-left"
           name="Укажите используемую технику"
         ></Hinput>
-        <div class="sowing__form-section">
+        <div class="tillage__form-section">
           <Hinput name="Начало обработки" type="date"></Hinput>
-          <div class="sowing__dash"></div>
+          <div class="tillage__dash"></div>
           <Hinput name="Окончание обработки" type="date"></Hinput>
         </div>
       </div>
-      <div class="sowing__form-areaBlock">
-        <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
-        <textarea class="sowing__form-areaBlock-area"></textarea>
+      <div class="tillage__form-areaBlock">
+        <p class="tillage__form-areaBlock-name">Ваши заметки:</p>
+        <textarea class="tillage__form-areaBlock-area"></textarea>
       </div>
-      <button class="sowing__btn">Добавить</button>
-    </div>
-    <div class="sowing__addCart">
+      <button type="submit" class="tillage__btn tillage__btnAdd">
+        Добавить
+      </button>
+      <button
+        @click.prevent="showForm = false"
+        class="tillage__btn tillage__btnCancel"
+      >
+        Отмена
+      </button>
+    </form>
+    <div class="tillage__addCart" v-if="!showForm" @click="showForm = true">
       <img src="@/assets/image/svg/plus.svg" alt="" />
     </div>
   </div>
@@ -54,6 +65,7 @@
 <script>
 import Hinput from '../Hinput.vue'
 export default {
+  name: 'Tillage',
   components: {
     Hinput,
   },
@@ -65,7 +77,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.sowing {
+.tillage {
   font-family: 'Inter', Arial;
   width: 100%;
   &__cart {
@@ -143,31 +155,32 @@ export default {
       }
     }
   }
-  .sowing__form-section {
+  .tillage__form-section {
     display: flex;
     align-items: center;
     white-space: nowrap;
-    .sowing__dash {
+    .tillage__dash {
       margin: 15px 10px 0 10px;
       width: 20px;
       border-top: 2px solid #999;
     }
-    .sowing__dashCart {
+    .tillage__dashCart {
       margin: 10px;
     }
   }
-  .sowing__btn {
+  .tillage__btn {
     cursor: pointer;
-    max-width: 120px;
+    max-width: 130px;
     width: 100%;
     height: 40px;
     background: #5ca450;
     border-radius: 10px;
     color: #fff;
-    margin: auto 15px 15px auto;
-  }
-  .sowing__btnCart {
     margin: auto 0 0 auto;
+  }
+
+  .tillage__btnCancel {
+    margin: auto 0 0 15px;
   }
   &__addCart {
     cursor: pointer;
@@ -184,6 +197,9 @@ export default {
   &__addCart:hover {
     opacity: 1;
     margin-top: 20px;
+    img {
+      width: 50px;
+    }
   }
 }
 </style>

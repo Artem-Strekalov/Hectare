@@ -30,13 +30,13 @@ import FieldCard from '@/components/FieldCard'
 import Modal from '@/components/modal/Modal.vue'
 import HomeModal from '@/components/modal/HomeModal.vue'
 export default {
+  name: 'home',
   components: {
     FieldCard,
     Sidebar,
     Modal,
     HomeModal,
   },
-  name: 'home',
   data() {
     return {
       fieldName: '',

@@ -19,15 +19,15 @@
           <li class="mgt__main-nav-item">Уборка урожая</li>
         </ul>
       </div>
-      <Sowing></Sowing>
+      <Tillage></Tillage>
     </div>
   </div>
 </template>
 <script>
-import Sowing from '@/components/management/Sowing.vue'
+import Tillage from '@/components/management/Tillage.vue'
 export default {
   components: {
-    Sowing,
+    Tillage,
   },
 }
 </script>
