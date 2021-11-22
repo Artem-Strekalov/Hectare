@@ -12,7 +12,7 @@
         />
         <div class="home__addField">
           <div class="home__addField-content" @click="showModalWindow">
-            <img src="@/assets/image/plus.png" alt="" />
+            <img src="@/assets/image/svg/plus.svg" alt="" />
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default {
       bottom: 0;
       right: 0;
       left: 0;
-      background: #fff;
+      background: #5ca450;
       border-radius: 10px;
     }
   }
