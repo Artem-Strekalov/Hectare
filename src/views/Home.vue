@@ -110,7 +110,11 @@ export default {
       right: 0;
       left: 0;
       background: #5ca450;
+      opacity: 0.8;
       border-radius: 10px;
+    }
+    &-content:hover {
+      opacity: 1;
     }
   }
 }

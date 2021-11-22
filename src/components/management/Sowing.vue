@@ -75,6 +75,7 @@ export default {
     border: 1px solid #5ca450;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 30px;
     &-name {
       width: 100%;
       font-weight: 500;
@@ -171,18 +172,18 @@ export default {
   &__addCart {
     cursor: pointer;
     display: flex;
-    margin-top: 30px;
-    width: 100%;
     height: 200px;
     border: 1px solid #5ca450;
     border-radius: 10px;
     background: #5ca450;
+    opacity: 0.8;
     img {
       margin: auto;
     }
   }
   &__addCart:hover {
-    background: #fff;
+    opacity: 1;
+    margin-top: 20px;
   }
 }
 </style>
