@@ -6,16 +6,14 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import vuetify from './plugins/vuetify'
-import VueDatePicker from '@mathieustan/vue-datepicker'
-import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css'
 import 'material-design-icons-iconfont'
 import Vuelidate from 'vuelidate'
 
-Vue.use(VueDatePicker)
 Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 
+//инициализация firebase
 firebase.initializeApp({
   apiKey: 'AIzaSyDX7FaQ08Mo1TTPoi3wnncK3Zdfg4NFS4g',
   authDomain: 'hectare-cb91a.firebaseapp.com',

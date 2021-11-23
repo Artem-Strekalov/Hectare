@@ -45,11 +45,6 @@ export default {
       isVisibleModalWindow: false,
     }
   },
-  async mounted() {
-    if (!Object.keys(this.$store.getters.info).length) {
-      await this.$store.dispatch('fetchInfo')
-    }
-  },
   methods: {
     showModalWindow() {
       this.isVisibleModalWindow = true
