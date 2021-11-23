@@ -12,7 +12,7 @@
         />
         <div class="home__addField">
           <div class="home__addField-content" @click="showModalWindow">
-            <img src="@/assets/image/plus.png" alt="" />
+            <img src="@/assets/image/svg/plus.svg" alt="" />
           </div>
         </div>
       </div>
@@ -25,32 +25,24 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/sidebar/Sidebar'
 import FieldCard from '@/components/FieldCard'
-import Modal from '../components/modal/Modal.vue'
-import HomeModal from '../components/modal/HomeModal.vue'
+import Modal from '@/components/modal/Modal.vue'
+import HomeModal from '@/components/modal/HomeModal.vue'
 export default {
+  name: 'home',
   components: {
     FieldCard,
     Sidebar,
     Modal,
     HomeModal,
   },
-  name: 'home',
   data() {
     return {
       fieldName: '',
       fieldStatus: '',
       fieldSquare: null,
       isVisibleModalWindow: false,
-      fieldData: [
-        {id: 1, name: 'Участок № 1', status: 'Задисковано', square: 100},
-        {id: 2, name: 'Участок № 2', status: 'Пары', square: 200},
-        {id: 3, name: 'Участок № 3', status: 'Посеяно', square: 15},
-        {id: 4, name: 'Участок № 4', status: 'Пахота', square: 75},
-        {id: 5, name: 'Участок № 4', status: 'Пахота', square: 75},
-        {id: 7, name: 'Участок № 4', status: 'Пахота', square: 75},
-      ],
     }
   },
   async mounted() {
@@ -75,12 +67,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home {
+  box-sizing: border-box;
   font-family: 'Montserrat';
   width: 100%;
   min-height: 100vh;
   display: flex;
   &__sidebar {
-    min-width: 261px;
+    min-width: 260px;
     height: 100%;
   }
   &__main {
@@ -116,8 +109,12 @@ export default {
       bottom: 0;
       right: 0;
       left: 0;
-      background: #fff;
+      background: #5ca450;
+      opacity: 0.8;
       border-radius: 10px;
+    }
+    &-content:hover {
+      opacity: 1;
     }
   }
 }

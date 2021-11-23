@@ -20,4 +20,5 @@ export default {
 
 <style lang="scss">
 @import 'null-style.scss';
+
 </style>

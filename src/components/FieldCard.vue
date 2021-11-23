@@ -6,7 +6,7 @@
         <p class="content__block-square">Площадь: {{ field.square }} га</p>
         <p class="cars__block-status">Состояние: {{ field.status }}</p>
       </div>
-      <button class="content__btn">Управление</button>
+      <button class="content__btn" @click="goManagement">Управление</button>
     </div>
   </div>
 </template>
@@ -18,8 +18,10 @@ export default {
       type: Object,
     },
   },
-  data() {
-    return {}
+  methods: {
+    goManagement() {
+      this.$router.push('/management')
+    },
   },
 }
 </script>

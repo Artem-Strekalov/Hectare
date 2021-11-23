@@ -4,6 +4,7 @@ import Registration from '../views/auth/Registration'
 import Authorization from '../views/auth/Authorization.vue'
 import Home from '../views/Home.vue'
 import WelcomeScreen from '../views/WelcomeScreen.vue'
+import Management from '../views/Management.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,6 +22,11 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home,
+  },
+  {
+    path: '/management',
+    name: 'management',
+    component: Management,
   },
   {
     path: '/welcome',

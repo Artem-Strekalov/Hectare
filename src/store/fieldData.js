@@ -1,10 +1,9 @@
 export default {
   state: {
-    data: [
-    ],
+    data: [{id: 1, name: 'Участок №1', square: 60, status: 'Пахота'}],
   },
   actions: {
-    async fetchData({ commit }, field) {
+    async fetchData({commit}, field) {
       await commit('changeData', field)
     },
   },
