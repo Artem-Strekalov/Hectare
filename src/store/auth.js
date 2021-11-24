@@ -9,6 +9,7 @@ export default {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         const currentUser = firebase.auth().currentUser
       } catch (e) {
+        commit('setError', e)
         throw e
       }
     },

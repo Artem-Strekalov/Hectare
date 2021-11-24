@@ -10,6 +10,7 @@
               class="registration__input"
               nameInput="Введите название хозяйства/компании"
               v-model="regForm.nameCompany"
+              :errorInput="error"
             />
             <AppInput
               class="registration__input"
@@ -57,6 +58,7 @@
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
 import HeaderHectare from '@/components/HeaderHectare'
+import message from '@/errors/message'
 export default {
   components: {
     AppInput,
@@ -84,6 +86,17 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error
+    },
+  },
+  watch: {
+    error(fbError) {
+      console.log(fbError)
+      console.log(message[fbError.code])
     },
   },
 }
