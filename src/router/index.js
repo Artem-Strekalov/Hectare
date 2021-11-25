@@ -1,37 +1,36 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Registration from '../views/auth/Registration'
-import Authorization from '../views/auth/Authorization.vue'
-import Home from '../views/Home.vue'
-import WelcomeScreen from '../views/WelcomeScreen.vue'
-import Management from '../views/Management.vue'
+import firebase from 'firebase/app'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'authorization',
-    component: Authorization,
+    component: () => import('../views/auth/Authorization.vue'),
   },
   {
     path: '/registration',
     name: 'registration',
-    component: Registration,
+    component: () => import('../views/auth/Registration.vue'),
   },
   {
     path: '/home',
     name: 'home',
-    component: Home,
+    component: () => import('../views/Home.vue'),
+    meta: {auth: true},
   },
   {
     path: '/management',
     name: 'management',
-    component: Management,
+    component: () => import('../views/Management.vue'),
+    meta: {auth: true},
   },
   {
     path: '/welcome',
     name: 'welcome',
-    component: WelcomeScreen,
+    component: () => import('../views/WelcomeScreen.vue'),
+    meta: {auth: true},
   },
 ]
 
@@ -41,4 +40,15 @@ const router = new VueRouter({
   routes,
 })
 
+//защита роутеров
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser
+  const requierAuth = to.matched.some(record => record.meta.auth)
+
+  if (requierAuth && !currentUser) {
+    next('/')
+  } else {
+    next()
+  }
+})
 export default router

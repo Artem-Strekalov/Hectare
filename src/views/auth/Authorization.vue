@@ -6,16 +6,13 @@
         <h2 class="authorization__main-auth">Авторизация на ГЕКТАР</h2>
         <div class="authorization__main-block-input">
           <AppInput
+            nameInput="Введите логин(email)"
             class="authorization__input"
             v-model="email"
-            :nameInput="nameInput.login"
-            :icon="true"
-            :showPasswordInput="false"
           />
           <AppInput
-            class="authorization__input"
             v-model="password"
-            :nameInput="nameInput.password"
+            nameInput="Введите пароль"
             :showPasswordInput="true"
             :typeText="false"
           />
@@ -27,19 +24,6 @@
         >
       </form>
     </div>
-    <v-snackbar
-      v-model="showError"
-      :centered="true"
-      color="#ED4949"
-      timeout="15000"
-    >
-      {{ textError }}
-      <template v-slot:action="{attrs}">
-        <v-btn color="red" text v-bind="attrs" @click="closeError">
-          Закрыть
-        </v-btn>
-      </template>
-    </v-snackbar>
   </div>
 </template>
 
@@ -58,10 +42,6 @@ export default {
     return {
       email: '',
       password: '',
-      nameInput: {
-        login: 'Введите логин(email)',
-        password: 'Введите пароль',
-      },
     }
   },
   methods: {
@@ -71,21 +51,11 @@ export default {
         password: this.password,
       }
       try {
-        await this.$store.dispatch('login', formData)
+        await this.$store.dispatch('authorization', formData)
         this.$router.push('/home')
-      } catch (e) {}
-    },
-    closeError() {
-      this.$store.commit('showWindowError', false)
-    },
-  },
-  computed: {
-    textError() {
-      return this.$store.getters['getError']
-    },
-
-    showError() {
-      return this.$store.getters['getWindowError']
+      } catch (e) {
+        console.log(e)
+      }
     },
   },
 }

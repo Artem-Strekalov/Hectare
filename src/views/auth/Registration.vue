@@ -2,46 +2,43 @@
   <div class="registration">
     <HeaderHectare>ГЕКТАР</HeaderHectare>
     <div class="registration__main">
-      <form class="registration__main-content" @submit.prevent="registration">
+      <form class="registration__main-content" @submit.prevent="signUp">
         <h2 class="registration__main-reg">Регистрация на ГЕКТАР</h2>
         <div class="registration__main-block-input">
           <div class="registration__block-left">
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.nameCompany"
-              :showPasswordInput="false"
+              nameInput="Введите название хозяйства/компании"
               v-model="regForm.nameCompany"
+              :errorInput="error"
             />
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.userFirstName"
-              :showPasswordInput="false"
+              nameInput="Введите свое имя"
               v-model="regForm.userFirstName"
             />
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.userLastName"
-              :showPasswordInput="false"
+              nameInput="Введите свою фамилию"
               v-model="regForm.userLastName"
             />
           </div>
           <div class="registration__block-right">
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.login"
-              :showPasswordInput="false"
+              nameInput="Введите логин(email)"
               v-model="regForm.email"
             />
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.password"
+              nameInput="Введите пароль"
               :showPasswordInput="true"
               v-model="regForm.password"
               :typeText="false"
             />
             <AppInput
               class="registration__input"
-              :nameInput="nameInput.confirmPassword"
+              nameInput="Повторите пароль"
               :showPasswordInput="true"
               :typeText="false"
               v-model="regForm.repeatPassword"
@@ -54,19 +51,6 @@
         >
       </form>
     </div>
-    <v-snackbar
-      v-model="showError"
-      :centered="true"
-      color="#ED4949"
-      timeout="15000"
-    >
-      {{ textError }}
-      <template v-slot:action="{attrs}">
-        <v-btn color="red" text v-bind="attrs" @click="closeError">
-          Закрыть
-        </v-btn>
-      </template>
-    </v-snackbar>
   </div>
 </template>
 
@@ -74,6 +58,7 @@
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
 import HeaderHectare from '@/components/HeaderHectare'
+import message from '@/errors/message'
 export default {
   components: {
     AppInput,
@@ -83,48 +68,35 @@ export default {
   name: 'registration',
   data() {
     return {
-      nameInput: {
-        nameCompany: 'Введите название хозяйства/компании',
-        userFirstName: 'Введите свое имя',
-        userLastName: 'Введите свою фамилию',
-        login: 'Введите логин(email)',
-        password: 'Введите пароль',
-        confirmPassword: 'Повторите пароль',
-      },
       regForm: {
         email: '',
         password: '',
-        nameCompany: '',
-        userLastName: '',
-        userFirstName: '',
       },
     }
   },
   methods: {
-    async registration() {
-      const formData = {
+    async signUp() {
+      const data = {
         email: this.regForm.email,
         password: this.regForm.password,
-        userFirstName: this.regForm.userFirstName,
-        userLastName: this.regForm.userLastName,
-        nameCompany: this.regForm.nameCompany,
       }
       try {
-        await this.$store.dispatch('registered', formData)
+        await this.$store.dispatch('registered', data)
         this.$router.push('/home')
-      } catch (e) {}
-    },
-    closeError() {
-      this.$store.commit('showWindowError', false)
+      } catch (e) {
+        console.log(e)
+      }
     },
   },
   computed: {
-    textError() {
-      return this.$store.getters['getError']
+    error() {
+      return this.$store.getters.error
     },
-
-    showError() {
-      return this.$store.getters['getWindowError']
+  },
+  watch: {
+    error(fbError) {
+      console.log(fbError)
+      console.log(message[fbError.code])
     },
   },
 }
