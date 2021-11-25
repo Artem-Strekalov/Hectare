@@ -54,7 +54,7 @@ export default {
         await this.$store.dispatch('authorization', formData)
         this.$router.push('/home')
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
     },
   },

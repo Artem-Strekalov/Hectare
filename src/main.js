@@ -3,11 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import firebase from 'firebase/app'
+import vuetify from './plugins/vuetify'
+import Vuelidate from 'vuelidate'
 import 'firebase/auth'
 import 'firebase/database'
-import vuetify from './plugins/vuetify'
 import 'material-design-icons-iconfont'
-import Vuelidate from 'vuelidate'
 
 Vue.use(Vuelidate)
 

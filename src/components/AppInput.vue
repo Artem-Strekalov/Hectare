@@ -2,27 +2,28 @@
   <div class="input">
     <div class="input__name-block">
       <p class="input__name">{{ nameInput }}</p>
-      <p class="input__error" :class="{error: errorInput}">{{ errorInput }}</p>
+      <p class="input__error" v-if="errorInput">{{ errorInput }}</p>
     </div>
 
     <div class="input__block">
       <input
         class="input__block-input"
-        :type="icon || typeText ? 'text' : 'password'"
+        :type="typePassword || typeText ? 'text' : 'password'"
         @input="$emit('input', $event.target.value)"
       />
       <div
         class="input__block-icon"
         v-if="showPasswordInput"
-        @click="icon = !icon"
+        @click="typePassword = !typePassword"
       >
-        <img v-if="icon" src="@/assets/image/svg/showPassword.svg" alt="" />
-        <img v-if="!icon" src="@/assets/image/svg/noShowPassword.svg" alt="" />
+        <img v-if="typePassword" src="@/assets/image/svg/showPassword.svg" alt="" />
+        <img v-if="!typePassword" src="@/assets/image/svg/noShowPassword.svg" alt="" />
       </div>
     </div>
   </div>
 </template>
 <script>
+import {email, required, minLength} from 'vuelidate/lib/validators'
 export default {
   name: 'AppInput',
   model: {
@@ -35,7 +36,8 @@ export default {
       default: true,
     },
     errorInput: {
-      type: String, Object
+      type: String,
+      Object,
     },
     nameInput: {
       type: String,
@@ -46,9 +48,12 @@ export default {
   },
   data() {
     return {
-      icon: false,
+      typePassword: false,
     }
   },
+  validations:{
+
+  }
 }
 </script>
 <style lang="scss" scoped>
