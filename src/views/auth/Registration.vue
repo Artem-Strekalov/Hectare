@@ -33,7 +33,7 @@
               class="registration__input"
               nameInput="Введите логин(email)"
               v-model.trim="regForm.email"
-              :showError="$v.regForm.email.$error"
+              :showError="$v.regForm.email.$error || showEmailError"
               :textError="errorEmail"
             />
             <AppInput
@@ -80,6 +80,7 @@ export default {
   name: 'registration',
   data() {
     return {
+      showEmailError: false,
       defaultError: '',
       errorEmail: '',
       errorPassword: '',
@@ -105,7 +106,8 @@ export default {
     },
   },
   methods: {
-    checkForm() {
+    async signUp() {
+      //Валидация
       this.$v.regForm.$touch()
       if (this.$v.regForm.$error) {
         this.defaultError = 'Поле не должно быть пустым'
@@ -114,9 +116,6 @@ export default {
         this.errorRepeatPassword = 'Пароли не совпадают'
         return
       }
-    },
-    async signUp() {
-      this.checkForm()
       const data = {
         email: this.regForm.email,
         password: this.regForm.password,
@@ -125,6 +124,11 @@ export default {
         await this.$store.dispatch('registered', data)
         this.$router.push('/home')
       } catch (e) {
+        if (e.code == 'auth/email-already-in-use') {
+          this.showEmailError = true
+          this.errorEmail = 'Пользователь с таким email уже существует'
+        }
+
         console.log(e)
       }
     },

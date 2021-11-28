@@ -8,13 +8,17 @@
           <AppInput
             nameInput="Введите логин(email)"
             class="authorization__input"
-            v-model="email"
+            v-model.trim="auth.email"
+            :showError="$v.auth.email.$error || showEmailError"
+            :textError="errorEmail"
           />
           <AppInput
-            v-model="password"
+            v-model.trim="auth.password"
             nameInput="Введите пароль"
             :showPasswordInput="true"
             :typeText="false"
+            :showError="$v.auth.password.$error || showPasswordError"
+            :textError="errorPassword"
           />
         </div>
 
@@ -31,6 +35,8 @@
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
 import HeaderHectare from '@/components/HeaderHectare'
+import {email, required} from 'vuelidate/lib/validators'
+import message from '@/errors/message'
 export default {
   components: {
     AppInput,
@@ -40,21 +46,53 @@ export default {
   name: 'authorization',
   data() {
     return {
-      email: '',
-      password: '',
+      auth: {email: '', password: ''},
+      errorEmail: '',
+      errorPassword: '',
+      showEmailError: false,
+      showPasswordError: false,
     }
   },
+  validations: {
+    auth: {
+      email: {required, email},
+      password: {required},
+    },
+  },
   methods: {
+    checkForm() {
+      this.$v.auth.$touch()
+      if (this.$v.auth.$error) {
+        this.errorEmail = 'Неверный формат email'
+        this.errorPassword = 'Поле не должно быть пустым'
+      }
+      return
+    },
     async signIn() {
+      this.$v.auth.$touch()
+      if (this.$v.auth.$error) {
+        this.errorEmail = 'Неверный формат email'
+        this.errorPassword = 'Поле не должно быть пустым'
+        return
+      }
       const formData = {
-        email: this.email,
-        password: this.password,
+        email: this.auth.email,
+        password: this.auth.password,
       }
       try {
         await this.$store.dispatch('authorization', formData)
         this.$router.push('/home')
       } catch (e) {
-        console.log(e)
+        console.log(e.code)
+        if (e.code == 'auth/wrong-password') {
+          console.log('1')
+          this.showPasswordError = true
+          this.errorPassword = 'Неверный пароль'
+          return
+        } else {
+          this.showEmailError = true
+          this.errorEmail = message[e.code]
+        }
       }
     },
   },
@@ -104,8 +142,6 @@ export default {
         &:hover {
           text-decoration-line: none;
         }
-      }
-      &-btn {
       }
     }
     &-auth {
