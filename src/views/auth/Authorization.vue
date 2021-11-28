@@ -100,7 +100,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .authorization {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   font-family: Inter;
   background: #f5f5f5;

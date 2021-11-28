@@ -57,8 +57,8 @@
           </div>
         </div>
         <ButtonGreen>Зарегистрироваться</ButtonGreen>
-        <router-link to="/" class="registration-link"
-          >У меня уже есть аккаунт</router-link
+        <router-link to="/" class="registration-link">
+          У меня уже есть аккаунт</router-link
         >
       </form>
     </div>
@@ -137,7 +137,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .registration {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   font-family: Inter;
   background: #f5f5f5;
@@ -188,5 +188,6 @@ export default {
       color: #222222;
     }
   }
+ 
 }
 </style>

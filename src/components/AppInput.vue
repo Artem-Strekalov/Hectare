@@ -114,6 +114,6 @@ input:-webkit-autofill:active {
   }
 }
 .input__error {
-  border: 1px solid red;
+  border-bottom: 2px solid rgb(233, 19, 19);
 }
 </style>
