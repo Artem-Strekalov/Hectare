@@ -57,9 +57,9 @@
           </div>
         </div>
         <ButtonGreen>Зарегистрироваться</ButtonGreen>
-        <router-link to="/" class="registration-link">
-          У меня уже есть аккаунт</router-link
-        >
+        <p @click="goAuth" class="registration-link">
+          У меня уже есть аккаунт
+        </p>
       </form>
     </div>
   </div>
@@ -106,6 +106,9 @@ export default {
     },
   },
   methods: {
+    goAuth() {
+      this.$router.push('/')
+    },
     async signUp() {
       //Валидация
       this.$v.regForm.$touch()
@@ -182,12 +185,15 @@ export default {
         }
       }
     }
+    .registration-link {
+      cursor: pointer;
+      color: #999999;
+    }
     &-reg {
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
       color: #222222;
     }
   }
- 
 }
 </style>

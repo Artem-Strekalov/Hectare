@@ -23,9 +23,17 @@
         </div>
 
         <ButtonGreen>Войти</ButtonGreen>
-        <router-link to="/registration" class="registration-link"
-          >Регистрация</router-link
-        >
+        <div class="authorization__nav">
+          <p class="authorization__nav-link" @click="goRegistartion">
+            Регистрация
+          </p>
+          <p
+            @click="goForgotPassword"
+            class="authorization__nav-link authorization__nav-password"
+          >
+            Забыли пароль?
+          </p>
+        </div>
       </form>
     </div>
   </div>
@@ -60,6 +68,12 @@ export default {
     },
   },
   methods: {
+    goForgotPassword() {
+      this.$router.push('/forgot-password')
+    },
+    goRegistartion() {
+      this.$router.push('/registration')
+    },
     checkForm() {
       this.$v.auth.$touch()
       if (this.$v.auth.$error) {
@@ -83,7 +97,7 @@ export default {
         await this.$store.dispatch('authorization', formData)
         this.$router.push('/home')
       } catch (e) {
-        console.log(e.code)
+        console.log(e)
         if (e.code == 'auth/wrong-password') {
           console.log('1')
           this.showPasswordError = true
@@ -146,8 +160,23 @@ export default {
     }
     &-auth {
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
       color: #222222;
+    }
+  }
+  &__nav {
+    text-align: center;
+    display: flex;
+
+    &-link {
+      margin-bottom: 10px;
+      color: #5ca450;
+      cursor: pointer;
+    }
+    &-password {
+      margin-left: 10px;
+      text-decoration: underline;
+      color: #999999;
     }
   }
 }
