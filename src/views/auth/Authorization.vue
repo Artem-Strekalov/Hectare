@@ -16,6 +16,7 @@
             v-model.trim="auth.password"
             nameInput="Введите пароль"
             :showPasswordInput="true"
+            :inputPassword="true"
             :typeText="false"
             :showError="$v.auth.password.$error || showPasswordError"
             :textError="errorPassword"
