@@ -9,52 +9,64 @@
             <AppInput
               class="registration__input"
               nameInput="Введите название хозяйства/компании"
-              v-model="regForm.nameCompany"
-              :errorInput="error"
+              v-model.trim="regForm.nameCompany"
+              :showError="$v.regForm.nameCompany.$error"
+              :textError="defaultError"
             />
             <AppInput
               class="registration__input"
               nameInput="Введите свое имя"
-              v-model="regForm.userFirstName"
+              v-model.trim="regForm.firstName"
+              :showError="$v.regForm.firstName.$error"
+              :textError="defaultError"
             />
             <AppInput
               class="registration__input"
               nameInput="Введите свою фамилию"
-              v-model="regForm.userLastName"
+              v-model.trim="regForm.lastName"
+              :showError="$v.regForm.lastName.$error"
+              :textError="defaultError"
             />
           </div>
           <div class="registration__block-right">
             <AppInput
               class="registration__input"
               nameInput="Введите логин(email)"
-              v-model="regForm.email"
+              v-model.trim="regForm.email"
+              :showError="$v.regForm.email.$error || showEmailError"
+              :textError="errorEmail"
             />
             <AppInput
               class="registration__input"
               nameInput="Введите пароль"
-              :showPasswordInput="true"
-              v-model="regForm.password"
+              :inputPassword="true"
+              v-model.trim="regForm.password"
               :typeText="false"
+              :showError="$v.regForm.password.$error"
+              :textError="errorPassword"
             />
             <AppInput
               class="registration__input"
               nameInput="Повторите пароль"
-              :showPasswordInput="true"
+              :inputPassword="true"
               :typeText="false"
-              v-model="regForm.repeatPassword"
+              v-model.trim="regForm.repeatPassword"
+              :showError="$v.regForm.repeatPassword.$error"
+              :textError="errorRepeatPassword"
             />
           </div>
         </div>
         <ButtonGreen>Зарегистрироваться</ButtonGreen>
-        <router-link to="/" class="registration-link"
-          >У меня уже есть аккаунт</router-link
-        >
+        <p @click="goAuth" class="registration-link">
+          У меня уже есть аккаунт
+        </p>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import {email, required, sameAs, minLength} from 'vuelidate/lib/validators'
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
 import HeaderHectare from '@/components/HeaderHectare'
@@ -68,14 +80,45 @@ export default {
   name: 'registration',
   data() {
     return {
+      showEmailError: false,
+      defaultError: '',
+      errorEmail: '',
+      errorPassword: '',
+      errorRepeatPassword: '',
       regForm: {
+        nameCompany: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
+        repeatPassword: '',
       },
     }
   },
+  validations: {
+    regForm: {
+      nameCompany: {required},
+      firstName: {required},
+      lastName: {required},
+      email: {email, required},
+      password: {required, minLength: minLength(7)},
+      repeatPassword: {required, sameAsPassword: sameAs('password')},
+    },
+  },
   methods: {
+    goAuth() {
+      this.$router.push('/')
+    },
     async signUp() {
+      //Валидация
+      this.$v.regForm.$touch()
+      if (this.$v.regForm.$error) {
+        this.defaultError = 'Поле не должно быть пустым'
+        this.errorEmail = 'Неверный формат email'
+        this.errorPassword = 'Пароль должен состоять минимум из 7 символов'
+        this.errorRepeatPassword = 'Пароли не совпадают'
+        return
+      }
       const data = {
         email: this.regForm.email,
         password: this.regForm.password,
@@ -84,26 +127,20 @@ export default {
         await this.$store.dispatch('registered', data)
         this.$router.push('/home')
       } catch (e) {
+        if (e.code == 'auth/email-already-in-use') {
+          this.showEmailError = true
+          this.errorEmail = 'Пользователь с таким email уже существует'
+        }
+
         console.log(e)
       }
-    },
-  },
-  computed: {
-    error() {
-      return this.$store.getters.error
-    },
-  },
-  watch: {
-    error(fbError) {
-      console.log(fbError)
-      console.log(message[fbError.code])
     },
   },
 }
 </script>
 <style lang="scss" scoped>
 .registration {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   font-family: Inter;
   background: #f5f5f5;
@@ -148,9 +185,13 @@ export default {
         }
       }
     }
+    .registration-link {
+      cursor: pointer;
+      color: #999999;
+    }
     &-reg {
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
       color: #222222;
     }
   }

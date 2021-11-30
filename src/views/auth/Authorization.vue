@@ -8,20 +8,33 @@
           <AppInput
             nameInput="Введите логин(email)"
             class="authorization__input"
-            v-model="email"
+            v-model.trim="auth.email"
+            :showError="$v.auth.email.$error || showEmailError"
+            :textError="errorEmail"
           />
           <AppInput
-            v-model="password"
+            v-model.trim="auth.password"
             nameInput="Введите пароль"
             :showPasswordInput="true"
+            :inputPassword="true"
             :typeText="false"
+            :showError="$v.auth.password.$error || showPasswordError"
+            :textError="errorPassword"
           />
         </div>
 
         <ButtonGreen>Войти</ButtonGreen>
-        <router-link to="/registration" class="registration-link"
-          >Регистрация</router-link
-        >
+        <div class="authorization__nav">
+          <p class="authorization__nav-link" @click="goRegistartion">
+            Регистрация
+          </p>
+          <p
+            @click="goForgotPassword"
+            class="authorization__nav-link authorization__nav-password"
+          >
+            Забыли пароль?
+          </p>
+        </div>
       </form>
     </div>
   </div>
@@ -31,6 +44,8 @@
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
 import HeaderHectare from '@/components/HeaderHectare'
+import {email, required} from 'vuelidate/lib/validators'
+import message from '@/errors/message'
 export default {
   components: {
     AppInput,
@@ -40,21 +55,59 @@ export default {
   name: 'authorization',
   data() {
     return {
-      email: '',
-      password: '',
+      auth: {email: '', password: ''},
+      errorEmail: '',
+      errorPassword: '',
+      showEmailError: false,
+      showPasswordError: false,
     }
   },
+  validations: {
+    auth: {
+      email: {required, email},
+      password: {required},
+    },
+  },
   methods: {
+    goForgotPassword() {
+      this.$router.push('/forgot-password')
+    },
+    goRegistartion() {
+      this.$router.push('/registration')
+    },
+    checkForm() {
+      this.$v.auth.$touch()
+      if (this.$v.auth.$error) {
+        this.errorEmail = 'Неверный формат email'
+        this.errorPassword = 'Поле не должно быть пустым'
+      }
+      return
+    },
     async signIn() {
+      this.$v.auth.$touch()
+      if (this.$v.auth.$error) {
+        this.errorEmail = 'Неверный формат email'
+        this.errorPassword = 'Поле не должно быть пустым'
+        return
+      }
       const formData = {
-        email: this.email,
-        password: this.password,
+        email: this.auth.email,
+        password: this.auth.password,
       }
       try {
         await this.$store.dispatch('authorization', formData)
         this.$router.push('/home')
       } catch (e) {
         console.log(e)
+        if (e.code == 'auth/wrong-password') {
+          console.log('1')
+          this.showPasswordError = true
+          this.errorPassword = 'Неверный пароль'
+          return
+        } else {
+          this.showEmailError = true
+          this.errorEmail = message[e.code]
+        }
       }
     },
   },
@@ -62,7 +115,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .authorization {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   font-family: Inter;
   background: #f5f5f5;
@@ -105,13 +158,26 @@ export default {
           text-decoration-line: none;
         }
       }
-      &-btn {
-      }
     }
     &-auth {
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
       color: #222222;
+    }
+  }
+  &__nav {
+    text-align: center;
+    display: flex;
+
+    &-link {
+      margin-bottom: 10px;
+      color: #5ca450;
+      cursor: pointer;
+    }
+    &-password {
+      margin-left: 10px;
+      text-decoration: underline;
+      color: #999999;
     }
   }
 }

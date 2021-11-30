@@ -127,7 +127,7 @@ export default {
     align-items: center;
     margin-top: auto;
     img {
-      width: 16px;
+      width: 20px;
     }
   }
   &__profile {

@@ -29,6 +29,7 @@ import Sidebar from '@/components/sidebar/Sidebar'
 import FieldCard from '@/components/FieldCard'
 import Modal from '@/components/modal/Modal.vue'
 import HomeModal from '@/components/modal/HomeModal.vue'
+import {getAuth} from 'firebase/auth'
 export default {
   name: 'home',
   components: {
