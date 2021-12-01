@@ -6,23 +6,18 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'authorization',
-    component: () => import('../views/auth/Authorization.vue'),
+    name: 'Auth',
+    component: () => import('../views/auth/Auth.vue'),
   },
   {
-    path: '/registration',
-    name: 'registration',
-    component: () => import('../views/auth/Registration.vue'),
+    path: '/reg',
+    name: 'Reg',
+    component: () => import('../views/auth/Reg.vue'),
   },
   {
     path: '/forgot-password',
     name: 'ForgotPassword',
     component: () => import('../views/auth/ForgotPassword.vue'),
-  },
-  {
-    path: '/new-auth',
-    name: 'NewAuth',
-    component: () => import('../views/auth/NewAuth.vue'),
   },
   {
     path: '/home',

@@ -1,20 +1,37 @@
 <template>
-  <div class="forgot">
-    <HeaderHectare></HeaderHectare>
-    <form class="forgot__main" @submit.prevent="resertPassword">
-      <h2 class="forgot__main-name">Восстановление пароля</h2>
-      <AppInput nameInput="Введите ваш email" v-model="email"></AppInput>
-      <ButtonGreen>Отправить</ButtonGreen>
-      <p @click="goAuth" class="forgot__out">Назад</p>
-    </form>
+  <div class="auth">
+    <div class="auth__left">
+      <h2 class="auth__name">ГЕКТАР</h2>
+      <form class="auth__form" @submit.prevent="resertPassword">
+        <h2 class="auth__form-name">ВОССТАНОВЛЕНИЕ ПАРОЛЯ</h2>
+        <AppInput
+          class="auth__form-input"
+          nameInput="Введите email"
+          v-model.trim="email"
+          :showError="$v.email.$error"
+          :textError="errorEmail"
+        ></AppInput>
+        <ButtonGreen>Отправить</ButtonGreen>
+        <div class="auth__nav">
+          <p class="auth__nav-link" @click="goAuth">
+            Назад
+          </p>
+        </div>
+      </form>
+
+      <div class="auth__angle"></div>
+    </div>
+    <div class="auth__right"></div>
   </div>
 </template>
+
 <script>
 import AppInput from '@/components/AppInput'
 import HeaderHectare from '@/components/HeaderHectare'
 import ButtonGreen from '@/components/ButtonGreen'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import {email, required} from 'vuelidate/lib/validators'
 export default {
   name: 'ForgotPassword',
   components: {
@@ -25,13 +42,22 @@ export default {
   data() {
     return {
       email: null,
+      errorEmail: '',
     }
+  },
+  validations: {
+    email: {required, email},
   },
   methods: {
     goAuth() {
       this.$router.push('/')
     },
     resertPassword() {
+      this.$v.email.$touch()
+      if (this.$v.email.$error) {
+        this.errorEmail = 'Неверный формат email'
+        return
+      }
       firebase
         .auth()
         .sendPasswordResetEmail(this.email)
@@ -45,38 +71,78 @@ export default {
   },
 }
 </script>
+
 <style lang="scss" scoped>
-.forgot {
+.auth {
+  background: url('./background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
   width: 100%;
   height: 100vh;
-  background: #f5f5f5;
-  display: flex;
-  flex-direction: column;
-  font-family: Inter;
-  &__main {
+  overflow: hidden;
+  &__left {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    position: absolute;
+    background: #fff;
+    opacity: 0.9;
+    bottom: 0;
+    top: 0;
+    .auth__name {
+      font-family: Montserrat;
+      font-size: 36px;
+      color: #5ca450;
+      letter-spacing: 9px;
+      margin: 25px 0 0 25px;
+    }
+  }
+  &__form {
+    font-family: Inter;
+    height: 400px;
+    margin: auto 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    border-radius: 10px;
-    padding: 50px 70px;
-    max-width: 556px;
-    width: 100%;
-    height: 400px;
-    margin: auto;
+    padding: 0 60px;
     &-name {
-      font-weight: 600;
-      font-size: 20px;
+      font-size: 16px;
       color: #222222;
+      margin-bottom: 30px;
+    }
+    &-input {
+      margin-bottom: 20px;
     }
   }
-  &__out {
-    color: #999999;
-    cursor: pointer;
+  &__nav {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    &-link {
+      margin-bottom: 10px;
+      color: #999;
+      cursor: pointer;
+    }
   }
-  &__out:hover {
-    color: #5ca450;
+  &__angle {
+    position: absolute;
+    background-color: #fff;
+    transform: rotate(4deg);
+    width: 70px;
+    right: -35px;
+    top: -4px;
+    height: 100.2%;
+  }
+  &__right {
+    width: 100%;
+    height: 100%;
+    background: url('./background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
 }
 </style>

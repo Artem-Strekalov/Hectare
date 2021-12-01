@@ -3,7 +3,7 @@
     <div class="auth__left">
       <h2 class="auth__name">ГЕКТАР</h2>
       <form class="auth__form" @submit.prevent="signIn">
-        <h2 class="auth__form-name">Авторизация</h2>
+        <h2 class="auth__form-name">АВТОРИЗАЦИЯ</h2>
         <AppInput
           class="auth__form-input"
           nameInput="Введите email"
@@ -44,14 +44,12 @@
 <script>
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
-import HeaderHectare from '@/components/HeaderHectare'
 import {email, required} from 'vuelidate/lib/validators'
 import message from '@/errors/message'
 export default {
   components: {
     AppInput,
     ButtonGreen,
-    HeaderHectare,
   },
   name: 'authorization',
   data() {
@@ -74,7 +72,7 @@ export default {
       this.$router.push('/forgot-password')
     },
     goRegistartion() {
-      this.$router.push('/registration')
+      this.$router.push('/reg')
     },
     checkForm() {
       this.$v.auth.$touch()
@@ -117,6 +115,10 @@ export default {
 
 <style lang="scss" scoped>
 .auth {
+  background: url('./background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   display: flex;
   width: 100%;
   height: 100vh;
@@ -124,9 +126,13 @@ export default {
   &__left {
     display: flex;
     flex-direction: column;
-    max-width: 450px;
+    max-width: 500px;
     width: 100%;
-    position: relative;
+    position: absolute;
+    background: #fff;
+    opacity: 0.9;
+    bottom: 0;
+    top: 0;
     .auth__name {
       font-family: Montserrat;
       font-size: 36px;
@@ -142,12 +148,12 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 50px;
+    padding: 0 60px;
     &-name {
-      font-weight: 600;
-      font-size: 20px;
+      font-size: 16px;
       color: #222222;
       margin-bottom: 30px;
+      letter-spacing: 2px;
     }
     &-input {
       margin-bottom: 20px;
@@ -168,20 +174,19 @@ export default {
       color: #999999;
     }
   }
-  ////
   &__angle {
     position: absolute;
     background-color: #fff;
     transform: rotate(4deg);
-    width: 65px;
-    right: -30px;
+    width: 70px;
+    right: -35px;
     top: -4px;
-    height: 103%;
+    height: 100.2%;
   }
   &__right {
     width: 100%;
     height: 100%;
-    background: url('./resize.jpg');
+    background: url('./background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
