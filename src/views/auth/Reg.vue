@@ -109,6 +109,8 @@ export default {
       const data = {
         email: this.regForm.email,
         password: this.regForm.password,
+        nameCompany: this.regForm.nameCompany,
+        firstName: this.regForm.firstName,
       }
       try {
         await this.$store.dispatch('registered', data)

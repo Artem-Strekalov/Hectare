@@ -29,7 +29,6 @@ import Sidebar from '@/components/sidebar/Sidebar'
 import FieldCard from '@/components/FieldCard'
 import Modal from '@/components/modal/Modal.vue'
 import HomeModal from '@/components/modal/HomeModal.vue'
-import {getAuth} from 'firebase/auth'
 export default {
   name: 'home',
   components: {
@@ -46,6 +45,7 @@ export default {
       isVisibleModalWindow: false,
     }
   },
+
   methods: {
     showModalWindow() {
       this.isVisibleModalWindow = true
@@ -108,9 +108,16 @@ export default {
       background: #5ca450;
       opacity: 0.8;
       border-radius: 10px;
+      img {
+        transition: transform 0.5s ease-in-out;
+      }
     }
     &-content:hover {
       opacity: 1;
+      img {
+        transform: rotate(90deg);
+        width: 50px;
+      }
     }
   }
 }

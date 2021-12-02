@@ -4,26 +4,40 @@ export default {
   mutations: {},
   actions: {
     // регистрация
-    async registered({dispatch, commit}, {email, password}) {
+    async registered(
+      {dispatch, commit},
+      {email, password, nameCompany, firstName},
+    ) {
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
-        const currentUser = firebase.auth().currentUser
+        const uid = await dispatch('getUid')
+        await firebase
+          .database()
+          .ref(`/users/${uid}/regInfo`)
+          .set({
+            nameCompany,
+            firstName,
+            email,
+          })
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
+    getUid() {
+      const user = firebase.auth().currentUser
+      return user ? user.uid : null
+    },
     //авторизация
     async authorization({dispatch}, {email, password}) {
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password)
-        const currentUser = await firebase.auth().currentUser
-        console.log(currentUser.uid)
       } catch (e) {
         throw e
       }
     },
     async logout({commit}) {
+      commit('clearInfo')
       await firebase.auth().signOut()
     },
   },

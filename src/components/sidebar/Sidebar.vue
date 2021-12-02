@@ -34,7 +34,7 @@
     <div class="sidebar__footer">
       <div class="sidebar__profile">
         <img src="@/assets/image/userFoto.png" alt="" />
-        <span class="sidebar__name-company">ИП КФХ Стрекалов</span>
+        <span class="sidebar__name-company">{{ nameCompany }}</span>
       </div>
       <div class="sidebar__exit" @click.prevent="logout">Выйти</div>
     </div>
@@ -49,13 +49,18 @@ export default {
       type: String,
     },
   },
-  data() {
-    return {}
+  async mounted() {
+    await this.$store.dispatch('loadInfo')
   },
   methods: {
     async logout() {
       await this.$store.dispatch('logout')
       this.$router.push('/')
+    },
+  },
+  computed: {
+    nameCompany() {
+      return this.$store.getters.getInfo.nameCompany
     },
   },
 }
