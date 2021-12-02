@@ -128,7 +128,7 @@ export default {
 
 <style lang="scss" scoped>
 .reg {
-  background: url('./background.jpg');
+  background: url('../../assets/image/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -196,7 +196,7 @@ export default {
     width: 70px;
     right: -35px;
     top: -4px;
-    height: 100.2%;
+    height: 100.3%;
   }
 }
 </style>

@@ -34,10 +34,8 @@
           </p>
         </div>
       </form>
-
       <div class="auth__angle"></div>
     </div>
-    <div class="auth__right"></div>
   </div>
 </template>
 
@@ -115,7 +113,7 @@ export default {
 
 <style lang="scss" scoped>
 .auth {
-  background: url('./background.jpg');
+  background: url('../../assets/image/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -181,15 +179,7 @@ export default {
     width: 70px;
     right: -35px;
     top: -4px;
-    height: 100.2%;
-  }
-  &__right {
-    width: 100%;
-    height: 100%;
-    background: url('./background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    height: 100.3%;
   }
 }
 </style>
