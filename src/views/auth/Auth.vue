@@ -1,41 +1,40 @@
 <template>
-  <div class="authorization">
-    <HeaderHectare>ГЕКТАР</HeaderHectare>
-    <div class="authorization__main">
-      <form class="authorization__main-content" @submit.prevent="signIn">
-        <h2 class="authorization__main-auth">Авторизация на ГЕКТАР</h2>
-        <div class="authorization__main-block-input">
-          <AppInput
-            nameInput="Введите логин(email)"
-            class="authorization__input"
-            v-model.trim="auth.email"
-            :showError="$v.auth.email.$error || showEmailError"
-            :textError="errorEmail"
-          />
-          <AppInput
-            v-model.trim="auth.password"
-            nameInput="Введите пароль"
-            :showPasswordInput="true"
-            :inputPassword="true"
-            :typeText="false"
-            :showError="$v.auth.password.$error || showPasswordError"
-            :textError="errorPassword"
-          />
-        </div>
-
+  <div class="auth">
+    <div class="auth__left">
+      <h2 class="auth__name">ГЕКТАР</h2>
+      <form class="auth__form" @submit.prevent="signIn">
+        <h2 class="auth__form-name">АВТОРИЗАЦИЯ</h2>
+        <AppInput
+          class="auth__form-input"
+          nameInput="Введите email"
+          v-model.trim="auth.email"
+          :showError="$v.auth.email.$error || showEmailError"
+          :textError="errorEmail"
+        ></AppInput>
+        <AppInput
+          class="auth__form-input"
+          v-model.trim="auth.password"
+          nameInput="Введите пароль"
+          :showPasswordInput="true"
+          :inputPassword="true"
+          :typeText="false"
+          :showError="$v.auth.password.$error || showPasswordError"
+          :textError="errorPassword"
+        ></AppInput>
         <ButtonGreen>Войти</ButtonGreen>
-        <div class="authorization__nav">
-          <p class="authorization__nav-link" @click="goRegistartion">
+        <div class="auth__nav">
+          <p class="auth__nav-link" @click="goRegistartion">
             Регистрация
           </p>
           <p
             @click="goForgotPassword"
-            class="authorization__nav-link authorization__nav-password"
+            class="auth__nav-link auth__nav-password"
           >
             Забыли пароль?
           </p>
         </div>
       </form>
+      <div class="auth__angle"></div>
     </div>
   </div>
 </template>
@@ -43,14 +42,12 @@
 <script>
 import AppInput from '@/components/AppInput'
 import ButtonGreen from '@/components/ButtonGreen'
-import HeaderHectare from '@/components/HeaderHectare'
 import {email, required} from 'vuelidate/lib/validators'
 import message from '@/errors/message'
 export default {
   components: {
     AppInput,
     ButtonGreen,
-    HeaderHectare,
   },
   name: 'authorization',
   data() {
@@ -73,7 +70,7 @@ export default {
       this.$router.push('/forgot-password')
     },
     goRegistartion() {
-      this.$router.push('/registration')
+      this.$router.push('/reg')
     },
     checkForm() {
       this.$v.auth.$touch()
@@ -113,62 +110,57 @@ export default {
   },
 }
 </script>
+
 <style lang="scss" scoped>
-.authorization {
+.auth {
+  background: url('../../assets/image/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
   width: 100%;
   height: 100vh;
-  font-family: Inter;
-  background: #f5f5f5;
-  display: flex;
-  flex-direction: column;
-  &__main {
-    width: 100%;
-    flex: 1 1 auto;
+  overflow: hidden;
+  &__left {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    &-content {
-      max-width: 556px;
-      width: 100%;
-      max-height: 478px;
-      height: 100%;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      border-radius: 10px;
-      .authorization__main-block-input {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        padding: 0 70px;
-        .authorization__input {
-          margin-bottom: 19px;
-        }
-        .authorization__block-left {
-          margin-right: 70px;
-        }
-      }
-      .authorization__registration-link {
-        font-size: 12px;
-        text-decoration-line: underline;
-        color: #5ca450;
-        &:hover {
-          text-decoration-line: none;
-        }
-      }
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    position: absolute;
+    background: #fff;
+    opacity: 0.9;
+    bottom: 0;
+    top: 0;
+    .auth__name {
+      font-family: Montserrat;
+      font-size: 36px;
+      color: #5ca450;
+      letter-spacing: 9px;
+      margin: 25px 0 0 25px;
     }
-    &-auth {
-      font-weight: 600;
-      font-size: 20px;
+  }
+  &__form {
+    font-family: Inter;
+    height: 400px;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 60px;
+    &-name {
+      font-size: 16px;
       color: #222222;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+    &-input {
+      margin-bottom: 20px;
     }
   }
   &__nav {
+    margin-top: 20px;
     text-align: center;
     display: flex;
-
     &-link {
       margin-bottom: 10px;
       color: #5ca450;
@@ -179,6 +171,15 @@ export default {
       text-decoration: underline;
       color: #999999;
     }
+  }
+  &__angle {
+    position: absolute;
+    background-color: #fff;
+    transform: rotate(4deg);
+    width: 70px;
+    right: -35px;
+    top: -4px;
+    height: 100.3%;
   }
 }
 </style>
