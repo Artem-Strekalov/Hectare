@@ -45,7 +45,9 @@ export default {
       isVisibleModalWindow: false,
     }
   },
-
+  async mounted() {
+    await this.$store.dispatch('loadFields')
+  },
   methods: {
     showModalWindow() {
       this.isVisibleModalWindow = true

@@ -6,8 +6,9 @@ export default {
     fields: {},
   },
   mutations: {
-    setFields(state, field) {
-      state.fields = field
+    setFields(state, fields) {
+      console.log(fields);
+      state.fields = fields
     },
   },
   actions: {
@@ -24,6 +25,17 @@ export default {
         })
     },
     //загрузка полей
+    async loadFields({dispatch, commit}) {
+      const uid = await dispatch('getUid')
+      const fields = (
+        await firebase
+          .database()
+          .ref(`users/${uid}/fields`)
+          .once('value')
+      ).val()
+      console.log(fields)
+     commit('setFields', fields)
+    },
 
     async fetchData({commit}, field) {
       await commit('changeData', field)
