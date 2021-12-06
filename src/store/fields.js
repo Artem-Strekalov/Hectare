@@ -10,6 +10,9 @@ export default {
       console.log(fields);
       state.fields = fields
     },
+    changeData(state, field) {
+      state.data.push(field)
+    },
   },
   actions: {
     // добавление поля
@@ -33,7 +36,7 @@ export default {
           .ref(`users/${uid}/fields`)
           .once('value')
       ).val()
-      console.log(fields)
+      console.log(fields.value)
      commit('setFields', fields)
     },
 
@@ -41,11 +44,7 @@ export default {
       await commit('changeData', field)
     },
   },
-  mutations: {
-    changeData(state, field) {
-      state.data.push(field)
-    },
-  },
+  
   getters: {
     getData(state) {
       return state.data.reverse()
