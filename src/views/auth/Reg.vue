@@ -114,6 +114,7 @@ export default {
       }
       try {
         await this.$store.dispatch('registered', data)
+        await this.$store.dispatch('sendUsersInfo', data)
         this.$router.push('/home')
       } catch (e) {
         if (e.code == 'auth/email-already-in-use') {

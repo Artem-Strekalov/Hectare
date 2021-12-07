@@ -1,4 +1,11 @@
-import firebase from 'firebase/app'
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth'
+import {authApp, db} from '../firebase'
+import {doc, setDoc} from 'firebase/firestore'
+
 export default {
   state: {},
   mutations: {},
@@ -9,36 +16,27 @@ export default {
       {email, password, nameCompany, firstName},
     ) {
       try {
-        await firebase.auth().createUserWithEmailAndPassword(email, password)
-        const uid = await dispatch('getUid')
-        await firebase
-          .database()
-          .ref(`/users/${uid}/regInfo`)
-          .set({
-            nameCompany,
-            firstName,
-            email,
-          })
+        await createUserWithEmailAndPassword(authApp, email, password)
       } catch (e) {
-        commit('setError', e)
         throw e
       }
     },
+    //получение id текущего пользователя
     getUid() {
-      const user = firebase.auth().currentUser
+      const user = authApp.currentUser
       return user ? user.uid : null
     },
     //авторизация
     async authorization({dispatch}, {email, password}) {
       try {
-        await firebase.auth().signInWithEmailAndPassword(email, password)
+        await signInWithEmailAndPassword(authApp, email, password)
       } catch (e) {
         throw e
       }
     },
     async logout({commit}) {
-      commit('clearInfo')
-      await firebase.auth().signOut()
+      await signOut(authApp)
+      commit('clearUser')
     },
   },
   getters: {},

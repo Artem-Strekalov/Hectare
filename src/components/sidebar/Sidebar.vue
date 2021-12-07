@@ -50,7 +50,7 @@ export default {
     },
   },
   async mounted() {
-    await this.$store.dispatch('loadInfo')
+    await this.$store.dispatch('loadUser')
   },
   methods: {
     async logout() {
@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     nameCompany() {
-      return this.$store.getters.getInfo.nameCompany
+      return this.$store.getters.getUser.nameCompany
     },
   },
 }
