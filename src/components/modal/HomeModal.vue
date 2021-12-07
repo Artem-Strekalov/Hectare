@@ -57,6 +57,9 @@ export default {
       },
     }
   },
+  async mounted() {
+    await this.$store.dispatch('loadFields')
+  },
   methods: {
     async addNewField() {
       this.$v.form.$touch()
