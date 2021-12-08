@@ -57,9 +57,7 @@ export default {
       },
     }
   },
-  async mounted() {
-    await this.$store.dispatch('loadFields')
-  },
+
   methods: {
     async addNewField() {
       this.$v.form.$touch()
@@ -70,6 +68,7 @@ export default {
         square: this.form.square,
       }
       await this.$store.dispatch('addField', field)
+      await this.$store.dispatch('loadFields')
       this.closeModalWindow()
     },
   },

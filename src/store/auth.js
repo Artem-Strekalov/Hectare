@@ -35,8 +35,8 @@ export default {
       }
     },
     async logout({commit}) {
+    
       await signOut(authApp)
-      commit('clearUser')
     },
   },
   getters: {},

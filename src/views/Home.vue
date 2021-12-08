@@ -35,12 +35,14 @@ export default {
   },
   data() {
     return {
-      fields: [{id: 1, name: 'Участок №1', square: 60, status: 'Пахота'}],
       fieldName: '',
       fieldStatus: '',
       fieldSquare: null,
       isVisibleModalWindow: false,
     }
+  },
+  async mounted() {
+    await this.$store.dispatch('loadFields')
   },
   methods: {
     showModalWindow() {
@@ -48,6 +50,11 @@ export default {
     },
     closeModalWindow() {
       this.isVisibleModalWindow = false
+    },
+  },
+  computed: {
+    fields() {
+      return this.$store.getters.getFields
     },
   },
 }
