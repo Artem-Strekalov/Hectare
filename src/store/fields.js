@@ -9,7 +9,9 @@ export default {
   mutations: {
     saveFields(state, fields) {
       state.fields = Object.values(fields)
-      console.log(state.fields)
+    },
+    clearFields(state) {
+      state.fields = []
     },
   },
 
@@ -17,12 +19,10 @@ export default {
     //получение участков
     async loadFields({dispatch, commit}) {
       const uid = await dispatch('getUid')
-      const path = doc(db, 'fields', `${uid}`)
+      const path = await doc(db, 'fields', `${uid}`)
       const dataFields = await getDoc(path)
       if (dataFields.exists()) {
         commit('saveFields', dataFields.data())
-      } else {
-        commit('saveFields', [])
       }
     },
 
@@ -43,7 +43,7 @@ export default {
 
   getters: {
     getFields(state) {
-      state.fields ? state.fields : []
+      return state.fields
     },
   },
 }

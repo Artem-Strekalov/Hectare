@@ -54,8 +54,8 @@ export default {
   },
   methods: {
     async logout() {
-      await this.$store.dispatch('logout')
-      this.$router.push('/')
+      await this.$router.push('/')
+      this.$store.dispatch('logout')
     },
   },
   computed: {

@@ -42,6 +42,7 @@ export default {
     }
   },
   async mounted() {
+    console.log('w')
     await this.$store.dispatch('loadFields')
   },
   methods: {
