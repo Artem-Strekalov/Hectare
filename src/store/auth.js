@@ -1,44 +1,33 @@
-import firebase from 'firebase/app'
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth'
+import {authApp, db} from '../firebase'
 export default {
   state: {},
   mutations: {},
   actions: {
     // регистрация
-    async registered(
-      {dispatch, commit},
-      {email, password, nameCompany, firstName},
-    ) {
-      try {
-        await firebase.auth().createUserWithEmailAndPassword(email, password)
-        const uid = await dispatch('getUid')
-        await firebase
-          .database()
-          .ref(`/users/${uid}/regInfo`)
-          .set({
-            nameCompany,
-            firstName,
-            email,
-          })
-      } catch (e) {
-        commit('setError', e)
-        throw e
-      }
+    async registered({dispatch, commit}, {email, password}) {
+      await createUserWithEmailAndPassword(authApp, email, password)
     },
+
+    //получение id текущего пользователя
     getUid() {
-      const user = firebase.auth().currentUser
+      const user = authApp.currentUser
       return user ? user.uid : null
     },
+
     //авторизация
     async authorization({dispatch}, {email, password}) {
-      try {
-        await firebase.auth().signInWithEmailAndPassword(email, password)
-      } catch (e) {
-        throw e
-      }
+      await signInWithEmailAndPassword(authApp, email, password)
     },
+
     async logout({commit}) {
-      commit('clearInfo')
-      await firebase.auth().signOut()
+      commit('clearUser')
+      commit('clearFields')
+      await signOut(authApp)
     },
   },
   getters: {},

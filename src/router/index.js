@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import firebase from 'firebase/app'
+import {authApp} from '../firebase'
 Vue.use(VueRouter)
 
 const routes = [
@@ -47,7 +47,7 @@ const router = new VueRouter({
 
 //защита роутеров
 router.beforeEach((to, from, next) => {
-  const currentUser = firebase.auth().currentUser
+  const currentUser = authApp.currentUser
   const requierAuth = to.matched.some(record => record.meta.auth)
 
   if (requierAuth && !currentUser) {

@@ -37,7 +37,6 @@
   </Modal>
 </template>
 <script>
-import {v4 as uuidv4} from 'uuid'
 import Modal from './Modal.vue'
 import {required} from 'vuelidate/lib/validators'
 export default {
@@ -58,17 +57,18 @@ export default {
       },
     }
   },
+
   methods: {
-    addNewField() {
+    async addNewField() {
       this.$v.form.$touch()
       if (this.$v.form.$error) return
       let field = {
-        id: uuidv4(),
         name: this.form.name,
         status: this.form.status,
         square: this.form.square,
       }
-      this.$store.dispatch('fetchData', field)
+      await this.$store.dispatch('addField', field)
+      await this.$store.dispatch('loadFields')
       this.closeModalWindow()
     },
   },

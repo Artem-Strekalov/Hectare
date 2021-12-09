@@ -5,11 +5,7 @@
     </div>
     <div class="home__main">
       <div class="home__main-content">
-        <FieldCard
-          v-for="field in getFieldData"
-          :key="field.id"
-          :field="field"
-        />
+        <FieldCard v-for="field in fields" :key="field.id" :field="field" />
         <div class="home__addField">
           <div class="home__addField-content" @click="showModalWindow">
             <img src="@/assets/image/svg/plus.svg" alt="" />
@@ -45,7 +41,10 @@ export default {
       isVisibleModalWindow: false,
     }
   },
-
+  async mounted() {
+    console.log('w')
+    await this.$store.dispatch('loadFields')
+  },
   methods: {
     showModalWindow() {
       this.isVisibleModalWindow = true
@@ -55,8 +54,8 @@ export default {
     },
   },
   computed: {
-    getFieldData() {
-      return this.$store.getters.getData
+    fields() {
+      return this.$store.getters.getFields
     },
   },
 }

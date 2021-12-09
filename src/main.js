@@ -2,34 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import firebase from 'firebase/app'
+import {authApp} from './firebase'
 import vuetify from './plugins/vuetify'
 import Vuelidate from 'vuelidate'
-import 'firebase/auth'
-import 'firebase/database'
+import {onAuthStateChanged} from '@firebase/auth'
 import 'material-design-icons-iconfont'
 
 Vue.use(Vuelidate)
-
 Vue.config.productionTip = false
-
-//инициализация firebase
-firebase.initializeApp({
-  apiKey: 'AIzaSyDX7FaQ08Mo1TTPoi3wnncK3Zdfg4NFS4g',
-  authDomain: 'hectare-cb91a.firebaseapp.com',
-  databaseURL:
-    'https://hectare-cb91a-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'hectare-cb91a',
-  storageBucket: 'hectare-cb91a.appspot.com',
-  messagingSenderId: '819835781964',
-  appId: '1:819835781964:web:005f7a33d74797486805e9',
-})
-
 let app
-
-firebase.auth().onAuthStateChanged(() => {
+onAuthStateChanged(authApp, () => {
   if (!app) {
-    app = new Vue({
+    new Vue({
       router,
       store,
       vuetify,
