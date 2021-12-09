@@ -13,9 +13,10 @@
         </div>
       </div>
       <HomeModal
-        v-if="isVisibleModalWindow"
+        v-if="modalAddField"
         :closeModalWindow="closeModalWindow"
       ></HomeModal>
+      <DeleteField v-if="modalDeleteField"></DeleteField>
     </div>
     <Loader v-if="loading"></Loader>
   </div>
@@ -26,10 +27,12 @@ import Sidebar from '@/components/sidebar/Sidebar'
 import FieldCard from '@/components/FieldCard'
 import Modal from '@/components/modal/Modal.vue'
 import HomeModal from '@/components/modal/HomeModal.vue'
+import DeleteField from '@/components/modal/DeleteField.vue'
 import Loader from '@/components/loader/Loader.vue'
 export default {
   name: 'home',
   components: {
+    DeleteField,
     FieldCard,
     Sidebar,
     Modal,
@@ -41,7 +44,8 @@ export default {
       fieldName: '',
       fieldStatus: '',
       fieldSquare: null,
-      isVisibleModalWindow: false,
+      modalAddField: false,
+      modalDeleteField: true,
     }
   },
   async mounted() {
@@ -49,10 +53,10 @@ export default {
   },
   methods: {
     showModalWindow() {
-      this.isVisibleModalWindow = true
+      this.modalAddField = true
     },
     closeModalWindow() {
-      this.isVisibleModalWindow = false
+      this.modalAddField = false
     },
   },
   computed: {
