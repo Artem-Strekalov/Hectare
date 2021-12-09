@@ -17,6 +17,7 @@
         :closeModalWindow="closeModalWindow"
       ></HomeModal>
     </div>
+    <Loader v-if="loading"></Loader>
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import Sidebar from '@/components/sidebar/Sidebar'
 import FieldCard from '@/components/FieldCard'
 import Modal from '@/components/modal/Modal.vue'
 import HomeModal from '@/components/modal/HomeModal.vue'
+import Loader from '@/components/loader/Loader.vue'
 export default {
   name: 'home',
   components: {
@@ -32,6 +34,7 @@ export default {
     Sidebar,
     Modal,
     HomeModal,
+    Loader,
   },
   data() {
     return {
@@ -42,7 +45,6 @@ export default {
     }
   },
   async mounted() {
-    console.log('w')
     await this.$store.dispatch('loadFields')
   },
   methods: {
@@ -56,6 +58,9 @@ export default {
   computed: {
     fields() {
       return this.$store.getters.getFields
+    },
+    loading() {
+      return this.$store.getters.getLoading
     },
   },
 }

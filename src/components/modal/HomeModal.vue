@@ -12,7 +12,7 @@
         />
       </div>
       <div class="form__name">
-        <p>Площадь:</p>
+        <p>Площадь в Га:</p>
         <input
           v-model="form.square"
           :class="{errorInput: $v.form.square.$error}"
