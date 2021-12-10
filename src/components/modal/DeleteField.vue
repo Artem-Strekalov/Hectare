@@ -1,11 +1,15 @@
 <template>
-  <Modal>
+  <Modal @closeModal="closeModalDeleteField">
     <div class="content">
       <h1 class="content__name">
-        Вы действительно хотите удалить это поле?
+        Вы действительно хотите удалить {{ selectedField.name }}?
       </h1>
-      <button class="content__btn">Отмена</button>
-      <button class="content__btn">Удалить</button>
+      <div class="content__block-btn">
+        <button class="content__btn" @click.prevent="closeModalDeleteField">
+          Отмена
+        </button>
+        <button class="content__btn" @click="removeField">Удалить</button>
+      </div>
     </div>
   </Modal>
 </template>
@@ -15,6 +19,21 @@ import Modal from './Modal.vue'
 export default {
   name: 'DeleteField',
   components: {Modal},
+  props: {
+    closeModalDeleteField: {
+      type: Function,
+    },
+    selectedField: {
+      type: Object,
+    },
+  },
+  methods: {
+    async removeField() {
+      await this.$store.dispatch('removeField', this.selectedField.id)
+      await this.$store.dispatch('loadFields')
+      this.closeModalDeleteField()
+    },
+  },
 }
 </script>
 
@@ -23,15 +42,18 @@ export default {
   width: 500px;
   height: 100px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
   &__name {
     margin: 0 auto;
-    
+  }
+  &__block-btn {
+    display: flex;
+    justify-content: space-around;
   }
   &__btn {
     width: 40%;
     height: 40px;
-    margin: 20px auto 20px auto;
     border: 1px solid #5ca450;
     background: #5ca450;
     border-radius: 10px;

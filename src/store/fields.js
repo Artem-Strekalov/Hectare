@@ -1,5 +1,5 @@
 import {db} from '../firebase'
-import {doc, setDoc, getDoc} from 'firebase/firestore'
+import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 import {v4 as uuidv4} from 'uuid'
 export default {
   state: {
@@ -46,6 +46,18 @@ export default {
         {merge: true},
       )
       commit('saveLoading', false)
+    },
+
+    //удаление участка
+    async removeField({dispatch, commit}, idField) {
+      commit('saveLoading', true)
+      const uid = await dispatch('getUid')
+      const path = doc(db, 'fields', `${uid}`)
+
+      await updateDoc(path, {
+        [`${idField}`]: deleteField(),
+      })
+      commit('saveLoading', true)
     },
   },
 
