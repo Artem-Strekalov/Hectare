@@ -26,10 +26,11 @@ const routes = [
     meta: {auth: true},
   },
   {
-    path: '/management',
+    path: '/management/:field',
     name: 'management',
     component: () => import('../views/Management.vue'),
     meta: {auth: true},
+    props: true,
   },
   {
     path: '/welcome',

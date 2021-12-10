@@ -201,5 +201,10 @@ export default {
       width: 50px;
     }
   }
+  button:hover {
+    border: 1px solid #5ca450;
+    background: #fff;
+    color: #5ca450;
+  }
 }
 </style>

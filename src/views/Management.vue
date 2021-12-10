@@ -7,7 +7,9 @@
           arrow_back
         </span>
         <span class="back-title">Назад</span>
-        <span class="mgt__header-back-name">Участок № 1, 100га</span>
+        <span class="mgt__header-back-name">
+          {{ currentField.name }}, {{ currentField.square }} га
+        </span>
       </div>
     </div>
     <div class="mgt__main">
@@ -53,10 +55,24 @@ export default {
   components: {
     Tillage,
   },
+  props: {
+    field: {
+      type: [Object, String],
+    },
+  },
   data() {
     return {
       navItem: 'tillage',
     }
+  },
+
+  async created() {
+    await this.$store.dispatch('recordCurrentField', this.field)
+  },
+  computed: {
+    currentField() {
+      return this.$store.getters.getCurrentFiled
+    },
   },
 }
 </script>

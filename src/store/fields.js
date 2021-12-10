@@ -4,6 +4,7 @@ import {v4 as uuidv4} from 'uuid'
 export default {
   state: {
     fields: [],
+    currentField: {},
     loading: false,
   },
 
@@ -16,6 +17,10 @@ export default {
     },
     saveLoading(state, status) {
       state.loading = status
+    },
+    saveCurrentField(state, field) {
+      console.log(field);
+      state.currentField = field
     },
   },
 
@@ -59,6 +64,11 @@ export default {
       })
       commit('saveLoading', true)
     },
+
+    //запись текущего участка
+    async recordCurrentField({commit}, field) {
+      await commit('saveCurrentField', field)
+    },
   },
 
   getters: {
@@ -67,6 +77,9 @@ export default {
     },
     getLoading(state) {
       return state.loading
+    },
+    getCurrentFiled(state) {
+      return state.currentField
     },
   },
 }
