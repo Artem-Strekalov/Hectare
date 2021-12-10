@@ -3,10 +3,15 @@
     <div class="content">
       <div class="content__block">
         <h2 class="content__block-name">{{ field.name }}</h2>
+        <span class="content__block-delete" @click.prevent="openModal(field)">
+          <i class="modal__close material-icons">close</i>
+        </span>
         <p class="content__block-square">Площадь: {{ field.square }} га</p>
         <p class="cars__block-status">Состояние: {{ field.status }}</p>
       </div>
-      <button class="content__btn" @click="goManagement">Управление</button>
+      <button class="content__btn" @click.prevent="goManagement">
+        Управление
+      </button>
     </div>
   </div>
 </template>
@@ -17,10 +22,16 @@ export default {
     field: {
       type: Object,
     },
+    openModal: {
+      type: Function,
+    },
   },
   methods: {
     goManagement() {
       this.$router.push('/management')
+    },
+    test() {
+      console.log(this.field)
     },
   },
 }
@@ -56,6 +67,13 @@ export default {
     }
     &__status {
       white-space: nowrap;
+    }
+    &-delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: #5ca450;
+      cursor: pointer;
     }
   }
   &__btn {

@@ -5,18 +5,29 @@
     </div>
     <div class="home__main">
       <div class="home__main-content">
-        <FieldCard v-for="field in fields" :key="field.id" :field="field" />
+        <FieldCard
+          v-for="field in fields"
+          :key="field.id"
+          :field="field"
+          :openModal="openModalDeleteField"
+        />
         <div class="home__addField">
-          <div class="home__addField-content" @click="showModalWindow">
+          <div class="home__addField-content" @click.prevent="showModalWindow">
             <img src="@/assets/image/svg/plus.svg" alt="" />
           </div>
         </div>
       </div>
       <HomeModal
-        v-if="isVisibleModalWindow"
+        v-if="modalAddField"
         :closeModalWindow="closeModalWindow"
       ></HomeModal>
+      <DeleteField
+        v-if="modalDeleteField"
+        :closeModalDeleteField="closeModalDeleteField"
+        :selectedField="selectedField"
+      ></DeleteField>
     </div>
+    <Loader v-if="loading"></Loader>
   </div>
 </template>
 
@@ -25,37 +36,52 @@ import Sidebar from '@/components/sidebar/Sidebar'
 import FieldCard from '@/components/FieldCard'
 import Modal from '@/components/modal/Modal.vue'
 import HomeModal from '@/components/modal/HomeModal.vue'
+import DeleteField from '@/components/modal/DeleteField.vue'
+import Loader from '@/components/loader/Loader.vue'
 export default {
   name: 'home',
   components: {
+    DeleteField,
     FieldCard,
     Sidebar,
     Modal,
     HomeModal,
+    Loader,
   },
   data() {
     return {
       fieldName: '',
       fieldStatus: '',
       fieldSquare: null,
-      isVisibleModalWindow: false,
+      modalAddField: false,
+      modalDeleteField: false,
+      selectedField: null,
     }
   },
   async mounted() {
-    console.log('w')
     await this.$store.dispatch('loadFields')
   },
   methods: {
+    closeModalDeleteField() {
+      this.modalDeleteField = false
+    },
+    openModalDeleteField(field) {
+      this.selectedField = field
+      this.modalDeleteField = true
+    },
     showModalWindow() {
-      this.isVisibleModalWindow = true
+      this.modalAddField = true
     },
     closeModalWindow() {
-      this.isVisibleModalWindow = false
+      this.modalAddField = false
     },
   },
   computed: {
     fields() {
       return this.$store.getters.getFields
+    },
+    loading() {
+      return this.$store.getters.getLoading
     },
   },
 }

@@ -43,7 +43,7 @@
           :showError="$v.regForm.repeatPassword.$error"
           :textError="errorRepeatPassword"
         />
-        <ButtonGreen>Войти</ButtonGreen>
+        <ButtonGreen>Зарегистрироваться</ButtonGreen>
         <div class="reg__nav">
           <p class="reg__nav-link reg__nav-password" @click="goAuth">
             У меня уже есть аккаунт
