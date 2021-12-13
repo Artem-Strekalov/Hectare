@@ -1,14 +1,16 @@
 <template>
   <div class="mgt">
     <div class="mgt__header">
-      <h1 class="mgt__header-title">ГЕКТАР</h1>
+      <h1 class="mgt__header-title" @click.prevent="goHome">ГЕКТАР</h1>
       <div class="mgt__header-back">
-        <span class="material-icons arrow">
-          arrow_back
-        </span>
-        <span class="back-title">Назад</span>
+        <div class="mgt__back" @click.prevent="goHome">
+          <span class="material-icons arrow">
+            arrow_back
+          </span>
+          <span class="back-title">Назад</span>
+        </div>
         <span class="mgt__header-back-name">
-          {{ currentField.name }}, {{ currentField.square }} га
+          {{ nameField }}, {{ squareField }} га
         </span>
       </div>
     </div>
@@ -47,31 +49,52 @@
       </div>
       <Tillage v-if="navItem === 'tillage'"></Tillage>
     </div>
+    <Loader v-if="loading"></Loader>
   </div>
 </template>
 <script>
 import Tillage from '@/components/management/Tillage.vue'
+import Loader from '@/components/loader/Loader.vue'
+import {db} from '../firebase'
+import {doc, getDoc} from 'firebase/firestore'
 export default {
   components: {
+    Loader,
     Tillage,
-  },
-  props: {
-    field: {
-      type: [Object, String],
-    },
   },
   data() {
     return {
       navItem: 'tillage',
+      idFiled: null,
+      nameField: '',
+      squareField: '',
     }
   },
-
-  async created() {
-    await this.$store.dispatch('recordCurrentField', this.field)
+  async mounted() {
+    this.idFiled = this.$route.query.id
+    await this.getField()
+  },
+  methods: {
+    async getField() {
+      this.$store.commit('saveLoading', true)
+      const uid = await this.$store.dispatch('getUid')
+      const path = await doc(db, 'fields', `${uid}`)
+      const dataFields = await getDoc(path)
+      if (dataFields.exists()) {
+        const field = dataFields.data()[this.idFiled]
+        this.nameField = field.name
+        this.squareField = field.square
+      }
+      this.$store.commit('saveLoading', false)
+      return
+    },
+    goHome() {
+      this.$router.push({name: 'home'})
+    },
   },
   computed: {
-    currentField() {
-      return this.$store.getters.getCurrentFiled
+    loading() {
+      return this.$store.getters.getLoading
     },
   },
 }
@@ -88,7 +111,12 @@ export default {
     display: flex;
     align-items: center;
     width: 100%;
+    .mgt__back {
+      display: flex;
+      align-items: center;
+    }
     &-title {
+      cursor: pointer;
       font-family: Montserrat;
       font-size: 36px;
       color: #5ca450;
