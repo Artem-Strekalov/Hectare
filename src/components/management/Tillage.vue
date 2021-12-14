@@ -1,6 +1,9 @@
 <template>
   <div class="tillage">
     <div class="tillage__cart" v-for="item in tillage" :key="item.id">
+      <span class="tillage__close" @click.prevent="removeTillage(item.id)">
+        <i class="material-icons">close</i>
+      </span>
       <h2 class="tillage__cart-name">Дискование</h2>
       <div class="tillage__cart-content">
         <p class="tillage__cart-content-item">
@@ -127,6 +130,14 @@ export default {
       await this.$store.dispatch('loadTillageCart', this.idField)
       this.showForm = false
     },
+    async removeTillage(idTillage) {
+      const dataId = {
+        idField: this.idField,
+        idTillage,
+      }
+      await this.$store.dispatch('removeTillage', dataId)
+      await this.$store.dispatch('loadTillageCart', this.idField)
+    },
   },
   computed: {
     tillage() {
@@ -147,6 +158,18 @@ export default {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 30px;
+    position: relative;
+    .tillage__close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: red;
+      cursor: pointer;
+      opacity: 0.3;
+    }
+    .tillage__close:hover {
+      opacity: 1;
+    }
     &-name {
       width: 100%;
       font-weight: 500;
@@ -218,6 +241,7 @@ export default {
     display: flex;
     align-items: center;
     white-space: nowrap;
+
     .tillage__dash {
       margin: 15px 10px 0 10px;
       width: 20px;

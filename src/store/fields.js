@@ -13,14 +13,16 @@ export default {
       state.fields = Object.values(fields)
     },
     saveTillage(state, data) {
-      console.log(Object.values(data))
-      state.tillage = data
+      state.tillage = Object.values(data)
+    },
+    saveLoading(state, status) {
+      state.loading = status
     },
     clearFields(state) {
       state.fields = []
     },
-    saveLoading(state, status) {
-      state.loading = status
+    clearTillage(state) {
+      state.tillage = []
     },
   },
 
@@ -82,21 +84,27 @@ export default {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const idCart = uuidv4()
-      const path = await doc(db, 'fields', `${uid}`, 'management', `${idField}`)
+      const path = await doc(
+        db,
+        'fields',
+        `${uid}`,
+        'management',
+        `${idField}`,
+        'tillage',
+        '2021',
+      )
       await setDoc(
         path,
         {
-          tillage: {
-            [`${idCart}`]: {
-              id: idCart,
-              typeTillage,
-              weather,
-              tillageDepth,
-              technics,
-              startTillage,
-              endTillage,
-              notes,
-            },
+          [`${idCart}`]: {
+            id: idCart,
+            typeTillage,
+            weather,
+            tillageDepth,
+            technics,
+            startTillage,
+            endTillage,
+            notes,
           },
         },
         {merge: true},
@@ -108,11 +116,38 @@ export default {
     async loadTillageCart({dispatch, commit}, idField) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
-      const path = await doc(db, 'fields', `${uid}`, 'management', `${idField}`)
+      const path = await doc(
+        db,
+        'fields',
+        `${uid}`,
+        'management',
+        `${idField}`,
+        'tillage',
+        '2021',
+      )
       const dataTillage = await getDoc(path)
       if (dataTillage.exists()) {
-        commit('saveTillage', dataTillage.data().tillage)
+        commit('saveTillage', dataTillage.data())
       }
+      commit('saveLoading', false)
+    },
+
+    //удаление данных tillage
+    async removeTillage({dispatch, commit}, {idField, idTillage}) {
+      commit('saveLoading', true)
+      const uid = await dispatch('getUid')
+      const path = await doc(
+        db,
+        'fields',
+        `${uid}`,
+        'management',
+        `${idField}`,
+        'tillage',
+        '2021',
+      )
+      await updateDoc(path, {
+        [`${idTillage}`]: deleteField(),
+      })
       commit('saveLoading', false)
     },
   },

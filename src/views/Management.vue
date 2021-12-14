@@ -47,7 +47,7 @@
           </li>
         </ul>
       </div>
-      <Tillage v-if="navItem === 'tillage'" ></Tillage>
+      <Tillage v-if="navItem === 'tillage'"></Tillage>
     </div>
     <Loader v-if="loading"></Loader>
   </div>
@@ -73,6 +73,9 @@ export default {
   async mounted() {
     this.idField = await this.$route.query.id
     await this.getField()
+  },
+  destroyed() {
+    this.$store.commit('clearTillage')
   },
   methods: {
     async getField() {
