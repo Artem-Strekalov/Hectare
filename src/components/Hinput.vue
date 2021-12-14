@@ -1,7 +1,12 @@
 <template>
   <div class="hinput">
     <label class="hinput__label" for="inp">{{ name }}</label>
-    <input class="hinput__input" id="inp" :type="type" />
+    <input
+      class="hinput__input"
+      id="inp"
+      :type="type"
+      @input="$emit('input', $event.target.value)"
+    />
   </div>
 </template>
 <script>

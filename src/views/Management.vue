@@ -47,7 +47,7 @@
           </li>
         </ul>
       </div>
-      <Tillage v-if="navItem === 'tillage'"></Tillage>
+      <Tillage v-if="navItem === 'tillage'" ></Tillage>
     </div>
     <Loader v-if="loading"></Loader>
   </div>
@@ -65,13 +65,13 @@ export default {
   data() {
     return {
       navItem: 'tillage',
-      idFiled: null,
+      idField: null,
       nameField: '',
       squareField: '',
     }
   },
   async mounted() {
-    this.idFiled = this.$route.query.id
+    this.idField = await this.$route.query.id
     await this.getField()
   },
   methods: {
@@ -81,7 +81,7 @@ export default {
       const path = await doc(db, 'fields', `${uid}`)
       const dataFields = await getDoc(path)
       if (dataFields.exists()) {
-        const field = dataFields.data()[this.idFiled]
+        const field = dataFields.data()[this.idField]
         this.nameField = field.name
         this.squareField = field.square
       }

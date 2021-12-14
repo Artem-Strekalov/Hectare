@@ -4,12 +4,17 @@ import {v4 as uuidv4} from 'uuid'
 export default {
   state: {
     fields: [],
+    tillage: [],
     loading: false,
   },
 
   mutations: {
     saveFields(state, fields) {
       state.fields = Object.values(fields)
+    },
+    saveTillage(state, data) {
+      console.log(Object.values(data))
+      state.tillage = data
     },
     clearFields(state) {
       state.fields = []
@@ -31,7 +36,6 @@ export default {
       }
       commit('saveLoading', false)
     },
-    // получение одного поля
 
     //добавление участка
     async addField({commit, dispatch}, {name, status, square}) {
@@ -60,6 +64,57 @@ export default {
       })
       commit('saveLoading', true)
     },
+
+    //добаление данных tillage
+    async addTillage(
+      {commit, dispatch},
+      {
+        idField,
+        typeTillage,
+        weather,
+        tillageDepth,
+        technics,
+        startTillage,
+        endTillage,
+        notes,
+      },
+    ) {
+      commit('saveLoading', true)
+      const uid = await dispatch('getUid')
+      const idCart = uuidv4()
+      const path = await doc(db, 'fields', `${uid}`, 'management', `${idField}`)
+      await setDoc(
+        path,
+        {
+          tillage: {
+            [`${idCart}`]: {
+              id: idCart,
+              typeTillage,
+              weather,
+              tillageDepth,
+              technics,
+              startTillage,
+              endTillage,
+              notes,
+            },
+          },
+        },
+        {merge: true},
+      )
+      commit('saveLoading', false)
+    },
+
+    //получение данных tillage
+    async loadTillageCart({dispatch, commit}, idField) {
+      commit('saveLoading', true)
+      const uid = await dispatch('getUid')
+      const path = await doc(db, 'fields', `${uid}`, 'management', `${idField}`)
+      const dataTillage = await getDoc(path)
+      if (dataTillage.exists()) {
+        commit('saveTillage', dataTillage.data().tillage)
+      }
+      commit('saveLoading', false)
+    },
   },
 
   getters: {
@@ -68,6 +123,9 @@ export default {
     },
     getLoading(state) {
       return state.loading
+    },
+    getTillage(state) {
+      return state.tillage
     },
   },
 }

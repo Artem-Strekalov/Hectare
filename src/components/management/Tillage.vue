@@ -1,51 +1,76 @@
 <template>
   <div class="tillage">
-    <div class="tillage__cart">
+    <div class="tillage__cart" v-for="item in tillage" :key="item.id">
       <h2 class="tillage__cart-name">Дискование</h2>
       <div class="tillage__cart-content">
         <p class="tillage__cart-content-item">
-          Период обработки: c 15.08.2021 по 20.08.2021
+          Период обработки: c {{ item.startTillage }} по {{ item.endTillage }}
         </p>
-        <p class="tillage__cart-content-item">Погодные условия: Сухая погода</p>
         <p class="tillage__cart-content-item">
-          Используемая техника: Трактор МТЗ, бдт-2,5
+          Погодные условия: {{ item.weather }}
         </p>
-        <p class="tillage__cart-content-item">Глубина обработки: 10см</p>
+        <p class="tillage__cart-content-item">
+          Используемая техника: {{ item.technics }}
+        </p>
+        <p class="tillage__cart-content-item">
+          Глубина обработки: {{ item.tillageDepth }}
+        </p>
       </div>
       <div class="tillage__cart-content">
         <p class="tillage__cart-content-item">Ваши заметки:</p>
         <div class="tillage__cart-area">
-          Обработка происходила в сырую погоду, глубина обработки 10см
+          {{ item.notes }}
         </div>
         <button class="tillage__btn tillage__btnCart">Редактировать</button>
       </div>
     </div>
-    <form class="tillage__form" v-if="showForm">
+    <form class="tillage__form" v-if="showForm" @submit.prevent="addTillage">
       <div class="tillage__form-content-left">
         <Hinput
           class="tillage__form-left"
           name="Укажите тип обработки"
+          v-model="typeTillage"
         ></Hinput>
         <div class="tillage__form-section">
-          <Hinput class="tillage__form-left" name="Погодные условия"></Hinput>
+          <Hinput
+            class="tillage__form-left"
+            name="Погодные условия"
+            v-model="weather"
+          ></Hinput>
           <div class="tillage__dashCart"></div>
-          <Hinput class="tillage__form-left" name="Глубина обработки"></Hinput>
+          <Hinput
+            class="tillage__form-left"
+            name="Глубина обработки"
+            v-model="tillageDepth"
+          ></Hinput>
         </div>
       </div>
       <div class="tillage__form-content-right">
         <Hinput
           class="tillage__form-left"
           name="Укажите используемую технику"
+          v-model="technics"
         ></Hinput>
         <div class="tillage__form-section">
-          <Hinput name="Начало обработки" type="date"></Hinput>
+          <Hinput
+            name="Начало обработки"
+            type="date"
+            v-model="startTillage"
+          ></Hinput>
           <div class="tillage__dash"></div>
-          <Hinput name="Окончание обработки" type="date"></Hinput>
+          <Hinput
+            name="Окончание обработки"
+            type="date"
+            v-model="endTillage"
+          ></Hinput>
         </div>
       </div>
       <div class="tillage__form-areaBlock">
         <p class="tillage__form-areaBlock-name">Ваши заметки:</p>
-        <textarea class="tillage__form-areaBlock-area"></textarea>
+        <textarea
+          class="tillage__form-areaBlock-area"
+          v-model="notes"
+        ></textarea>
       </div>
       <button type="submit" class="tillage__btn tillage__btnAdd">
         Добавить
@@ -69,10 +94,44 @@ export default {
   components: {
     Hinput,
   },
+
   data() {
     return {
       showForm: false,
+      typeTillage: null,
+      weather: null,
+      tillageDepth: null,
+      technics: null,
+      startTillage: null,
+      endTillage: null,
+      notes: null,
     }
+  },
+  async mounted() {
+    this.idField = this.$route.query.id
+    await this.$store.dispatch('loadTillageCart', this.idField)
+  },
+  methods: {
+    async addTillage() {
+      const dataTillage = {
+        idField: this.idField,
+        typeTillage: this.typeTillage,
+        weather: this.weather,
+        tillageDepth: this.weather,
+        technics: this.technics,
+        startTillage: this.startTillage,
+        endTillage: this.endTillage,
+        notes: this.notes,
+      }
+      await this.$store.dispatch('addTillage', dataTillage)
+      await this.$store.dispatch('loadTillageCart', this.idField)
+      this.showForm = false
+    },
+  },
+  computed: {
+    tillage() {
+      return this.$store.getters.getTillage
+    },
   },
 }
 </script>
