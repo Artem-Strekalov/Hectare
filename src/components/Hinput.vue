@@ -5,6 +5,8 @@
       class="hinput__input"
       id="inp"
       :type="type"
+      v-bind="$attrs"
+      :value="value"
       @input="$emit('input', $event.target.value)"
     />
   </div>
@@ -13,6 +15,9 @@
 export default {
   name: 'Hinput',
   props: {
+    value: {
+      default: null,
+    },
     name: String,
     type: {
       type: String,

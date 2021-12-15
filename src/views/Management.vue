@@ -47,7 +47,14 @@
           </li>
         </ul>
       </div>
-      <Tillage v-if="navItem === 'tillage'"></Tillage>
+
+      <div class="test">
+        <vuescroll :ops="ops">
+          <Tillage v-if="navItem === 'tillage'"></Tillage>
+        </vuescroll>
+      </div>
+
+      <!-- <Tillage v-if="navItem === 'tillage'"></Tillage> -->
     </div>
     <Loader v-if="loading"></Loader>
   </div>
@@ -55,12 +62,14 @@
 <script>
 import Tillage from '@/components/management/Tillage.vue'
 import Loader from '@/components/loader/Loader.vue'
+import vuescroll from 'vuescroll'
 import {db} from '../firebase'
 import {doc, getDoc} from 'firebase/firestore'
 export default {
   components: {
     Loader,
     Tillage,
+    vuescroll,
   },
   data() {
     return {
@@ -68,6 +77,18 @@ export default {
       idField: null,
       nameField: '',
       squareField: '',
+      ops: {
+        bar: {
+          onlyShowBarOnScroll: true,
+          keepShow: false,
+          background: '#5ca450',
+          opacity: 0.8,
+          hoverStyle: false,
+          specifyBorderRadius: false,
+          minSize: 0.1,
+          size: '8px',
+        },
+      },
     }
   },
   async mounted() {
@@ -103,6 +124,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.test {
+  width: 100%;
+  height: inherit;
+}
 .mgt {
   font-family: 'Inter', arial;
   box-sizing: border-box;
@@ -110,6 +135,7 @@ export default {
   height: 100vh;
   background: #e3e8e2;
   padding: 10px;
+  overflow: hidden;
   &__header {
     display: flex;
     align-items: center;
@@ -156,7 +182,7 @@ export default {
     height: calc(100% - 60px);
     background: #fff;
     border-radius: 10px;
-    padding: 25px;
+    padding: 25px 10px 25px 25px;
     &-nav {
       width: 100%;
       border-bottom: 1px solid #f1f1f1;

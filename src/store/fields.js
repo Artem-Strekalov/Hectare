@@ -1,6 +1,7 @@
 import {db} from '../firebase'
 import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 import {v4 as uuidv4} from 'uuid'
+
 export default {
   state: {
     fields: [],
@@ -48,7 +49,13 @@ export default {
       await setDoc(
         path,
         {
-          [`${idField}`]: {id: idField, name, status, square},
+          [`${idField}`]: {
+            id: idField,
+            dateCreation: Date.now(),
+            name,
+            status,
+            square,
+          },
         },
         {merge: true},
       )
@@ -98,6 +105,7 @@ export default {
         {
           [`${idCart}`]: {
             id: idCart,
+            dateCreation: Date.now(),
             typeTillage,
             weather,
             tillageDepth,
@@ -150,17 +158,54 @@ export default {
       })
       commit('saveLoading', false)
     },
+    // изменение данных tillage
+    async changeTillage(
+      {dispatch, commit},
+      {
+        idTillage,
+        idField,
+        typeTillage,
+        weather,
+        tillageDepth,
+        technics,
+        startTillage,
+        endTillage,
+        notes,
+      },
+    ) {
+      commit('saveLoading', true)
+      const uid = await dispatch('getUid')
+      const path = await doc(
+        db,
+        'fields',
+        `${uid}`,
+        'management',
+        `${idField}`,
+        'tillage',
+        '2021',
+      )
+      await updateDoc(path, {
+        [`${idTillage}.notes`]: notes,
+        [`${idTillage}.weather`]: weather,
+        [`${idTillage}.technics`]: technics,
+        [`${idTillage}.endTillage`]: endTillage,
+        [`${idTillage}.typeTillage`]: typeTillage,
+        [`${idTillage}.tillageDepth`]: tillageDepth,
+        [`${idTillage}.startTillage`]: startTillage,
+      })
+      commit('saveLoading', false)
+    },
   },
 
   getters: {
     getFields(state) {
-      return state.fields
+      return state.fields.sort((a, b) => a.dateCreation - b.dateCreation)
     },
     getLoading(state) {
       return state.loading
     },
     getTillage(state) {
-      return state.tillage
+      return state.tillage.sort((a, b) => b.dateCreation - a.dateCreation)
     },
   },
 }
