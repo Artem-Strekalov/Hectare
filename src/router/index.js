@@ -30,6 +30,7 @@ const routes = [
     name: 'management',
     component: () => import('../views/Management.vue'),
     meta: {auth: true},
+  
   },
   {
     path: '/welcome',

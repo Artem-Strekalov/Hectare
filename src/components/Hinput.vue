@@ -1,13 +1,23 @@
 <template>
   <div class="hinput">
     <label class="hinput__label" for="inp">{{ name }}</label>
-    <input class="hinput__input" id="inp" :type="type" />
+    <input
+      class="hinput__input"
+      id="inp"
+      :type="type"
+      v-bind="$attrs"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
+    />
   </div>
 </template>
 <script>
 export default {
   name: 'Hinput',
   props: {
+    value: {
+      default: null,
+    },
     name: String,
     type: {
       type: String,
