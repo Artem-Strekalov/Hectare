@@ -26,8 +26,8 @@
           </li>
           <li
             class="mgt__main-nav-item"
-            :class="{mgt__itemActive: navItem === 'sawing'}"
-            @click.prevent="navItem = 'sawing'"
+            :class="{mgt__itemActive: navItem === 'sowing'}"
+            @click.prevent="navItem = 'sowing'"
           >
             Сев
           </li>
@@ -48,9 +48,10 @@
         </ul>
       </div>
 
-      <div class="test">
+      <div class="mgt__content">
         <vuescroll :ops="ops">
           <Tillage v-if="navItem === 'tillage'"></Tillage>
+          <Sowing v-if="navItem === 'sowing'"></Sowing>
         </vuescroll>
       </div>
 
@@ -61,12 +62,14 @@
 </template>
 <script>
 import Tillage from '@/components/management/Tillage.vue'
+import Sowing from '@/components/management/Sowing.vue'
 import Loader from '@/components/loader/Loader.vue'
 import vuescroll from 'vuescroll'
 import {db} from '../firebase'
 import {doc, getDoc} from 'firebase/firestore'
 export default {
   components: {
+    Sowing,
     Loader,
     Tillage,
     vuescroll,
@@ -124,7 +127,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.test {
+.mgt__content {
   width: 100%;
   height: inherit;
 }
