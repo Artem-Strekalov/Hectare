@@ -76,7 +76,7 @@ export default {
   },
   data() {
     return {
-      navItem: 'tillage',
+      navItem: 'sowing',
       idField: null,
       nameField: '',
       squareField: '',

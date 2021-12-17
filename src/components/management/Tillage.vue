@@ -7,21 +7,27 @@
       <h2 class="tillage__cart-name">{{ item.typeTillage }}</h2>
       <div class="tillage__cart-content">
         <p class="tillage__cart-content-item">
-          Период обработки: c {{ item.startTillage }} по
+          <span class="tillage__span"> Глубина обработки:</span>
+          {{ item.tillageDepth }}
+        </p>
+        <p class="tillage__cart-content-item">
+          <span class="tillage__span">Погодные условия:</span>
+          {{ item.weather }}
+        </p>
+        <p class="tillage__cart-content-item">
+          <span class="tillage__span"> Используемая техника:</span>
+          {{ item.technics }}
+        </p>
+        <p class="tillage__cart-content-item">
+          <span class="tillage__span"> Период обработки: </span>
+          c {{ item.startTillage }} по
           {{ item.endTillage }}
-        </p>
-        <p class="tillage__cart-content-item">
-          Погодные условия: {{ item.weather }}
-        </p>
-        <p class="tillage__cart-content-item">
-          Используемая техника: {{ item.technics }}
-        </p>
-        <p class="tillage__cart-content-item">
-          Глубина обработки: {{ item.tillageDepth }}
         </p>
       </div>
       <div class="tillage__cart-content">
-        <p class="tillage__cart-content-item">Ваши заметки:</p>
+        <p class="tillage__cart-content-item">
+          <span class="tillage__span"> Ваши заметки: </span>
+        </p>
         <div class="tillage__cart-area">
           {{ item.notes }}
         </div>
@@ -226,6 +232,7 @@ export default {
     margin-bottom: 30px;
     position: relative;
     margin-right: 30px;
+
     .tillage__close {
       position: absolute;
       right: 10px;
@@ -240,6 +247,7 @@ export default {
     &-name {
       width: 100%;
       font-weight: 500;
+      font-size: 16px;
       margin-bottom: 20px;
     }
     &-content {
@@ -248,13 +256,14 @@ export default {
       width: 50%;
       &-item {
         color: #5a5a5a;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
     }
     &-area {
       margin-top: 5px;
       width: 100%;
       border-radius: 5px;
+      margin-bottom: 10px;
     }
     &-btn {
       margin: auto 0 0 auto;

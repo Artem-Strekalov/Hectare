@@ -30,7 +30,6 @@ export default {
 .hinput {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
   width: 100%;
   &__label {
     font-size: 12px;

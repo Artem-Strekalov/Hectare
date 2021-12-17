@@ -7,16 +7,32 @@
       <h2 class="sowing__cart-name">Сев Пшеница</h2>
       <div class="sowing__cart-content">
         <p class="sowing__cart-content-item">
-          Период обработки: c 30.09.2021 по 20.10.21 г
+          <span class="sowing__span">Посеяно:</span> 50 га
         </p>
         <p class="sowing__cart-content-item">
-          Погодные условия: Влага
+          <span class="sowing__span">Культура:</span> Пшеница
         </p>
         <p class="sowing__cart-content-item">
-          Используемая техника: Мтз
+          <span class="sowing__span">Сорт:</span> Зустрич
         </p>
         <p class="sowing__cart-content-item">
-          Глубина обработки: 12мм
+          <span class="sowing__span">Норма высева:</span> 250 кг/га
+        </p>
+        <p class="sowing__cart-content-item">
+          <span class="sowing__span">Удобрение:</span> Амафос
+        </p>
+        <p class="sowing__cart-content-item">
+          <span class="sowing__span">Норма высева удобрения:</span> 30 кг/га
+        </p>
+        <p class="sowing__cart-content-item">
+          <span class="sowing__span">Погодные условия:</span> Влага 15 мм
+        </p>
+        <p class="sowing__cart-content-item">
+          <span class="sowing__span">Используемая техника:</span> Влага 15 мм
+        </p>
+        <p class="sowing__cart-content-item">
+          <span class="sowing__span">Период сева:</span> c 30.09.2021 по
+          20.10.21 г
         </p>
       </div>
       <div class="sowing__cart-content">
@@ -29,47 +45,34 @@
         </button>
       </div>
     </div>
-    <form class="sowing__form" >
-      <div class="sowing__form-content-left">
-        <Hinput
-          class="sowing__form-left"
-          name="Укажите тип обработки"
-          v-model="typeTillage"
-        ></Hinput>
-        <div class="sowing__form-section">
-          <Hinput
-            class="sowing__form-left"
-            name="Погодные условия"
-            v-model="weather"
-          ></Hinput>
-          <div class="sowing__dashCart"></div>
-          <Hinput
-            class="sowing__form-left"
-            name="Глубина обработки"
-            v-model="sowingDepth"
-          ></Hinput>
-        </div>
-      </div>
-      <div class="sowing__form-content-right">
-        <Hinput
-          class="sowing__form-left"
-          name="Укажите используемую технику"
-          v-model="technics"
-        ></Hinput>
-        <div class="sowing__form-section">
-          <Hinput
-            name="Начало обработки"
-            type="date"
-            v-model="startTillage"
-          ></Hinput>
+    <form class="sowing__form">
+      <div class="sowing__form-block">
+        <div class="sowing__form-date">
+          <Hinput name="Начало сева" type="date"></Hinput>
           <div class="sowing__dash"></div>
-          <Hinput
-            name="Окончание обработки"
-            type="date"
-            v-model="endTillage"
-          ></Hinput>
+          <Hinput name="Окончание сева" type="date"></Hinput>
         </div>
+        <Hinput
+          class="middleInput"
+          name="Укажите используемую технику"
+        ></Hinput>
+        <Hinput name="Укажите используемую технику"></Hinput>
       </div>
+
+      <div class="sowing__form-block">
+        <Hinput name="Культура"></Hinput>
+        <Hinput class="middleInput" name="Наименование сорта"></Hinput>
+        <Hinput name="Укажите норму высева в кг/га"></Hinput>
+      </div>
+      <div class="sowing__form-block">
+        <Hinput name="Удобрение"></Hinput>
+        <Hinput
+          class="middleInput"
+          name="Норма высева удобрения в кг/га"
+        ></Hinput>
+        <Hinput name="Погодные условия"></Hinput>
+      </div>
+
       <div class="sowing__form-areaBlock">
         <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
         <textarea
@@ -77,16 +80,10 @@
           v-model="notes"
         ></textarea>
       </div>
-      <button
-        class="sowing__btn sowing__btnAdd"
-      >
+      <button class="sowing__btn sowing__btnAdd">
         Сохранить
       </button>
-      <button
-       
-        type="submit"
-        class="sowing__btn sowing__btnAdd"
-      >
+      <button type="submit" class="sowing__btn sowing__btnAdd">
         Добавить
       </button>
       <button
@@ -102,6 +99,13 @@
   </div>
 </template>
 <script>
+import Hinput from '../Hinput.vue'
+export default {
+  name: 'Sowing',
+  components: {
+    Hinput,
+  },
+}
 /* import Hinput from '../Hinput.vue'
 import vuescroll from 'vuescroll'
 export default {
@@ -220,6 +224,7 @@ export default {
     margin-bottom: 30px;
     position: relative;
     margin-right: 30px;
+
     .sowing__close {
       position: absolute;
       right: 10px;
@@ -242,7 +247,7 @@ export default {
       width: 50%;
       &-item {
         color: #5a5a5a;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
     }
     &-area {
@@ -263,22 +268,27 @@ export default {
   &__form {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 30px;
+    margin: 30px 0;
     width: 100%;
-    &-content-right {
-      padding-left: 10px;
-      width: 50%;
-    }
-    &-content-left {
-      padding-right: 10px;
-      width: 50%;
-    }
-    &-left {
+    &-block {
+      width: 100%;
+      display: flex;
       margin-bottom: 20px;
+      .sowing__form-date {
+       
+        display: flex;
+        align-items: center;
+      }
+      .sowing__dash {
+        width: 20px;
+        margin: 10px 10px 0 10px;
+        border-top: 2px solid #999;
+      }
+      .middleInput {
+        margin: 0 30px;
+      }
     }
-    &-right {
-      margin-top: 20px;
-    }
+
     &-areaBlock {
       display: flex;
       width: 50%;
