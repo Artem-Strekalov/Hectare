@@ -12,6 +12,7 @@
         <span class="mgt__header-back-name">
           {{ nameField }}, {{ squareField }} га
         </span>
+        <Select :options="years"></Select>
       </div>
     </div>
     <div class="mgt__main">
@@ -68,6 +69,7 @@ import Sowing from '@/components/management/Sowing.vue'
 import Harvest from '@/components/management/Harvest.vue'
 import Additionally from '@/components/management/Additionally.vue'
 import Loader from '@/components/loader/Loader.vue'
+import Select from '@/components/Select.vue'
 import vuescroll from 'vuescroll'
 import {db} from '../firebase'
 import {doc, getDoc} from 'firebase/firestore'
@@ -78,6 +80,7 @@ export default {
     Tillage,
     Harvest,
     Additionally,
+    Select,
     vuescroll,
   },
   data() {
@@ -86,6 +89,26 @@ export default {
       idField: null,
       nameField: '',
       squareField: '',
+      currentYear: 2021,
+      years: [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026,
+        2027,
+        2028,
+        2029,
+        2030,
+      ],
       ops: {
         bar: {
           onlyShowBarOnScroll: true,

@@ -70,10 +70,7 @@
         <Hinput name="Итоговый намолот"></Hinput>
       </div>
       <div class="harvest__form-block">
-        <Hinput
-          name="Используемая техника"
-         
-        ></Hinput>
+        <Hinput name="Используемая техника"></Hinput>
       </div>
       <div class="harvest__form-block"></div>
       <div class="harvest__form-areaBlock">
