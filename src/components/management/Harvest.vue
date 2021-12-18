@@ -1,96 +1,100 @@
 <template>
-  <div class="sowing">
-    <div class="sowing__cart">
-      <span class="sowing__close">
+  <div class="harvest">
+    <div class="harvest__cart">
+      <span class="harvest__close">
         <i class="material-icons">close</i>
       </span>
-      <h2 class="sowing__cart-name">Сев Пшеница</h2>
-      <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Посеяно:</span> 50 га
+      <h2 class="harvest__cart-name">Уборка урожая</h2>
+      <div class="harvest__cart-content">
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Площадь уборки:</span> 50 га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Культура:</span> Пшеница
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Культура:</span> Пшеница
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Сорт:</span> Зустрич
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Сорт:</span> Зустрич
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Норма высева:</span> 250 кг/га
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Средняя урожайность:</span> 50 ц/га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Удобрение:</span> Амафос
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Качество:</span> 3 класс
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Норма высева удобрения:</span> 30 кг/га
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Натура:</span> 800
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Погодные условия:</span> Влага 15 мм
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Средняя влажность на участке</span> 13
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Используемая техника:</span> Влага 15 мм
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Итоговый намолот</span> 600 т
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Период сева:</span> c 30.09.2021 по
+
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Используемая техника:</span> Трактор МТЗ,
+          опрыскиватель
+        </p>
+        <p class="harvest__cart-content-item">
+          <span class="harvest__span">Период уборки:</span> c 30.09.2021 по
           20.10.21 г
         </p>
       </div>
-      <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">Ваши заметки:</p>
-        <div class="sowing__cart-area">
+      <div class="harvest__cart-content">
+        <p class="harvest__cart-content-item">Ваши заметки:</p>
+        <div class="harvest__cart-area">
           Заметки
         </div>
-        <button class="sowing__btn sowing__btnCart">
+        <button class="harvest__btn harvest__btnCart">
           Редактировать
         </button>
       </div>
     </div>
-    <form class="sowing__form">
-      <div class="sowing__form-block">
-        <div class="sowing__form-date">
-          <Hinput name="Начало сева" type="date"></Hinput>
-          <div class="sowing__dash"></div>
-          <Hinput name="Окончание сева" type="date"></Hinput>
+
+    <form class="harvest__form">
+      <div class="harvest__form-block">
+        <div class="harvest__form-date">
+          <Hinput name="Начало уборки" type="date"></Hinput>
+          <div class="harvest__dash"></div>
+          <Hinput name="Окончание уборки" type="date"></Hinput>
         </div>
-        <Hinput
-          class="middleInput sowing__square"
-          name="Посеянная площадь в га"
-          type="number"
-        ></Hinput>
-        <Hinput name="Укажите используемую технику"></Hinput>
+        <Hinput class="middleInput" name="Культура"></Hinput>
+        <Hinput class="harvest__sort" name="Сорт"></Hinput>
+        <Hinput name="Средняя урожайность"></Hinput>
       </div>
 
-      <div class="sowing__form-block">
-        <Hinput name="Культура"></Hinput>
-        <Hinput class="middleInput" name="Наименование сорта"></Hinput>
-        <Hinput name="Укажите норму высева в кг/га"></Hinput>
+      <div class="harvest__form-block">
+        <Hinput name="Качество"></Hinput>
+        <Hinput class="middleInput" name="Натура"></Hinput>
+        <Hinput class="harvest__sort" name="Средняя влажность"></Hinput>
+        <Hinput name="Итоговый намолот"></Hinput>
       </div>
-      <div class="sowing__form-block">
-        <Hinput name="Удобрение"></Hinput>
+      <div class="harvest__form-block">
         <Hinput
-          class="middleInput"
-          name="Норма высева удобрения в кг/га"
-        ></Hinput>
-        <Hinput name="Погодные условия"></Hinput>
-      </div>
-      <div class="sowing__form-areaBlock">
-        <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
-        <textarea
-          class="sowing__form-areaBlock-area"
+          name="Используемая техника"
          
-        ></textarea>
+        ></Hinput>
       </div>
-      <button class="sowing__btn sowing__btnAdd">
+      <div class="harvest__form-block"></div>
+      <div class="harvest__form-areaBlock">
+        <p class="harvest__form-areaBlock-name">Ваши заметки:</p>
+        <textarea class="harvest__form-areaBlock-area"></textarea>
+      </div>
+      <button class="harvest__btn harvest__btnAdd">
         Сохранить
       </button>
-      <button type="submit" class="sowing__btn sowing__btnAdd">
+      <button type="submit" class="harvest__btn harvest__btnAdd">
         Добавить
       </button>
-      <button class="sowing__btn sowing__btnCancel">
+      <button
+        @click.prevent="closeForm()"
+        class="harvest__btn harvest__btnCancel"
+      >
         Отмена
       </button>
     </form>
-    <div class="sowing__addCart" >
+
+    <div class="harvest__addCart">
       <img src="@/assets/image/svg/plus.svg" alt="" />
     </div>
   </div>
@@ -98,12 +102,9 @@
 <script>
 import Hinput from '../Hinput.vue'
 export default {
-  name: 'Sowing',
+  name: 'Harvest',
   components: {
     Hinput,
-  },
-  data() {
-    return {}
   },
 }
 /* import Hinput from '../Hinput.vue'
@@ -122,7 +123,7 @@ export default {
       showChangeForm: false,
       typeTillage: '',
       weather: null,
-      sowingDepth: null,
+      harvestDepth: null,
       technics: null,
       startTillage: null,
       endTillage: null,
@@ -137,7 +138,7 @@ export default {
     clearForm() {
       this.typeTillage = null
       this.weather = null
-      this.sowingDepth = null
+      this.harvestDepth = null
       this.technics = null
       this.startTillage = null
       this.endTillage = null
@@ -153,7 +154,7 @@ export default {
         idField: this.idField,
         typeTillage: this.typeTillage,
         weather: this.weather,
-        sowingDepth: this.sowingDepth,
+        harvestDepth: this.harvestDepth,
         technics: this.technics,
         startTillage: this.startTillage,
         endTillage: this.endTillage,
@@ -174,7 +175,7 @@ export default {
     openRedactionForm(item) {
       this.typeTillage = item.typeTillage
       this.weather = item.weather
-      this.sowingDepth = item.sowingDepth
+      this.harvestDepth = item.harvestDepth
       this.technics = item.technics
       this.startTillage = item.startTillage
       this.endTillage = item.endTillage
@@ -190,7 +191,7 @@ export default {
         idField: this.idField,
         typeTillage: this.typeTillage,
         weather: this.weather,
-        sowingDepth: this.sowingDepth,
+        harvestDepth: this.harvestDepth,
         technics: this.technics,
         startTillage: this.startTillage,
         endTillage: this.endTillage,
@@ -202,14 +203,14 @@ export default {
     },
   },
   computed: {
-    sowing() {
+    harvest() {
       return this.$store.getters.getTillage
     },
   },
 } */
 </script>
 <style lang="scss" scoped>
-.sowing {
+.harvest {
   font-family: 'Inter', Arial;
   width: calc(100% - 15px);
   max-height: inherit;
@@ -225,7 +226,7 @@ export default {
     position: relative;
     margin-right: 30px;
 
-    .sowing__close {
+    .harvest__close {
       position: absolute;
       right: 10px;
       top: 10px;
@@ -233,7 +234,7 @@ export default {
       cursor: pointer;
       opacity: 0.3;
     }
-    .sowing__close:hover {
+    .harvest__close:hover {
       opacity: 1;
     }
     &-name {
@@ -274,11 +275,12 @@ export default {
       width: 100%;
       display: flex;
       margin-bottom: 20px;
-      .sowing__form-date {
+      .harvest__form-date {
         display: flex;
         align-items: center;
+        width: 100%;
       }
-      .sowing__dash {
+      .harvest__dash {
         width: 20px;
         margin: 10px 10px 0 10px;
         border-top: 2px solid #999;
@@ -286,7 +288,10 @@ export default {
       .middleInput {
         margin: 0 30px;
       }
-      .sowing__square {
+      .harvest__sort {
+        margin-right: 30px;
+      }
+      .harvest__square {
         max-width: 200px;
         width: 100%;
       }
@@ -311,21 +316,21 @@ export default {
       }
     }
   }
-  .sowing__form-section {
+  .harvest__form-section {
     display: flex;
     align-items: center;
     white-space: nowrap;
 
-    .sowing__dash {
+    .harvest__dash {
       margin: 15px 10px 0 10px;
       width: 20px;
       border-top: 2px solid #999;
     }
-    .sowing__dashCart {
+    .harvest__dashCart {
       margin: 10px;
     }
   }
-  .sowing__btn {
+  .harvest__btn {
     cursor: pointer;
     max-width: 130px;
     width: 100%;
@@ -336,7 +341,7 @@ export default {
     margin: auto 0 0 auto;
   }
 
-  .sowing__btnCancel {
+  .harvest__btnCancel {
     margin: auto 0 0 15px;
   }
   &__addCart {

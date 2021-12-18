@@ -1,96 +1,106 @@
 <template>
-  <div class="sowing">
-    <div class="sowing__cart">
-      <span class="sowing__close">
+  <div class="additional">
+    <div class="additional__cart">
+      <span class="additional__close">
         <i class="material-icons">close</i>
       </span>
-      <h2 class="sowing__cart-name">Сев Пшеница</h2>
-      <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Посеяно:</span> 50 га
+      <h2 class="additional__cart-name">Внесение удобрений</h2>
+      <div class="additional__cart-content">
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Обработано:</span> 50 га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Культура:</span> Пшеница
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Удобрение:</span> КАС
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Сорт:</span> Зустрич
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Производитель удобрения:</span> ЕвроХим
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Норма высева:</span> 250 кг/га
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Расход удобрения на га:</span> 100 л/га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Удобрение:</span> Амафос
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Тип СЗР:</span> Гербицид
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Норма высева удобрения:</span> 30 кг/га
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Производитель СЗР:</span> Торнадо 500
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Погодные условия:</span> Влага 15 мм
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Расход СЗР на га:</span> 5 л/га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Используемая техника:</span> Влага 15 мм
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Погодные условия:</span> Пасмурно
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Период сева:</span> c 30.09.2021 по
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Температура воздуха:</span> +18 C*
+        </p>
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Используемая техника:</span> Трактор
+          МТЗ, опрыскиватель
+        </p>
+        <p class="additional__cart-content-item">
+          <span class="additional__span">Период работы:</span> c 30.09.2021 по
           20.10.21 г
         </p>
       </div>
-      <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">Ваши заметки:</p>
-        <div class="sowing__cart-area">
+      <div class="additional__cart-content">
+        <p class="additional__cart-content-item">Ваши заметки:</p>
+        <div class="additional__cart-area">
           Заметки
         </div>
-        <button class="sowing__btn sowing__btnCart">
+        <button class="additional__btn additional__btnCart">
           Редактировать
         </button>
       </div>
     </div>
-    <form class="sowing__form">
-      <div class="sowing__form-block">
-        <div class="sowing__form-date">
-          <Hinput name="Начало сева" type="date"></Hinput>
-          <div class="sowing__dash"></div>
-          <Hinput name="Окончание сева" type="date"></Hinput>
+
+    <form class="additional__form">
+      <div class="additional__form-block">
+        <div class="additional__form-date">
+          <Hinput name="Начало работы" type="date"></Hinput>
+          <div class="additional__dash"></div>
+          <Hinput name="Окончание работы" type="date"></Hinput>
         </div>
-        <Hinput
-          class="middleInput sowing__square"
-          name="Посеянная площадь в га"
-          type="number"
-        ></Hinput>
-        <Hinput name="Укажите используемую технику"></Hinput>
+        <Hinput class="middleInput" name="Погодные условия"></Hinput>
+        <Hinput class="additional__temp" name="Температура воздуха"></Hinput>
+        <Hinput name="Обработано в га" type="number"></Hinput>
       </div>
 
-      <div class="sowing__form-block">
-        <Hinput name="Культура"></Hinput>
-        <Hinput class="middleInput" name="Наименование сорта"></Hinput>
-        <Hinput name="Укажите норму высева в кг/га"></Hinput>
-      </div>
-      <div class="sowing__form-block">
-        <Hinput name="Удобрение"></Hinput>
+      <div class="additional__form-block">
         <Hinput
-          class="middleInput"
-          name="Норма высева удобрения в кг/га"
+          name="Наименование удобрений"
+          placeholder="Например КАС"
         ></Hinput>
-        <Hinput name="Погодные условия"></Hinput>
+        <Hinput class="middleInput" name="Производитель удобрения"></Hinput>
+        <Hinput
+          name="Укажите норму внесения"
+          placeholder="Например 100 кг/га"
+        ></Hinput>
       </div>
-      <div class="sowing__form-areaBlock">
-        <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
-        <textarea
-          class="sowing__form-areaBlock-area"
-         
-        ></textarea>
+      <div class="additional__form-block">
+        <Hinput name="Тип СЗР" placeholder="Например Гербицид"></Hinput>
+        <Hinput class="middleInput" name="Производитель СЗР"></Hinput>
+        <Hinput name="Расход СЗР на га"></Hinput>
       </div>
-      <button class="sowing__btn sowing__btnAdd">
+      <div class="additional__form-block"></div>
+      <div class="additional__form-areaBlock">
+        <p class="additional__form-areaBlock-name">Ваши заметки:</p>
+        <textarea class="additional__form-areaBlock-area"></textarea>
+      </div>
+      <button class="additional__btn additional__btnAdd">
         Сохранить
       </button>
-      <button type="submit" class="sowing__btn sowing__btnAdd">
+      <button type="submit" class="additional__btn additional__btnAdd">
         Добавить
       </button>
-      <button class="sowing__btn sowing__btnCancel">
+      <button
+        @click.prevent="closeForm()"
+        class="additional__btn additional__btnCancel"
+      >
         Отмена
       </button>
     </form>
-    <div class="sowing__addCart" >
+
+    <div class="additional__addCart">
       <img src="@/assets/image/svg/plus.svg" alt="" />
     </div>
   </div>
@@ -98,12 +108,9 @@
 <script>
 import Hinput from '../Hinput.vue'
 export default {
-  name: 'Sowing',
+  name: 'Additionally',
   components: {
     Hinput,
-  },
-  data() {
-    return {}
   },
 }
 /* import Hinput from '../Hinput.vue'
@@ -122,7 +129,7 @@ export default {
       showChangeForm: false,
       typeTillage: '',
       weather: null,
-      sowingDepth: null,
+      additionalDepth: null,
       technics: null,
       startTillage: null,
       endTillage: null,
@@ -137,7 +144,7 @@ export default {
     clearForm() {
       this.typeTillage = null
       this.weather = null
-      this.sowingDepth = null
+      this.additionalDepth = null
       this.technics = null
       this.startTillage = null
       this.endTillage = null
@@ -153,7 +160,7 @@ export default {
         idField: this.idField,
         typeTillage: this.typeTillage,
         weather: this.weather,
-        sowingDepth: this.sowingDepth,
+        additionalDepth: this.additionalDepth,
         technics: this.technics,
         startTillage: this.startTillage,
         endTillage: this.endTillage,
@@ -174,7 +181,7 @@ export default {
     openRedactionForm(item) {
       this.typeTillage = item.typeTillage
       this.weather = item.weather
-      this.sowingDepth = item.sowingDepth
+      this.additionalDepth = item.additionalDepth
       this.technics = item.technics
       this.startTillage = item.startTillage
       this.endTillage = item.endTillage
@@ -190,7 +197,7 @@ export default {
         idField: this.idField,
         typeTillage: this.typeTillage,
         weather: this.weather,
-        sowingDepth: this.sowingDepth,
+        additionalDepth: this.additionalDepth,
         technics: this.technics,
         startTillage: this.startTillage,
         endTillage: this.endTillage,
@@ -202,14 +209,14 @@ export default {
     },
   },
   computed: {
-    sowing() {
+    additional() {
       return this.$store.getters.getTillage
     },
   },
 } */
 </script>
 <style lang="scss" scoped>
-.sowing {
+.additional {
   font-family: 'Inter', Arial;
   width: calc(100% - 15px);
   max-height: inherit;
@@ -225,7 +232,7 @@ export default {
     position: relative;
     margin-right: 30px;
 
-    .sowing__close {
+    .additional__close {
       position: absolute;
       right: 10px;
       top: 10px;
@@ -233,7 +240,7 @@ export default {
       cursor: pointer;
       opacity: 0.3;
     }
-    .sowing__close:hover {
+    .additional__close:hover {
       opacity: 1;
     }
     &-name {
@@ -274,11 +281,12 @@ export default {
       width: 100%;
       display: flex;
       margin-bottom: 20px;
-      .sowing__form-date {
+      .additional__form-date {
         display: flex;
         align-items: center;
+        width: 100%;
       }
-      .sowing__dash {
+      .additional__dash {
         width: 20px;
         margin: 10px 10px 0 10px;
         border-top: 2px solid #999;
@@ -286,7 +294,10 @@ export default {
       .middleInput {
         margin: 0 30px;
       }
-      .sowing__square {
+      .additional__temp {
+        margin-right: 30px;
+      }
+      .additional__square {
         max-width: 200px;
         width: 100%;
       }
@@ -311,21 +322,21 @@ export default {
       }
     }
   }
-  .sowing__form-section {
+  .additional__form-section {
     display: flex;
     align-items: center;
     white-space: nowrap;
 
-    .sowing__dash {
+    .additional__dash {
       margin: 15px 10px 0 10px;
       width: 20px;
       border-top: 2px solid #999;
     }
-    .sowing__dashCart {
+    .additional__dashCart {
       margin: 10px;
     }
   }
-  .sowing__btn {
+  .additional__btn {
     cursor: pointer;
     max-width: 130px;
     width: 100%;
@@ -336,7 +347,7 @@ export default {
     margin: auto 0 0 auto;
   }
 
-  .sowing__btnCancel {
+  .additional__btnCancel {
     margin: auto 0 0 15px;
   }
   &__addCart {

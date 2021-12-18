@@ -52,6 +52,8 @@
         <vuescroll :ops="ops">
           <Tillage v-if="navItem === 'tillage'"></Tillage>
           <Sowing v-if="navItem === 'sowing'"></Sowing>
+          <Additionally v-if="navItem === 'additionally'"></Additionally>
+          <Harvest v-if="navItem === 'harvest'"></Harvest>
         </vuescroll>
       </div>
 
@@ -63,6 +65,8 @@
 <script>
 import Tillage from '@/components/management/Tillage.vue'
 import Sowing from '@/components/management/Sowing.vue'
+import Harvest from '@/components/management/Harvest.vue'
+import Additionally from '@/components/management/Additionally.vue'
 import Loader from '@/components/loader/Loader.vue'
 import vuescroll from 'vuescroll'
 import {db} from '../firebase'
@@ -72,11 +76,13 @@ export default {
     Sowing,
     Loader,
     Tillage,
+    Harvest,
+    Additionally,
     vuescroll,
   },
   data() {
     return {
-      navItem: 'sowing',
+      navItem: 'harvest',
       idField: null,
       nameField: '',
       squareField: '',
