@@ -12,7 +12,7 @@
         <span class="mgt__header-back-name">
           {{ nameField }}, {{ squareField }} га
         </span>
-        <Select :options="years"></Select>
+  
       </div>
     </div>
     <div class="mgt__main">

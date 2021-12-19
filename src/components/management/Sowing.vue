@@ -45,39 +45,53 @@
         </button>
       </div>
     </div>
-    <form class="sowing__form">
+    <form class="sowing__form" v-if="showForm">
       <div class="sowing__form-block">
         <div class="sowing__form-date">
-          <Hinput name="Начало сева" type="date"></Hinput>
+          <Hinput name="Начало сева" type="date" v-model="startSowing"></Hinput>
           <div class="sowing__dash"></div>
-          <Hinput name="Окончание сева" type="date"></Hinput>
+          <Hinput
+            name="Окончание сева"
+            type="date"
+            v-model="endSowing"
+          ></Hinput>
         </div>
         <Hinput
           class="middleInput sowing__square"
           name="Посеянная площадь в га"
           type="number"
-        ></Hinput>
-        <Hinput name="Укажите используемую технику"></Hinput>
+          v-model="square"
+        >
+        </Hinput>
+        <Hinput name="Укажите используемую технику" v-model="technics"></Hinput>
       </div>
 
       <div class="sowing__form-block">
-        <Hinput name="Культура"></Hinput>
-        <Hinput class="middleInput" name="Наименование сорта"></Hinput>
-        <Hinput name="Укажите норму высева в кг/га"></Hinput>
+        <Hinput name="Культура" v-model="crop"></Hinput>
+        <Hinput
+          class="middleInput"
+          name="Наименование сорта"
+          v-model="variety"
+        ></Hinput>
+        <Hinput
+          name="Укажите норму высева в кг/га"
+          v-model="seedingRate"
+        ></Hinput>
       </div>
       <div class="sowing__form-block">
-        <Hinput name="Удобрение"></Hinput>
+        <Hinput name="Удобрение" v-model="fertilizer"></Hinput>
         <Hinput
           class="middleInput"
           name="Норма высева удобрения в кг/га"
+          v-model="fertilizerRate"
         ></Hinput>
-        <Hinput name="Погодные условия"></Hinput>
+        <Hinput name="Погодные условия" v-model="weather"></Hinput>
       </div>
       <div class="sowing__form-areaBlock">
         <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
         <textarea
           class="sowing__form-areaBlock-area"
-         
+          v-model="notes"
         ></textarea>
       </div>
       <button class="sowing__btn sowing__btnAdd">
@@ -86,11 +100,14 @@
       <button type="submit" class="sowing__btn sowing__btnAdd">
         Добавить
       </button>
-      <button class="sowing__btn sowing__btnCancel">
+      <button
+        class="sowing__btn sowing__btnCancel"
+        @click.prevent="showForm = false"
+      >
         Отмена
       </button>
     </form>
-    <div class="sowing__addCart" >
+    <div class="sowing__addCart" @click.prevent="showForm = true">
       <img src="@/assets/image/svg/plus.svg" alt="" />
     </div>
   </div>
@@ -103,7 +120,20 @@ export default {
     Hinput,
   },
   data() {
-    return {}
+    return {
+      showForm: false,
+      startSowing: null,
+      endSowing: null,
+      square: null,
+      technics: null,
+      crop: null,
+      variety: null,
+      seedingRate: null,
+      fertilizer: null,
+      fertilizerRate: null,
+      weather: null,
+      notes: null,
+    }
   },
 }
 /* import Hinput from '../Hinput.vue'
