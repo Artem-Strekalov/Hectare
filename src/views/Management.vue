@@ -12,7 +12,10 @@
         <span class="mgt__header-back-name">
           {{ nameField }}, {{ squareField }} га
         </span>
-  
+        <div class="mgt__years">
+          <p class="mgt__years-title">Выберите год:</p>
+          <SelectYears @select="optionSelect"></SelectYears>
+        </div>
       </div>
     </div>
     <div class="mgt__main">
@@ -57,8 +60,6 @@
           <Harvest v-if="navItem === 'harvest'"></Harvest>
         </vuescroll>
       </div>
-
-      <!-- <Tillage v-if="navItem === 'tillage'"></Tillage> -->
     </div>
     <Loader v-if="loading"></Loader>
   </div>
@@ -69,7 +70,7 @@ import Sowing from '@/components/management/Sowing.vue'
 import Harvest from '@/components/management/Harvest.vue'
 import Additionally from '@/components/management/Additionally.vue'
 import Loader from '@/components/loader/Loader.vue'
-import Select from '@/components/Select.vue'
+import SelectYears from '@/components/SelectYears.vue'
 import vuescroll from 'vuescroll'
 import {db} from '../firebase'
 import {doc, getDoc} from 'firebase/firestore'
@@ -80,7 +81,7 @@ export default {
     Tillage,
     Harvest,
     Additionally,
-    Select,
+    SelectYears,
     vuescroll,
   },
   data() {
@@ -90,25 +91,6 @@ export default {
       nameField: '',
       squareField: '',
       currentYear: 2021,
-      years: [
-        2014,
-        2015,
-        2016,
-        2017,
-        2018,
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024,
-        2025,
-        2026,
-        2027,
-        2028,
-        2029,
-        2030,
-      ],
       ops: {
         bar: {
           onlyShowBarOnScroll: true,
@@ -131,6 +113,9 @@ export default {
     this.$store.commit('clearTillage')
   },
   methods: {
+    optionSelect(option) {
+      console.log(option)
+    },
     async getField() {
       this.$store.commit('saveLoading', true)
       const uid = await this.$store.dispatch('getUid')
@@ -205,6 +190,17 @@ export default {
       &-name {
         margin: 0 auto;
         font-size: 18px;
+      }
+    }
+    .mgt__years {
+      display: flex;
+      align-items: center;
+      max-width: 200px;
+      width: 100%;
+      &-title {
+        color: #999999;
+        white-space: nowrap;
+        font-size: 16px;
       }
     }
   }
