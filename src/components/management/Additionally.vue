@@ -112,6 +112,11 @@ export default {
   components: {
     Hinput,
   },
+  props: {
+    year: {
+      type: [Number, String],
+    },
+  },
 }
 /* import Hinput from '../Hinput.vue'
 import vuescroll from 'vuescroll'

@@ -79,13 +79,12 @@ export default {
 .content {
   position: relative;
   &__select {
-    height: 40px;
-    margin-top: 1px;
     display: flex;
     align-items: center;
+    margin-top: 4px;
     cursor: pointer;
     img {
-      width: 10px;
+      width: 15px;
     }
     .upendArrow {
       transform: rotate(180deg);
@@ -102,7 +101,7 @@ export default {
     padding: 10px 0;
     border-radius: 0 0 10px 10px;
     z-index: 1;
-    top: 33px;
+    top: 20px;
     &-item {
       cursor: pointer;
       margin-bottom: 10px;

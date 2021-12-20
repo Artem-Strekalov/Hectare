@@ -119,6 +119,11 @@ export default {
   components: {
     Hinput,
   },
+  props: {
+    year: {
+      type: [Number, String],
+    },
+  },
   data() {
     return {
       showForm: false,

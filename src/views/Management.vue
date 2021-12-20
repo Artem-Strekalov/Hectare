@@ -12,10 +12,6 @@
         <span class="mgt__header-back-name">
           {{ nameField }}, {{ squareField }} га
         </span>
-        <div class="mgt__years">
-          <p class="mgt__years-title">Выберите год:</p>
-          <SelectYears @select="optionSelect"></SelectYears>
-        </div>
       </div>
     </div>
     <div class="mgt__main">
@@ -50,14 +46,21 @@
             Уборка урожая
           </li>
         </ul>
+        <div class="mgt__years">
+          <p class="mgt__years-title">Выберите год:</p>
+          <SelectYears @select="optionSelect"></SelectYears>
+        </div>
       </div>
 
       <div class="mgt__content">
         <vuescroll :ops="ops">
-          <Tillage v-if="navItem === 'tillage'"></Tillage>
-          <Sowing v-if="navItem === 'sowing'"></Sowing>
-          <Additionally v-if="navItem === 'additionally'"></Additionally>
-          <Harvest v-if="navItem === 'harvest'"></Harvest>
+          <Tillage v-if="navItem === 'tillage'" :year="currentYear"></Tillage>
+          <Sowing v-if="navItem === 'sowing'" :year="currentYear"></Sowing>
+          <Additionally
+            v-if="navItem === 'additionally'"
+            :year="currentYear"
+          ></Additionally>
+          <Harvest v-if="navItem === 'harvest'" :year="currentYear"></Harvest>
         </vuescroll>
       </div>
     </div>
@@ -90,7 +93,7 @@ export default {
       idField: null,
       nameField: '',
       squareField: '',
-      currentYear: 2021,
+      currentYear: new Date().getFullYear(),
       ops: {
         bar: {
           onlyShowBarOnScroll: true,
@@ -114,7 +117,7 @@ export default {
   },
   methods: {
     optionSelect(option) {
-      console.log(option)
+      this.currentYear = option
     },
     async getField() {
       this.$store.commit('saveLoading', true)
@@ -192,17 +195,6 @@ export default {
         font-size: 18px;
       }
     }
-    .mgt__years {
-      display: flex;
-      align-items: center;
-      max-width: 200px;
-      width: 100%;
-      &-title {
-        color: #999999;
-        white-space: nowrap;
-        font-size: 16px;
-      }
-    }
   }
   &__main {
     margin-top: 10px;
@@ -215,6 +207,8 @@ export default {
       width: 100%;
       border-bottom: 1px solid #f1f1f1;
       margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
       &-list {
         display: flex;
         height: 25px;
@@ -237,6 +231,17 @@ export default {
       }
       .mgt__first-item {
         margin: 0 10px 0 0;
+      }
+      .mgt__years {
+        display: flex;
+        align-items: center;
+        max-width: 200px;
+        width: 100%;
+        &-title {
+          color: #999999;
+          white-space: nowrap;
+          font-size: 16px;
+        }
       }
     }
   }

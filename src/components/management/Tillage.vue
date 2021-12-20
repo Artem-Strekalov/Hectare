@@ -122,7 +122,11 @@ export default {
     Hinput,
     vuescroll,
   },
-
+  props: {
+    year: {
+      type: [Number, String],
+    },
+  },
   data() {
     return {
       cartId: null,
@@ -137,11 +141,18 @@ export default {
       notes: null,
     }
   },
-  async mounted() {
+  mounted() {
     this.idField = this.$route.query.id
-    await this.$store.dispatch('loadTillageCart', this.idField)
+    this.loadTillageCart()
   },
   methods: {
+    async loadTillageCart() {
+      let form = {
+        idField: this.idField,
+        year: this.year,
+      }
+      await this.$store.dispatch('loadTillageCart', form)
+    },
     clearForm() {
       this.typeTillage = null
       this.weather = null
@@ -166,6 +177,7 @@ export default {
         startTillage: this.startTillage,
         endTillage: this.endTillage,
         notes: this.notes,
+        year: this.year,
       }
       await this.$store.dispatch('addTillage', dataTillage)
       await this.$store.dispatch('loadTillageCart', this.idField)
@@ -212,6 +224,11 @@ export default {
   computed: {
     tillage() {
       return this.$store.getters.getTillage
+    },
+  },
+  watch: {
+    year() {
+      this.loadTillageCart()
     },
   },
 }

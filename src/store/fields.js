@@ -86,6 +86,7 @@ export default {
         startTillage,
         endTillage,
         notes,
+        year,
       },
     ) {
       commit('saveLoading', true)
@@ -98,7 +99,7 @@ export default {
         'management',
         `${idField}`,
         'tillage',
-        '2021',
+        `${year}`,
       )
       await setDoc(
         path,
@@ -121,7 +122,7 @@ export default {
     },
 
     //получение данных tillage
-    async loadTillageCart({dispatch, commit}, idField) {
+    async loadTillageCart({dispatch, commit}, {idField, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = await doc(
@@ -131,11 +132,13 @@ export default {
         'management',
         `${idField}`,
         'tillage',
-        '2021',
+        `${year}`,
       )
       const dataTillage = await getDoc(path)
       if (dataTillage.exists()) {
         commit('saveTillage', dataTillage.data())
+      } else {
+        commit('saveTillage', [])
       }
       commit('saveLoading', false)
     },
