@@ -3,28 +3,31 @@ import {v4 as uuidv4} from 'uuid'
 import {db} from '../../firebase'
 export default {
   state: {
-    tillage: [],
+    sowing: [],
   },
   mutations: {
-    saveTillage(state, data) {
-      state.tillage = Object.values(data)
+    saveSowing(state, data) {
+      state.sowing = Object.values(data)
     },
-    clearTillage(state) {
+    clearSowing(state) {
       state.tillage = []
     },
   },
   actions: {
-    //добаление данных tillage
-    async addTillage(
+    async addSowing(
       {commit, dispatch},
       {
         idField,
-        typeTillage,
-        weather,
-        tillageDepth,
+        startSowing,
+        endSowing,
+        square,
         technics,
-        startTillage,
-        endTillage,
+        crop,
+        variety,
+        seedingRate,
+        fertilizer,
+        fertilizerRate,
+        weather,
         notes,
         year,
       },
@@ -38,7 +41,7 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'sowing',
         `${year}`,
       )
       await setDoc(
@@ -47,12 +50,16 @@ export default {
           [`${idCart}`]: {
             id: idCart,
             dateCreation: Date.now(),
-            typeTillage,
-            weather,
-            tillageDepth,
+            startSowing,
+            endSowing,
+            square,
             technics,
-            startTillage,
-            endTillage,
+            crop,
+            variety,
+            seedingRate,
+            fertilizer,
+            fertilizerRate,
+            weather,
             notes,
           },
         },
@@ -71,20 +78,20 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'sowing',
         `${year}`,
       )
-      const dataTillage = await getDoc(path)
-      if (dataTillage.exists()) {
-        commit('saveTillage', dataTillage.data())
+      const dataSowing = await getDoc(path)
+      if (dataSowing.exists()) {
+        commit('saveSowing', dataSowing.data())
       } else {
-        commit('saveTillage', [])
+        commit('saveSowing', [])
       }
       commit('saveLoading', false)
     },
 
     //удаление данных tillage
-    async removeTillage({dispatch, commit}, {idField, idTillage, year}) {
+    async removeSowing({dispatch, commit}, {idField, idTillage, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = await doc(
@@ -93,7 +100,7 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'sowing',
         `${year}`,
       )
       await updateDoc(path, {
@@ -102,7 +109,7 @@ export default {
       commit('saveLoading', false)
     },
     // изменение данных tillage
-    async changeTillage(
+    async changeSowing(
       {dispatch, commit},
       {
         idTillage,
@@ -114,7 +121,7 @@ export default {
         startTillage,
         endTillage,
         notes,
-        year
+        year,
       },
     ) {
       commit('saveLoading', true)
@@ -125,7 +132,7 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'sowing',
         `${year}`,
       )
       await updateDoc(path, {
@@ -141,8 +148,8 @@ export default {
     },
   },
   getters: {
-    getTillage(state) {
-      return state.tillage.sort((a, b) => b.dateCreation - a.dateCreation)
+    getSowing(state) {
+      return state.sowing.sort((a, b) => b.dateCreation - a.dateCreation)
     },
   },
 }

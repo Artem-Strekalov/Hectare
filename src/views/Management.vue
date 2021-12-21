@@ -89,7 +89,7 @@ export default {
   },
   data() {
     return {
-      navItem: 'harvest',
+      navItem: 'sowing',
       idField: null,
       nameField: '',
       squareField: '',

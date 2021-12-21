@@ -4,6 +4,7 @@ import auth from './auth'
 import fields from './fields'
 import users from './users'
 import tillage from './mgtFields/tillage'
+import sowing from './mgtFields/sowing'
 
 Vue.use(Vuex)
 
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     fields,
     users,
     tillage,
+    sowing,
   },
 })

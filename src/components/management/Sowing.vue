@@ -45,53 +45,53 @@
         </button>
       </div>
     </div>
-    <form class="sowing__form" v-if="showForm">
+    <form class="sowing__form" v-if="showForm" @submit.prevent="addSowing">
       <div class="sowing__form-block">
         <div class="sowing__form-date">
-          <Hinput name="Начало сева" type="date" v-model="startSowing"></Hinput>
+          <Hinput name="Начало сева" type="date" v-model.trim="startSowing"></Hinput>
           <div class="sowing__dash"></div>
           <Hinput
             name="Окончание сева"
             type="date"
-            v-model="endSowing"
+            v-model.trim.trim="endSowing"
           ></Hinput>
         </div>
         <Hinput
           class="middleInput sowing__square"
           name="Посеянная площадь в га"
           type="number"
-          v-model="square"
+          v-model.trim="square"
         >
         </Hinput>
-        <Hinput name="Укажите используемую технику" v-model="technics"></Hinput>
+        <Hinput name="Укажите используемую технику" v-model.trim="technics"></Hinput>
       </div>
 
       <div class="sowing__form-block">
-        <Hinput name="Культура" v-model="crop"></Hinput>
+        <Hinput name="Культура" v-model.trim="crop"></Hinput>
         <Hinput
           class="middleInput"
           name="Наименование сорта"
-          v-model="variety"
+          v-model.trim="variety"
         ></Hinput>
         <Hinput
           name="Укажите норму высева в кг/га"
-          v-model="seedingRate"
+          v-model.trim="seedingRate"
         ></Hinput>
       </div>
       <div class="sowing__form-block">
-        <Hinput name="Удобрение" v-model="fertilizer"></Hinput>
+        <Hinput name="Удобрение" v-model.trim="fertilizer"></Hinput>
         <Hinput
           class="middleInput"
           name="Норма высева удобрения в кг/га"
-          v-model="fertilizerRate"
+          v-model.trim="fertilizerRate"
         ></Hinput>
-        <Hinput name="Погодные условия" v-model="weather"></Hinput>
+        <Hinput name="Погодные условия" v-model.trim="weather"></Hinput>
       </div>
       <div class="sowing__form-areaBlock">
         <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
         <textarea
           class="sowing__form-areaBlock-area"
-          v-model="notes"
+          v-model.trim="notes"
         ></textarea>
       </div>
       <button class="sowing__btn sowing__btnAdd">
@@ -139,6 +139,31 @@ export default {
       weather: null,
       notes: null,
     }
+  },
+  mounted() {
+    this.idField = this.$route.query.id
+  },
+  methods: {
+    clearForm() {},
+    closeForm() {},
+    async addSowing() {
+      const dataSowing = {
+        idField: this.idField,
+        startSowing: this.startSowing,
+        endSowing: this.endSowing,
+        square: this.square,
+        technics: this.technics,
+        crop: this.crop,
+        variety: this.variety,
+        seedingRate: this.seedingRate,
+        fertilizer: this.fertilizer,
+        fertilizerRate: this.fertilizerRate,
+        weather: this.weather,
+        notes: this.notes,
+        year: this.year,
+      }
+      await this.$store.dispatch('addSowing', dataSowing)
+    },
   },
 }
 </script>

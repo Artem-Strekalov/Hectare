@@ -180,7 +180,7 @@ export default {
         year: this.year,
       }
       await this.$store.dispatch('addTillage', dataTillage)
-      await this.$store.dispatch('loadTillageCart', this.idField)
+      await this.loadTillageCart()
       this.closeForm()
     },
     async removeTillage(idTillage) {
@@ -190,7 +190,7 @@ export default {
         year: this.year,
       }
       await this.$store.dispatch('removeTillage', dataId)
-      await this.$store.dispatch('loadTillageCart', this.idField)
+      await this.loadTillageCart()
     },
     openRedactionForm(item) {
       this.typeTillage = item.typeTillage
@@ -216,9 +216,10 @@ export default {
         startTillage: this.startTillage,
         endTillage: this.endTillage,
         notes: this.notes,
+        year: this.year,
       }
       await this.$store.dispatch('changeTillage', dataTillage)
-      await this.$store.dispatch('loadTillageCart', this.idField)
+      await this.loadTillageCart()
       this.closeForm()
     },
   },
