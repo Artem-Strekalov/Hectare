@@ -187,6 +187,7 @@ export default {
       const dataId = {
         idField: this.idField,
         idTillage,
+        year: this.year,
       }
       await this.$store.dispatch('removeTillage', dataId)
       await this.$store.dispatch('loadTillageCart', this.idField)

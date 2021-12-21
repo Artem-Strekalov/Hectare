@@ -144,7 +144,7 @@ export default {
     },
 
     //удаление данных tillage
-    async removeTillage({dispatch, commit}, {idField, idTillage}) {
+    async removeTillage({dispatch, commit}, {idField, idTillage, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = await doc(
@@ -154,7 +154,7 @@ export default {
         'management',
         `${idField}`,
         'tillage',
-        '2021',
+        `${year}`,
       )
       await updateDoc(path, {
         [`${idTillage}`]: deleteField(),

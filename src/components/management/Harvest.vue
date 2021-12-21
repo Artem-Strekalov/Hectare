@@ -54,28 +54,49 @@
     <form class="harvest__form">
       <div class="harvest__form-block">
         <div class="harvest__form-date">
-          <Hinput name="Начало уборки" type="date"></Hinput>
+          <Hinput
+            name="Начало уборки"
+            type="date"
+            v-model="startHarvest"
+          ></Hinput>
           <div class="harvest__dash"></div>
-          <Hinput name="Окончание уборки" type="date"></Hinput>
+          <Hinput
+            name="Окончание уборки"
+            type="date"
+            v-model="endHarvest"
+          ></Hinput>
         </div>
-        <Hinput class="middleInput" name="Культура"></Hinput>
-        <Hinput class="harvest__sort" name="Сорт"></Hinput>
-        <Hinput name="Средняя урожайность"></Hinput>
+        <Hinput class="middleInput" name="Культура" v-model="crop"></Hinput>
+        <Hinput class="harvest__sort" name="Сорт" v-model="variety"></Hinput>
+        <Hinput name="Средняя урожайность" v-model="averageYield"></Hinput>
       </div>
 
       <div class="harvest__form-block">
-        <Hinput name="Качество"></Hinput>
-        <Hinput class="middleInput" name="Натура"></Hinput>
-        <Hinput class="harvest__sort" name="Средняя влажность"></Hinput>
-        <Hinput name="Итоговый намолот"></Hinput>
+        <Hinput name="Качество" v-model="quality"></Hinput>
+        <Hinput class="middleInput" name="Натура" v-model="nature"></Hinput>
+        <Hinput
+          class="harvest__sort"
+          name="Средняя влажность"
+          v-model="humidity"
+        >
+        </Hinput>
       </div>
       <div class="harvest__form-block">
-        <Hinput name="Используемая техника"></Hinput>
+        <Hinput name="Используемая техника" v-model="technics"></Hinput>
+        <Hinput
+          class="middleInput"
+          name="Площадь уборки"
+          v-model="square"
+        ></Hinput>
+        <Hinput name="Итоговый намолот" v-model="threshed"></Hinput>
       </div>
       <div class="harvest__form-block"></div>
       <div class="harvest__form-areaBlock">
         <p class="harvest__form-areaBlock-name">Ваши заметки:</p>
-        <textarea class="harvest__form-areaBlock-area"></textarea>
+        <textarea
+          class="harvest__form-areaBlock-area"
+          v-model="notes"
+        ></textarea>
       </div>
       <button class="harvest__btn harvest__btnAdd">
         Сохранить

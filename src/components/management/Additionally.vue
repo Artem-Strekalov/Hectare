@@ -56,35 +56,68 @@
     <form class="additional__form">
       <div class="additional__form-block">
         <div class="additional__form-date">
-          <Hinput name="Начало работы" type="date"></Hinput>
+          <Hinput name="Начало работы" type="date" v-model="starWork"></Hinput>
           <div class="additional__dash"></div>
-          <Hinput name="Окончание работы" type="date"></Hinput>
+          <Hinput
+            name="Окончание работы"
+            type="date"
+            v-model="endWork"
+          ></Hinput>
         </div>
-        <Hinput class="middleInput" name="Погодные условия"></Hinput>
-        <Hinput class="additional__temp" name="Температура воздуха"></Hinput>
-        <Hinput name="Обработано в га" type="number"></Hinput>
+        <Hinput
+          class="middleInput"
+          name="Погодные условия"
+          v-model="weather"
+        ></Hinput>
+        <Hinput
+          class="additional__temp"
+          name="Температура воздуха"
+          v-model="temperature"
+        ></Hinput>
+        <Hinput
+          name="Обработано в га"
+          type="number"
+          v-model="processed"
+        ></Hinput>
       </div>
 
       <div class="additional__form-block">
         <Hinput
           name="Наименование удобрений"
           placeholder="Например КАС"
+          v-model="fertilizer"
         ></Hinput>
-        <Hinput class="middleInput" name="Производитель удобрения"></Hinput>
+        <Hinput
+          class="middleInput"
+          name="Производитель удобрения"
+          v-model="fertilizerManufacturer"
+        ></Hinput>
         <Hinput
           name="Укажите норму внесения"
           placeholder="Например 100 кг/га"
+          v-model="fertilizerRate"
         ></Hinput>
       </div>
       <div class="additional__form-block">
-        <Hinput name="Тип СЗР" placeholder="Например Гербицид"></Hinput>
-        <Hinput class="middleInput" name="Производитель СЗР"></Hinput>
-        <Hinput name="Расход СЗР на га"></Hinput>
+        <Hinput
+          name="Тип СЗР"
+          placeholder="Например Гербицид"
+          v-model="plantProtectionAgent"
+        ></Hinput>
+        <Hinput
+          class="middleInput"
+          name="Производитель СЗР"
+          v-model="manufacturerPra"
+        ></Hinput>
+        <Hinput name="Расход СЗР на га" v-model="praRate"></Hinput>
       </div>
       <div class="additional__form-block"></div>
       <div class="additional__form-areaBlock">
         <p class="additional__form-areaBlock-name">Ваши заметки:</p>
-        <textarea class="additional__form-areaBlock-area"></textarea>
+        <textarea
+          class="additional__form-areaBlock-area"
+          v-model="notes"
+        ></textarea>
       </div>
       <button class="additional__btn additional__btnAdd">
         Сохранить
@@ -116,6 +149,22 @@ export default {
     year: {
       type: [Number, String],
     },
+  },
+  data() {
+    return {
+      startWork: null,
+      endWork: null,
+      weather: null,
+      temperature: null,
+      processed: null,
+      fertilizer: null,
+      fertilizerManufacturer: null,
+      fertilizerRate: null,
+      plantProtectionAgent: null,
+      manufacturerPra: null,
+      praRate: null,
+      notes: null,
+    }
   },
 }
 /* import Hinput from '../Hinput.vue'
