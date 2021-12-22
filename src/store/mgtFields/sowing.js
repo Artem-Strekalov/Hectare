@@ -10,7 +10,7 @@ export default {
       state.sowing = Object.values(data)
     },
     clearSowing(state) {
-      state.tillage = []
+      state.sowing = []
     },
   },
   actions: {
@@ -68,8 +68,8 @@ export default {
       commit('saveLoading', false)
     },
 
-    //получение данных tillage
-    async loadTillageCart({dispatch, commit}, {idField, year}) {
+    //получение данных
+    async loadSowingCart({dispatch, commit}, {idField, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = await doc(
@@ -90,8 +90,7 @@ export default {
       commit('saveLoading', false)
     },
 
-    //удаление данных tillage
-    async removeSowing({dispatch, commit}, {idField, idTillage, year}) {
+    async removeSowing({dispatch, commit}, {idField, idCart, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = await doc(
@@ -104,22 +103,27 @@ export default {
         `${year}`,
       )
       await updateDoc(path, {
-        [`${idTillage}`]: deleteField(),
+        [`${idCart}`]: deleteField(),
       })
       commit('saveLoading', false)
     },
-    // изменение данных tillage
+
+    // изменение данных
     async changeSowing(
       {dispatch, commit},
       {
-        idTillage,
+        idCart,
         idField,
-        typeTillage,
-        weather,
-        tillageDepth,
+        startSowing,
+        endSowing,
+        square,
         technics,
-        startTillage,
-        endTillage,
+        crop,
+        variety,
+        seedingRate,
+        fertilizer,
+        fertilizerRate,
+        weather,
         notes,
         year,
       },
@@ -136,13 +140,17 @@ export default {
         `${year}`,
       )
       await updateDoc(path, {
-        [`${idTillage}.notes`]: notes,
-        [`${idTillage}.weather`]: weather,
-        [`${idTillage}.technics`]: technics,
-        [`${idTillage}.endTillage`]: endTillage,
-        [`${idTillage}.typeTillage`]: typeTillage,
-        [`${idTillage}.tillageDepth`]: tillageDepth,
-        [`${idTillage}.startTillage`]: startTillage,
+        [`${idCart}.crop`]: crop,
+        [`${idCart}.notes`]: notes,
+        [`${idCart}.square`]: square,
+        [`${idCart}.weather`]: weather,
+        [`${idCart}.variety`]: variety,
+        [`${idCart}.technics`]: technics,
+        [`${idCart}.endSowing`]: endSowing,
+        [`${idCart}.fertilizer`]: fertilizer,
+        [`${idCart}.seedingRate`]: seedingRate,
+        [`${idCart}.startSowing`]: startSowing,
+        [`${idCart}.fertilizerRate`]: fertilizerRate,
       })
       commit('saveLoading', false)
     },

@@ -1,46 +1,59 @@
 <template>
   <div class="sowing">
-    <div class="sowing__cart">
-      <span class="sowing__close">
+    <div class="sowing__cart" v-for="cart in sowingCart" :key="cart.id">
+      <span class="sowing__close" @click.prevent="removeSowingCart(cart.id)">
         <i class="material-icons">close</i>
       </span>
-      <h2 class="sowing__cart-name">Сев Пшеница</h2>
+      <h2 class="sowing__cart-name">Сев {{ cart.crop }}</h2>
       <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Посеяно:</span> 50 га
+        <p class="sowing__cart-content-item" v-if="cart.square">
+          <span class="sowing__span">Посеяно:</span> {{ cart.square }} га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Культура:</span> Пшеница
+        <p class="sowing__cart-content-item" v-if="cart.crop">
+          <span class="sowing__span">Культура:</span> {{ cart.crop }}
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Сорт:</span> Зустрич
+        <p class="sowing__cart-content-item" v-if="cart.variety">
+          <span class="sowing__span">Сорт:</span> {{ cart.variety }}
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Норма высева:</span> 250 кг/га
+        <p class="sowing__cart-content-item" v-if="cart.seedingRate">
+          <span class="sowing__span">Норма высева:</span>
+          {{ cart.seedingRate }} кг/га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Удобрение:</span> Амафос
+        <p class="sowing__cart-content-item" v-if="cart.fertillizer">
+          <span class="sowing__span">Удобрение:</span> {{ cart.fertilizer }}
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Норма высева удобрения:</span> 30 кг/га
+        <p class="sowing__cart-content-item" v-if="cart.fertilizerRate">
+          <span class="sowing__span">Норма высева удобрения:</span>
+          {{ cart.fertilizerRate }} кг/га
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Погодные условия:</span> Влага 15 мм
+        <p class="sowing__cart-content-item" v-if="cart.weather">
+          <span class="sowing__span">Погодные условия:</span>
+          {{ cart.weather }}
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Используемая техника:</span> Влага 15 мм
+        <p class="sowing__cart-content-item" v-if="cart.technics">
+          <span class="sowing__span">Используемая техника:</span>
+          {{ cart.technics }}
         </p>
-        <p class="sowing__cart-content-item">
-          <span class="sowing__span">Период сева:</span> c 30.09.2021 по
-          20.10.21 г
+        <p
+          class="sowing__cart-content-item"
+          v-if="cart.startSowing || cart.endSowing"
+        >
+          <span class="sowing__span">Период сева:</span> c
+          {{ cart.startSowing }} по {{ cart.endSowing }} г
         </p>
       </div>
       <div class="sowing__cart-content">
-        <p class="sowing__cart-content-item">Ваши заметки:</p>
-        <div class="sowing__cart-area">
-          Заметки
-        </div>
-        <button class="sowing__btn sowing__btnCart">
+        <template v-if="cart.notes">
+          <p class="sowing__cart-content-item">Ваши заметки:</p>
+          <div class="sowing__cart-area">
+            {{ cart.notes }}
+          </div>
+        </template>
+
+        <button
+          class="sowing__btn sowing__btnCart"
+          @click.prevent="openRedactionForm(cart)"
+        >
           Редактировать
         </button>
       </div>
@@ -48,7 +61,11 @@
     <form class="sowing__form" v-if="showForm" @submit.prevent="addSowing">
       <div class="sowing__form-block">
         <div class="sowing__form-date">
-          <Hinput name="Начало сева" type="date" v-model.trim="startSowing"></Hinput>
+          <Hinput
+            name="Начало сева"
+            type="date"
+            v-model.trim="startSowing"
+          ></Hinput>
           <div class="sowing__dash"></div>
           <Hinput
             name="Окончание сева"
@@ -63,7 +80,10 @@
           v-model.trim="square"
         >
         </Hinput>
-        <Hinput name="Укажите используемую технику" v-model.trim="technics"></Hinput>
+        <Hinput
+          name="Укажите используемую технику"
+          v-model.trim="technics"
+        ></Hinput>
       </div>
 
       <div class="sowing__form-block">
@@ -94,16 +114,21 @@
           v-model.trim="notes"
         ></textarea>
       </div>
-      <button class="sowing__btn sowing__btnAdd">
+      <button
+        class="sowing__btn sowing__btnAdd"
+        v-if="showChangeForm"
+        @click.prevent="changeSowingCart"
+      >
         Сохранить
       </button>
-      <button type="submit" class="sowing__btn sowing__btnAdd">
+      <button
+        type="submit"
+        class="sowing__btn sowing__btnAdd"
+        v-if="!showChangeForm"
+      >
         Добавить
       </button>
-      <button
-        class="sowing__btn sowing__btnCancel"
-        @click.prevent="showForm = false"
-      >
+      <button class="sowing__btn sowing__btnCancel" @click.prevent="closeForm">
         Отмена
       </button>
     </form>
@@ -138,14 +163,40 @@ export default {
       fertilizerRate: null,
       weather: null,
       notes: null,
+      idCart: null,
+      showChangeForm: false,
     }
   },
   mounted() {
     this.idField = this.$route.query.id
+    this.loadSowingCart()
   },
   methods: {
-    clearForm() {},
-    closeForm() {},
+    clearForm() {
+      this.startSowing = null
+      this.endSowing = null
+      this.square = null
+      this.technics = null
+      this.crop = null
+      this.variety = null
+      this.seedingRate = null
+      this.fertilizer = null
+      this.fertilizerRate = null
+      this.weather = null
+      this.notes = null
+    },
+    closeForm() {
+      this.clearForm()
+      this.showForm = false
+      this.showChangeForm = false
+    },
+    async loadSowingCart() {
+      let form = {
+        idField: this.idField,
+        year: this.year,
+      }
+      await this.$store.dispatch('loadSowingCart', form)
+    },
     async addSowing() {
       const dataSowing = {
         idField: this.idField,
@@ -163,6 +214,64 @@ export default {
         year: this.year,
       }
       await this.$store.dispatch('addSowing', dataSowing)
+      this.loadSowingCart()
+      this.closeForm()
+    },
+    async removeSowingCart(idCart) {
+      const data = {
+        idField: this.idField,
+        idCart,
+        year: this.year,
+      }
+      await this.$store.dispatch('removeSowing', data)
+      await this.loadSowingCart()
+    },
+    openRedactionForm(item) {
+      this.startSowing = item.startSowing
+      this.endSowing = item.endSowing
+      this.square = item.square
+      this.technics = item.technics
+      this.crop = item.crop
+      this.variety = item.variety
+      this.seedingRate = item.seedingRate
+      this.fertilizer = item.fertilizer
+      this.fertilizerRate = item.fertilizerRate
+      this.weather = item.weather
+      this.notes = item.notes
+      this.idCart = item.id
+      this.showForm = true
+      this.showChangeForm = true
+    },
+    async changeSowingCart() {
+      const data = {
+        idField: this.idField,
+        idCart: this.idCart,
+        startSowing: this.startSowing,
+        endSowing: this.endSowing,
+        square: this.square,
+        technics: this.technics,
+        crop: this.crop,
+        variety: this.variety,
+        seedingRate: this.seedingRate,
+        fertilizer: this.fertilizer,
+        fertilizerRate: this.fertilizerRate,
+        weather: this.weather,
+        notes: this.notes,
+        year: this.year,
+      }
+      await this.$store.dispatch('changeSowing', data)
+      await this.loadSowingCart()
+      this.closeForm()
+    },
+  },
+  computed: {
+    sowingCart() {
+      return this.$store.getters.getSowing
+    },
+  },
+  watch: {
+    year() {
+      this.loadSowingCart()
     },
   },
 }
@@ -172,7 +281,6 @@ export default {
   font-family: 'Inter', Arial;
   width: calc(100% - 15px);
   max-height: inherit;
-
   &__cart {
     width: 100%;
     padding: 15px;
@@ -183,7 +291,6 @@ export default {
     margin-bottom: 30px;
     position: relative;
     margin-right: 30px;
-
     .sowing__close {
       position: absolute;
       right: 10px;
@@ -250,12 +357,11 @@ export default {
         width: 100%;
       }
     }
-
     &-areaBlock {
       display: flex;
       width: 50%;
       &-name {
-        color: #999;
+        color: #646464;
         font-size: 12px;
         white-space: nowrap;
         margin-right: 10px;

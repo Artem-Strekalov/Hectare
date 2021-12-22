@@ -239,7 +239,7 @@ export default {
       display: flex;
       width: 50%;
       &-name {
-        color: #999;
+        color: #646464;
         font-size: 12px;
         white-space: nowrap;
         margin-right: 10px;
