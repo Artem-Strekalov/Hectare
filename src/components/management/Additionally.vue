@@ -1,116 +1,123 @@
 <template>
   <div class="additional">
-    <div class="additional__cart">
+    <div class="additional__cart" v-for="item in cart" :key="item.id">
       <span class="additional__close">
         <i class="material-icons">close</i>
       </span>
-      <h2 class="additional__cart-name">Внесение удобрений</h2>
+      <h2 class="additional__cart-name">{{ item.typeWork }}</h2>
       <div class="additional__cart-content">
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Обработано:</span> 50 га
+        <p class="additional__cart-content-item" v-if="item.square">
+          <span class="additional__span">Обработано:</span> {{ item.square }} га
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Удобрение:</span> КАС
+        <p class="additional__cart-content-item" v-if="item.fertilizer">
+          <span class="additional__span">Удобрение:</span> {{ item.fertilizer }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Производитель удобрения:</span> ЕвроХим
+        <p
+          class="additional__cart-content-item"
+          v-if="item.fertilizerManufacturer"
+        >
+          <span class="additional__span">Производитель удобрения:</span>
+          {{ item.fertilizerManufacturer }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Расход удобрения на га:</span> 100 л/га
+        <p class="additional__cart-content-item" v-if="item.fertilizerRate">
+          <span class="additional__span">Расход удобрения на га:</span>
+          {{ item.fertilizerRate }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Тип СЗР:</span> Гербицид
+        <p
+          class="additional__cart-content-item"
+          v-if="item.plantProtectionAgent"
+        >
+          <span class="additional__span">Тип СЗР:</span>
+          {{ item.plantProtectionAgent }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Производитель СЗР:</span> Торнадо 500
+        <p class="additional__cart-content-item" v-if="item.manufacturerPra">
+          <span class="additional__span">Производитель СЗР:</span>
+          {{ item.manufacturerPra }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Расход СЗР на га:</span> 5 л/га
+        <p class="additional__cart-content-item" v-if="item.praRate">
+          <span class="additional__span">Расход СЗР на га:</span>
+          {{ item.praRate }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Погодные условия:</span> Пасмурно
+        <p class="additional__cart-content-item" v-if="item.weather">
+          <span class="additional__span">Погодные условия:</span>
+          {{ item.weather }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Температура воздуха:</span> +18 C*
+        <p class="additional__cart-content-item" v-if="item.temperature">
+          <span class="additional__span">Температура воздуха:</span>
+          {{ item.temperature }} C*
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Используемая техника:</span> Трактор
-          МТЗ, опрыскиватель
+        <p class="additional__cart-content-item" v-if="item.technics">
+          <span class="additional__span">Используемая техника:</span>
+          {{ item.technics }}
         </p>
-        <p class="additional__cart-content-item">
-          <span class="additional__span">Период работы:</span> c 30.09.2021 по
-          20.10.21 г
+        <p
+          class="additional__cart-content-item"
+          v-if="item.startWork || item.endWork"
+        >
+          <span class="additional__span">Период работы:</span> c
+          {{ item.startWork }} по {{ item.endWork }} г
         </p>
       </div>
       <div class="additional__cart-content">
-        <p class="additional__cart-content-item">Ваши заметки:</p>
-        <div class="additional__cart-area">
-          Заметки
-        </div>
+        <template v-if="item.notes">
+          <p class="additional__cart-content-item">Ваши заметки:</p>
+          <div class="additional__cart-area">
+            {{ notes }}
+          </div>
+        </template>
         <button class="additional__btn additional__btnCart">
           Редактировать
         </button>
       </div>
     </div>
 
-    <form class="additional__form">
+    <form class="additional__form" v-if="showForm" @submit.prevent="addCart">
       <div class="additional__form-block">
         <div class="additional__form-date">
-          <Hinput name="Начало работы" type="date" v-model="starWork"></Hinput>
+          <Hinput name="Начало работы" type="date" v-model="startWork"></Hinput>
           <div class="additional__dash"></div>
-          <Hinput
-            name="Окончание работы"
-            type="date"
-            v-model="endWork"
-          ></Hinput>
+          <Hinput name="Окончание работы" type="date" v-model="endWork">
+          </Hinput>
         </div>
-        <Hinput
-          class="middleInput"
-          name="Погодные условия"
-          v-model="weather"
-        ></Hinput>
+        <Hinput class="middleInput" name="Погодные условия" v-model="weather">
+        </Hinput>
         <Hinput
           class="additional__temp"
           name="Температура воздуха"
           v-model="temperature"
-        ></Hinput>
-        <Hinput
-          name="Обработано в га"
-          type="number"
-          v-model="processed"
-        ></Hinput>
+        >
+        </Hinput>
+        <Hinput name="Обработано в га" v-model="square"> </Hinput>
       </div>
 
       <div class="additional__form-block">
         <Hinput
-          name="Наименование удобрений"
-          placeholder="Например КАС"
-          v-model="fertilizer"
-        ></Hinput>
+          class="additional__typeWork"
+          name="Тип работы"
+          v-model="typeWork"
+        >
+        </Hinput>
+        <Hinput name="Наименование удобрений" v-model="fertilizer"> </Hinput>
         <Hinput
           class="middleInput"
           name="Производитель удобрения"
           v-model="fertilizerManufacturer"
-        ></Hinput>
-        <Hinput
-          name="Укажите норму внесения"
-          placeholder="Например 100 кг/га"
-          v-model="fertilizerRate"
-        ></Hinput>
+        >
+        </Hinput>
+        <Hinput name="Укажите норму внесения" v-model="fertilizerRate">
+        </Hinput>
       </div>
       <div class="additional__form-block">
-        <Hinput
-          name="Тип СЗР"
-          placeholder="Например Гербицид"
-          v-model="plantProtectionAgent"
-        ></Hinput>
+        <Hinput name="Тип СЗР" v-model="plantProtectionAgent"> </Hinput>
         <Hinput
           class="middleInput"
           name="Производитель СЗР"
           v-model="manufacturerPra"
-        ></Hinput>
+        >
+        </Hinput>
         <Hinput name="Расход СЗР на га" v-model="praRate"></Hinput>
       </div>
+      <Hinput name="Используемая техника" v-model="technics"></Hinput>
       <div class="additional__form-block"></div>
       <div class="additional__form-areaBlock">
         <p class="additional__form-areaBlock-name">Ваши заметки:</p>
@@ -133,7 +140,7 @@
       </button>
     </form>
 
-    <div class="additional__addCart">
+    <div class="additional__addCart" @click.prevent="showForm = true">
       <img src="@/assets/image/svg/plus.svg" alt="" />
     </div>
   </div>
@@ -154,17 +161,81 @@ export default {
     return {
       startWork: null,
       endWork: null,
+      typeWork: null,
       weather: null,
       temperature: null,
-      processed: null,
+      square: null,
       fertilizer: null,
       fertilizerManufacturer: null,
       fertilizerRate: null,
       plantProtectionAgent: null,
       manufacturerPra: null,
       praRate: null,
+      technics: null,
       notes: null,
+      showForm: false,
     }
+  },
+  mounted() {
+    this.idField = this.$route.query.id
+    this.loadCart()
+  },
+  methods: {
+    clearForm() {
+      this.startWork = null
+      this.endWork = null
+      this.typeWork = null
+      this.weather = null
+      this.temperature = null
+      this.technics = null
+      this.square = null
+      this.fertilizer = null
+      this.fertilizerManufacturer = null
+      this.fertilizerRate = null
+      this.plantProtectionAgent = null
+      this.manufacturerPra = null
+      this.praRate = null
+      this.notes = null
+    },
+    closeForm() {
+      this.clearForm()
+      this.showForm = false
+    },
+    async addCart() {
+      const data = {
+        startWork: this.startWork,
+        endWork: this.endWork,
+        typeWork: this.typeWork,
+        weather: this.weather,
+        temperature: this.temperature,
+        square: this.square,
+        fertilizer: this.fertilizer,
+        fertilizerManufacturer: this.fertilizerManufacturer,
+        fertilizerRate: this.fertilizerRate,
+        plantProtectionAgent: this.plantProtectionAgent,
+        manufacturerPra: this.manufacturerPra,
+        technics: this.technics,
+        praRate: this.praRate,
+        notes: this.notes,
+        year: this.year,
+        idField: this.idField,
+      }
+      await this.$store.dispatch('addAdditional', data)
+      this.loadCart()
+      this.closeForm()
+    },
+    async loadCart() {
+      const data = {
+        idField: this.idField,
+        year: this.year,
+      }
+      await this.$store.dispatch('loadAdditionalCart', data)
+    },
+  },
+  computed: {
+    cart() {
+      return this.$store.getters.getAdditional
+    },
   },
 }
 </script>
@@ -253,6 +324,9 @@ export default {
       .additional__square {
         max-width: 200px;
         width: 100%;
+      }
+      .additional__typeWork {
+        margin-right: 30px;
       }
     }
 

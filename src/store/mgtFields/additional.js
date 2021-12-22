@@ -3,30 +3,37 @@ import {v4 as uuidv4} from 'uuid'
 import {db} from '../../firebase'
 export default {
   state: {
-    tillage: [],
+    additional: [],
   },
   mutations: {
-    saveTillage(state, data) {
-      state.tillage = Object.values(data)
+    saveAdditional(state, data) {
+      state.additional = Object.values(data)
     },
-    clearTillage(state) {
-      state.tillage = []
+    clearAdditional(state) {
+      state.additional = []
     },
   },
   actions: {
-    //добаление данных tillage
-    async addTillage(
+    //добаление данных
+    async addAdditional(
       {commit, dispatch},
       {
-        idField,
-        typeTillage,
+        startWork,
+        endWork,
         weather,
-        tillageDepth,
+        square,
+        temperature,
         technics,
-        startTillage,
-        endTillage,
+        typeWork,
+        fertilizer,
+        fertilizerManufacturer,
+        fertilizerRate,
+        plantProtectionAgent,
+        manufacturerPra,
+        praRate,
         notes,
         year,
+        idField,
       },
     ) {
       commit('saveLoading', true)
@@ -38,7 +45,7 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'additional',
         `${year}`,
       )
       await setDoc(
@@ -47,12 +54,19 @@ export default {
           [`${idCart}`]: {
             id: idCart,
             dateCreation: Date.now(),
-            typeTillage,
+            startWork,
+            endWork,
+            typeWork,
             weather,
-            tillageDepth,
+            square,
+            temperature,
             technics,
-            startTillage,
-            endTillage,
+            fertilizer,
+            fertilizerManufacturer,
+            fertilizerRate,
+            plantProtectionAgent,
+            manufacturerPra,
+            praRate,
             notes,
           },
         },
@@ -61,8 +75,8 @@ export default {
       commit('saveLoading', false)
     },
 
-    //получение данных tillage
-    async loadTillageCart({dispatch, commit}, {idField, year}) {
+    //получение данных
+    async loadAdditionalCart({dispatch, commit}, {idField, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = await doc(
@@ -71,14 +85,14 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'additional',
         `${year}`,
       )
-      const dataTillage = await getDoc(path)
-      if (dataTillage.exists()) {
-        commit('saveTillage', dataTillage.data())
+      const dataAdditional = await getDoc(path)
+      if (dataAdditional.exists()) {
+        commit('saveAdditional', dataAdditional.data())
       } else {
-        commit('saveTillage', [])
+        commit('saveAdditional', [])
       }
       commit('saveLoading', false)
     },
@@ -141,8 +155,8 @@ export default {
     },
   },
   getters: {
-    getTillage(state) {
-      return state.tillage.sort((a, b) => b.dateCreation - a.dateCreation)
+    getAdditional(state) {
+      return state.additional.sort((a, b) => b.dateCreation - a.dateCreation)
     },
   },
 }

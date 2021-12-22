@@ -70,13 +70,12 @@
           <Hinput
             name="Окончание сева"
             type="date"
-            v-model.trim.trim="endSowing"
+            v-model.trim="endSowing"
           ></Hinput>
         </div>
         <Hinput
           class="middleInput sowing__square"
           name="Посеянная площадь в га"
-          type="number"
           v-model.trim="square"
         >
         </Hinput>
