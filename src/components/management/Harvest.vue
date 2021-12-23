@@ -1,49 +1,53 @@
 <template>
   <div class="harvest">
-    <div class="harvest__cart">
+    <div class="harvest__cart" v-for="item in cart" :key="item.id">
       <span class="harvest__close">
         <i class="material-icons">close</i>
       </span>
       <h2 class="harvest__cart-name">Уборка урожая</h2>
       <div class="harvest__cart-content">
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Площадь уборки:</span> 50 га
+          <span class="harvest__span">Площадь уборки:</span>
+          {{ item.square }} га
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Культура:</span> Пшеница
+          <span class="harvest__span">Культура:</span> {{ item.crop }}
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Сорт:</span> Зустрич
+          <span class="harvest__span">Сорт:</span> {{ item.variety }}
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Средняя урожайность:</span> 50 ц/га
+          <span class="harvest__span">Средняя урожайность:</span>
+          {{ item.averageYield }} ц/га
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Качество:</span> 3 класс
+          <span class="harvest__span">Качество:</span> {{ item.quality }}
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Натура:</span> 800
+          <span class="harvest__span">Натура:</span> {{ item.nature }}
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Средняя влажность на участке</span> 13
+          <span class="harvest__span">Средняя влажность на участке</span>
+          {{ item.humidity }}
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Итоговый намолот</span> 600 т
+          <span class="harvest__span">Итоговый намолот</span>
+          {{ item.threshed }}
         </p>
 
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Используемая техника:</span> Трактор МТЗ,
-          опрыскиватель
+          <span class="harvest__span">Используемая техника:</span>
+          {{ item.technics }}
         </p>
         <p class="harvest__cart-content-item">
-          <span class="harvest__span">Период уборки:</span> c 30.09.2021 по
-          20.10.21 г
+          <span class="harvest__span">Период уборки:</span> c
+          {{ item.startHarvest }} по {{ item.endHarvest }} г
         </p>
       </div>
       <div class="harvest__cart-content">
         <p class="harvest__cart-content-item">Ваши заметки:</p>
         <div class="harvest__cart-area">
-          Заметки
+          {{ item.notes }}
         </div>
         <button class="harvest__btn harvest__btnCart">
           Редактировать
@@ -51,7 +55,7 @@
       </div>
     </div>
 
-    <form class="harvest__form">
+    <form class="harvest__form" @submit.prevent="addCart">
       <div class="harvest__form-block">
         <div class="harvest__form-date">
           <Hinput
@@ -144,6 +148,43 @@ export default {
       threshed: null,
       notes: null,
     }
+  },
+  mounted() {
+    this.idField = this.$route.query.id
+    this.loadCart()
+  },
+  methods: {
+    async loadCart() {
+      const data = {
+        idField: this.idField,
+        year: this.year,
+      }
+      await this.$store.dispatch('loadHarvestCart', data)
+    },
+    async addCart() {
+      const data = {
+        idField: this.idField,
+        startHarvest: this.startHarvest,
+        endHarvest: this.endHarvest,
+        crop: this.crop,
+        variety: this.variety,
+        averageYield: this.averageYield,
+        quality: this.quality,
+        nature: this.nature,
+        humidity: this.humidity,
+        technics: this.technics,
+        square: this.square,
+        threshed: this.threshed,
+        notes: this.notes,
+        year: this.year,
+      }
+      await this.$store.dispatch('addHarvest', data)
+    },
+  },
+  computed: {
+    cart() {
+      return this.$store.getters.getHarvest
+    },
   },
 }
 </script>
