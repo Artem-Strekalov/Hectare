@@ -98,7 +98,7 @@ export default {
     },
 
     //удаление данных tillage
-    async removeTillage({dispatch, commit}, {idField, idTillage, year}) {
+    async removeAdditional({dispatch, commit}, {idField, idCart, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = await doc(
@@ -107,26 +107,34 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'additional',
         `${year}`,
       )
       await updateDoc(path, {
-        [`${idTillage}`]: deleteField(),
+        [`${idCart}`]: deleteField(),
       })
       commit('saveLoading', false)
     },
-    // изменение данных tillage
-    async changeTillage(
+
+    // изменение данных
+    async changeAdditional(
       {dispatch, commit},
       {
-        idTillage,
         idField,
-        typeTillage,
+        idCart,
+        startWork,
+        endWork,
         weather,
-        tillageDepth,
+        square,
+        temperature,
         technics,
-        startTillage,
-        endTillage,
+        typeWork,
+        fertilizer,
+        fertilizerManufacturer,
+        fertilizerRate,
+        plantProtectionAgent,
+        manufacturerPra,
+        praRate,
         notes,
         year,
       },
@@ -139,17 +147,24 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'tillage',
+        'additional',
         `${year}`,
       )
       await updateDoc(path, {
-        [`${idTillage}.notes`]: notes,
-        [`${idTillage}.weather`]: weather,
-        [`${idTillage}.technics`]: technics,
-        [`${idTillage}.endTillage`]: endTillage,
-        [`${idTillage}.typeTillage`]: typeTillage,
-        [`${idTillage}.tillageDepth`]: tillageDepth,
-        [`${idTillage}.startTillage`]: startTillage,
+        [`${idCart}.notes`]: notes,
+        [`${idCart}.square`]: square,
+        [`${idCart}.weather`]: weather,
+        [`${idCart}.endWork`]: endWork,
+        [`${idCart}.praRate`]: praRate,
+        [`${idCart}.technics`]: technics,
+        [`${idCart}.typeWork`]: typeWork,
+        [`${idCart}.startWork`]: startWork,
+        [`${idCart}.fertilizer`]: fertilizer,
+        [`${idCart}.temperature`]: temperature,
+        [`${idCart}.fertilizerRate`]: fertilizerRate,
+        [`${idCart}.manufacturerPra`]: manufacturerPra,
+        [`${idCart}.plantProtectionAgent`]: plantProtectionAgent,
+        [`${idCart}.fertilizerManufacturer`]: fertilizerManufacturer,
       })
       commit('saveLoading', false)
     },

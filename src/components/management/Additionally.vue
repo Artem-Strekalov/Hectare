@@ -1,7 +1,7 @@
 <template>
   <div class="additional">
     <div class="additional__cart" v-for="item in cart" :key="item.id">
-      <span class="additional__close">
+      <span class="additional__close" @click.prevent="removeCart(item.id)">
         <i class="material-icons">close</i>
       </span>
       <h2 class="additional__cart-name">{{ item.typeWork }}</h2>
@@ -65,7 +65,10 @@
             {{ notes }}
           </div>
         </template>
-        <button class="additional__btn additional__btnCart">
+        <button
+          class="additional__btn additional__btnCart"
+          @click="openRedactionForm(item)"
+        >
           Редактировать
         </button>
       </div>
@@ -92,7 +95,7 @@
 
       <div class="additional__form-block">
         <Hinput
-          class="additional__typeWork"
+          class="additional__leftInput"
           name="Тип работы"
           v-model="typeWork"
         >
@@ -116,20 +119,27 @@
         >
         </Hinput>
         <Hinput name="Расход СЗР на га" v-model="praRate"></Hinput>
+        <Hinput
+          class="additional__rightInput"
+          name="Используемая техника"
+          v-model="technics"
+        ></Hinput>
       </div>
-      <Hinput name="Используемая техника" v-model="technics"></Hinput>
+
       <div class="additional__form-block"></div>
       <div class="additional__form-areaBlock">
         <p class="additional__form-areaBlock-name">Ваши заметки:</p>
-        <textarea
-          class="additional__form-areaBlock-area"
-          v-model="notes"
-        ></textarea>
+        <textarea class="additional__form-areaBlock-area" v-model="notes">
+        </textarea>
       </div>
-      <button class="additional__btn additional__btnAdd">
+      <button
+        class="additional__btn additional__btnAdd"
+        v-if="showBtnSave"
+        @click.prevent="changeCart"
+      >
         Сохранить
       </button>
-      <button type="submit" class="additional__btn additional__btnAdd">
+      <button type="submit" class="additional__btn additional__btnAdd" v-else>
         Добавить
       </button>
       <button
@@ -139,7 +149,6 @@
         Отмена
       </button>
     </form>
-
     <div class="additional__addCart" @click.prevent="showForm = true">
       <img src="@/assets/image/svg/plus.svg" alt="" />
     </div>
@@ -174,6 +183,8 @@ export default {
       technics: null,
       notes: null,
       showForm: false,
+      showBtnSave: false,
+      idCart: null,
     }
   },
   mounted() {
@@ -200,6 +211,7 @@ export default {
     closeForm() {
       this.clearForm()
       this.showForm = false
+      this.showBtnSave = false
     },
     async addCart() {
       const data = {
@@ -224,12 +236,65 @@ export default {
       this.loadCart()
       this.closeForm()
     },
+    openRedactionForm(item) {
+      this.startWork = item.startWork
+      this.endWork = item.endWork
+      this.typeWork = item.typeWork
+      this.weather = item.weather
+      this.temperature = item.temperature
+      this.square = item.square
+      this.fertilizer = item.fertilizer
+      this.fertilizerManufacturer = item.fertilizerManufacturer
+      this.fertilizerRate = item.fertilizerRate
+      this.plantProtectionAgent = item.plantProtectionAgent
+      this.manufacturerPra = item.manufacturerPra
+      this.technics = item.technics
+      this.praRate = item.praRate
+      this.notes = item.notes
+      this.idCart = item.id
+      this.showForm = true
+      this.showBtnSave = true
+    },
+
     async loadCart() {
       const data = {
         idField: this.idField,
         year: this.year,
       }
       await this.$store.dispatch('loadAdditionalCart', data)
+    },
+    async removeCart(id) {
+      const data = {
+        idField: this.idField,
+        idCart: id,
+        year: this.year,
+      }
+      await this.$store.dispatch('removeAdditional', data)
+      this.loadCart()
+    },
+    async changeCart() {
+      const data = {
+        idCart: this.idCart,
+        startWork: this.startWork,
+        endWork: this.endWork,
+        typeWork: this.typeWork,
+        weather: this.weather,
+        temperature: this.temperature,
+        square: this.square,
+        fertilizer: this.fertilizer,
+        fertilizerManufacturer: this.fertilizerManufacturer,
+        fertilizerRate: this.fertilizerRate,
+        plantProtectionAgent: this.plantProtectionAgent,
+        manufacturerPra: this.manufacturerPra,
+        technics: this.technics,
+        praRate: this.praRate,
+        notes: this.notes,
+        year: this.year,
+        idField: this.idField,
+      }
+      await this.$store.dispatch('changeAdditional', data)
+      this.closeForm()
+      this.loadCart()
     },
   },
   computed: {
@@ -325,8 +390,11 @@ export default {
         max-width: 200px;
         width: 100%;
       }
-      .additional__typeWork {
+      .additional__leftInput {
         margin-right: 30px;
+      }
+      .additional__rightInput {
+        margin-left: 30px;
       }
     }
 
