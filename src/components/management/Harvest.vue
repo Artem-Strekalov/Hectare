@@ -1,7 +1,7 @@
 <template>
   <div class="harvest">
     <div class="harvest__cart" v-for="item in cart" :key="item.id">
-      <span class="harvest__close">
+      <span class="harvest__close" @click.prevent="removeCart(item.id)">
         <i class="material-icons">close</i>
       </span>
       <h2 class="harvest__cart-name">Уборка урожая</h2>
@@ -34,7 +34,6 @@
           <span class="harvest__span">Итоговый намолот</span>
           {{ item.threshed }}
         </p>
-
         <p class="harvest__cart-content-item">
           <span class="harvest__span">Используемая техника:</span>
           {{ item.technics }}
@@ -49,63 +48,68 @@
         <div class="harvest__cart-area">
           {{ item.notes }}
         </div>
-        <button class="harvest__btn harvest__btnCart">
+        <button
+          class="harvest__btn harvest__btnCart"
+          @click.prevent="openRedactionForm(item)"
+        >
           Редактировать
         </button>
       </div>
     </div>
 
-    <form class="harvest__form" @submit.prevent="addCart">
+    <form class="harvest__form" v-if="showForm" @submit.prevent="addCart">
       <div class="harvest__form-block">
         <div class="harvest__form-date">
-          <Hinput
-            name="Начало уборки"
-            type="date"
-            v-model="startHarvest"
-          ></Hinput>
+          <Hinput name="Начало уборки" type="date" v-model.trim="startHarvest">
+          </Hinput>
           <div class="harvest__dash"></div>
-          <Hinput
-            name="Окончание уборки"
-            type="date"
-            v-model="endHarvest"
-          ></Hinput>
+          <Hinput name="Окончание уборки" type="date" v-model.trim="endHarvest">
+          </Hinput>
         </div>
-        <Hinput class="middleInput" name="Культура" v-model="crop"></Hinput>
-        <Hinput class="harvest__sort" name="Сорт" v-model="variety"></Hinput>
-        <Hinput name="Средняя урожайность" v-model="averageYield"></Hinput>
+        <Hinput class="middleInput" name="Культура" v-model.trim="crop">
+        </Hinput>
+        <Hinput class="harvest__sort" name="Сорт" v-model.trim="variety">
+        </Hinput>
+        <Hinput name="Средняя урожайность" v-model.trim="averageYield"></Hinput>
       </div>
 
       <div class="harvest__form-block">
-        <Hinput name="Качество" v-model="quality"></Hinput>
-        <Hinput class="middleInput" name="Натура" v-model="nature"></Hinput>
+        <Hinput name="Качество" v-model.trim="quality"></Hinput>
+        <Hinput class="middleInput" name="Натура" v-model.trim="nature">
+        </Hinput>
         <Hinput
           class="harvest__sort"
           name="Средняя влажность"
-          v-model="humidity"
+          v-model.trim="humidity"
         >
         </Hinput>
       </div>
       <div class="harvest__form-block">
-        <Hinput name="Используемая техника" v-model="technics"></Hinput>
-        <Hinput
-          class="middleInput"
-          name="Площадь уборки"
-          v-model="square"
-        ></Hinput>
-        <Hinput name="Итоговый намолот" v-model="threshed"></Hinput>
+        <Hinput name="Используемая техника" v-model.trim="technics"></Hinput>
+        <Hinput class="middleInput" name="Площадь уборки" v-model.trim="square">
+        </Hinput>
+        <Hinput name="Итоговый намолот" v-model.trim="threshed"></Hinput>
       </div>
       <div class="harvest__form-block"></div>
       <div class="harvest__form-areaBlock">
         <p class="harvest__form-areaBlock-name">Ваши заметки:</p>
         <textarea
           class="harvest__form-areaBlock-area"
-          v-model="notes"
+          v-model.trim="notes"
         ></textarea>
       </div>
-      <button class="harvest__btn harvest__btnAdd">
+      <button
+        class="harvest__btn harvest__btnAdd"
+        v-if="showBtnSave"
+        @click.prevent="changeCart"
+      >
         Сохранить
       </button>
-      <button type="submit" class="harvest__btn harvest__btnAdd">
+      <button
+        type="submit"
+        class="harvest__btn harvest__btnAdd"
+        v-if="!showBtnSave"
+      >
         Добавить
       </button>
       <button
@@ -115,8 +119,7 @@
         Отмена
       </button>
     </form>
-
-    <div class="harvest__addCart">
+    <div class="harvest__addCart" @click.prevent="showForm = true">
       <img src="@/assets/image/svg/plus.svg" alt="" />
     </div>
   </div>
@@ -147,6 +150,9 @@ export default {
       square: null,
       threshed: null,
       notes: null,
+      showForm: false,
+      idCart: null,
+      showBtnSave: false,
     }
   },
   mounted() {
@@ -160,6 +166,25 @@ export default {
         year: this.year,
       }
       await this.$store.dispatch('loadHarvestCart', data)
+    },
+    clearForm() {
+      this.startHarvest = null
+      this.endHarvest = null
+      this.crop = null
+      this.variety = null
+      this.averageYield = null
+      this.quality = null
+      this.nature = null
+      this.humidity = null
+      this.technics = null
+      this.square = null
+      this.threshed = null
+      this.notes = null
+    },
+    closeForm() {
+      this.clearForm()
+      this.showForm = false
+      this.showBtnSave = false
     },
     async addCart() {
       const data = {
@@ -179,11 +204,65 @@ export default {
         year: this.year,
       }
       await this.$store.dispatch('addHarvest', data)
+      this.loadCart()
+      this.closeForm()
+    },
+    async removeCart(id) {
+      const data = {
+        idCart: id,
+        idField: this.idField,
+        year: this.year,
+      }
+      await this.$store.dispatch('removeHarvest', data)
+      this.loadCart()
+    },
+    openRedactionForm(item) {
+      this.startHarvest = item.startHarvest
+      this.endHarvest = item.endHarvest
+      this.crop = item.crop
+      this.variety = item.variety
+      this.averageYield = item.averageYield
+      this.quality = item.quality
+      this.nature = item.nature
+      this.humidity = item.humidity
+      this.technics = item.technics
+      this.square = item.square
+      this.threshed = item.threshed
+      this.notes = item.notes
+      this.showForm = true
+      this.showBtnSave = true
+    },
+    async changeCart() {
+      const data = {
+        idField: this.idField,
+        startHarvest: this.startHarvest,
+        endHarvest: this.endHarvest,
+        crop: this.crop,
+        variety: this.variety,
+        averageYield: this.averageYield,
+        quality: this.quality,
+        nature: this.nature,
+        humidity: this.humidity,
+        technics: this.technics,
+        square: this.square,
+        threshed: this.threshed,
+        notes: this.notes,
+        year: this.year,
+        idCart: this.idCart,
+      }
+      await this.$store.dispatch('changeHarvest', data)
+      this.loadCart()
+      this.closeForm()
     },
   },
   computed: {
     cart() {
       return this.$store.getters.getHarvest
+    },
+  },
+  watch: {
+    year() {
+      this.loadCart()
     },
   },
 }

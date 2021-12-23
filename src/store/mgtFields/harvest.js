@@ -92,8 +92,9 @@ export default {
       commit('saveLoading', false)
     },
 
-    async removeSowing({dispatch, commit}, {idField, idCart, year}) {
+    async removeHarvest({dispatch, commit}, {idField, idCart, year}) {
       commit('saveLoading', true)
+      console.log(idCart)
       const uid = await dispatch('getUid')
       const path = await doc(
         db,
@@ -101,7 +102,7 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'sowing',
+        'harvest',
         `${year}`,
       )
       await updateDoc(path, {
@@ -111,26 +112,28 @@ export default {
     },
 
     // изменение данных
-    async changeSowing(
+    async changeHarvest(
       {dispatch, commit},
       {
         idCart,
         idField,
-        startSowing,
-        endSowing,
-        square,
-        technics,
+        startHarvest,
+        endHarvest,
         crop,
         variety,
-        seedingRate,
-        fertilizer,
-        fertilizerRate,
-        weather,
+        averageYield,
+        quality,
+        nature,
+        humidity,
+        technics,
+        square,
+        threshed,
         notes,
         year,
       },
     ) {
       commit('saveLoading', true)
+      console.log(idCart);
       const uid = await dispatch('getUid')
       const path = await doc(
         db,
@@ -138,21 +141,22 @@ export default {
         `${uid}`,
         'management',
         `${idField}`,
-        'sowing',
+        'harvest',
         `${year}`,
       )
       await updateDoc(path, {
         [`${idCart}.crop`]: crop,
         [`${idCart}.notes`]: notes,
         [`${idCart}.square`]: square,
-        [`${idCart}.weather`]: weather,
+        [`${idCart}.nature`]: nature,
         [`${idCart}.variety`]: variety,
+        [`${idCart}.quality`]: quality,
+        [`${idCart}.humidity`]: humidity,
         [`${idCart}.technics`]: technics,
-        [`${idCart}.endSowing`]: endSowing,
-        [`${idCart}.fertilizer`]: fertilizer,
-        [`${idCart}.seedingRate`]: seedingRate,
-        [`${idCart}.startSowing`]: startSowing,
-        [`${idCart}.fertilizerRate`]: fertilizerRate,
+        [`${idCart}.threshed`]: threshed,
+        [`${idCart}.endHarvest`]: endHarvest,
+        [`${idCart}.averageYield`]: averageYield,
+        [`${idCart}.startHarvest`]: startHarvest,
       })
       commit('saveLoading', false)
     },
