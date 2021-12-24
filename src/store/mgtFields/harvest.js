@@ -1,6 +1,6 @@
-import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 import {v4 as uuidv4} from 'uuid'
 import {db} from '../../firebase'
+import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 export default {
   state: {
     harvest: [],
@@ -17,25 +17,25 @@ export default {
     async addHarvest(
       {commit, dispatch},
       {
-        idField,
-        startHarvest,
-        endHarvest,
         crop,
-        variety,
-        averageYield,
-        quality,
+        year,
+        notes,
         nature,
+        square,
+        idField,
+        variety,
+        quality,
         humidity,
         technics,
-        square,
         threshed,
-        notes,
-        year,
+        endHarvest,
+        startHarvest,
+        averageYield,
       },
     ) {
       commit('saveLoading', true)
-      const uid = await dispatch('getUid')
       const idCart = uuidv4()
+      const uid = await dispatch('getUid')
       const path = await doc(
         db,
         'fields',
@@ -49,20 +49,20 @@ export default {
         path,
         {
           [`${idCart}`]: {
-            id: idCart,
-            dateCreation: Date.now(),
-            startHarvest,
-            endHarvest,
             crop,
-            variety,
-            averageYield,
-            quality,
+            notes,
+            square,
             nature,
+            variety,
+            quality,
             humidity,
             technics,
-            square,
             threshed,
-            notes,
+            endHarvest,
+            id: idCart,
+            startHarvest,
+            averageYield,
+            dateCreation: Date.now(),
           },
         },
         {merge: true},
@@ -84,17 +84,14 @@ export default {
         `${year}`,
       )
       const dataHarvest = await getDoc(path)
-      if (dataHarvest.exists()) {
-        commit('saveHarvest', dataHarvest.data())
-      } else {
-        commit('saveHarvest', [])
-      }
+      dataHarvest.exists()
+        ? commit('saveHarvest', dataHarvest.data())
+        : commit('saveHarvest', [])
       commit('saveLoading', false)
     },
 
     async removeHarvest({dispatch, commit}, {idField, idCart, year}) {
       commit('saveLoading', true)
-      console.log(idCart)
       const uid = await dispatch('getUid')
       const path = await doc(
         db,
@@ -115,21 +112,21 @@ export default {
     async changeHarvest(
       {dispatch, commit},
       {
-        idCart,
-        idField,
-        startHarvest,
-        endHarvest,
         crop,
-        variety,
-        averageYield,
-        quality,
+        year,
+        notes,
+        idCart,
         nature,
+        square,
+        idField,
+        variety,
+        quality,
         humidity,
         technics,
-        square,
         threshed,
-        notes,
-        year,
+        endHarvest,
+        startHarvest,
+        averageYield,
       },
     ) {
       commit('saveLoading', true)

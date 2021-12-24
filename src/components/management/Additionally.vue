@@ -77,59 +77,68 @@
     <form class="additional__form" v-if="showForm" @submit.prevent="addCart">
       <div class="additional__form-block">
         <div class="additional__form-date">
-          <Hinput name="Начало работы" type="date" v-model="startWork"></Hinput>
+          <Hinput
+            name="Начало работы"
+            type="date"
+            v-model.trim="startWork"
+          ></Hinput>
           <div class="additional__dash"></div>
-          <Hinput name="Окончание работы" type="date" v-model="endWork">
+          <Hinput name="Окончание работы" type="date" v-model.trim="endWork">
           </Hinput>
         </div>
-        <Hinput class="middleInput" name="Погодные условия" v-model="weather">
+        <Hinput
+          class="middleInput"
+          name="Погодные условия"
+          v-model.trim="weather"
+        >
         </Hinput>
         <Hinput
           class="additional__temp"
           name="Температура воздуха"
-          v-model="temperature"
+          v-model.trim="temperature"
         >
         </Hinput>
-        <Hinput name="Обработано в га" v-model="square"> </Hinput>
+        <Hinput name="Обработано в га" v-model.trim="square"> </Hinput>
       </div>
 
       <div class="additional__form-block">
         <Hinput
           class="additional__leftInput"
           name="Тип работы"
-          v-model="typeWork"
+          v-model.trim="typeWork"
         >
         </Hinput>
-        <Hinput name="Наименование удобрений" v-model="fertilizer"> </Hinput>
+        <Hinput name="Наименование удобрений" v-model.trim="fertilizer">
+        </Hinput>
         <Hinput
           class="middleInput"
           name="Производитель удобрения"
-          v-model="fertilizerManufacturer"
+          v-model.trim="fertilizerManufacturer"
         >
         </Hinput>
-        <Hinput name="Укажите норму внесения" v-model="fertilizerRate">
+        <Hinput name="Укажите норму внесения" v-model.trim="fertilizerRate">
         </Hinput>
       </div>
       <div class="additional__form-block">
-        <Hinput name="Тип СЗР" v-model="plantProtectionAgent"> </Hinput>
+        <Hinput name="Тип СЗР" v-model.trim="plantProtectionAgent"> </Hinput>
         <Hinput
           class="middleInput"
           name="Производитель СЗР"
-          v-model="manufacturerPra"
+          v-model.trim="manufacturerPra"
         >
         </Hinput>
-        <Hinput name="Расход СЗР на га" v-model="praRate"></Hinput>
+        <Hinput name="Расход СЗР на га" v-model.trim="praRate"></Hinput>
         <Hinput
           class="additional__rightInput"
           name="Используемая техника"
-          v-model="technics"
+          v-model.trim="technics"
         ></Hinput>
       </div>
 
       <div class="additional__form-block"></div>
       <div class="additional__form-areaBlock">
         <p class="additional__form-areaBlock-name">Ваши заметки:</p>
-        <textarea class="additional__form-areaBlock-area" v-model="notes">
+        <textarea class="additional__form-areaBlock-area" v-model.trim="notes">
         </textarea>
       </div>
       <button
@@ -168,23 +177,23 @@ export default {
   },
   data() {
     return {
-      startWork: null,
-      endWork: null,
-      typeWork: null,
-      weather: null,
-      temperature: null,
-      square: null,
-      fertilizer: null,
-      fertilizerManufacturer: null,
-      fertilizerRate: null,
-      plantProtectionAgent: null,
-      manufacturerPra: null,
-      praRate: null,
-      technics: null,
       notes: null,
-      showForm: false,
-      showBtnSave: false,
+      square: null,
       idCart: null,
+      endWork: null,
+      praRate: null,
+      weather: null,
+      technics: null,
+      typeWork: null,
+      startWork: null,
+      showForm: false,
+      fertilizer: null,
+      temperature: null,
+      showBtnSave: false,
+      fertilizerRate: null,
+      manufacturerPra: null,
+      plantProtectionAgent: null,
+      fertilizerManufacturer: null,
     }
   },
   mounted() {
@@ -193,20 +202,20 @@ export default {
   },
   methods: {
     clearForm() {
-      this.startWork = null
-      this.endWork = null
-      this.typeWork = null
-      this.weather = null
-      this.temperature = null
-      this.technics = null
-      this.square = null
-      this.fertilizer = null
-      this.fertilizerManufacturer = null
-      this.fertilizerRate = null
-      this.plantProtectionAgent = null
-      this.manufacturerPra = null
-      this.praRate = null
       this.notes = null
+      this.square = null
+      this.endWork = null
+      this.weather = null
+      this.praRate = null
+      this.technics = null
+      this.typeWork = null
+      this.startWork = null
+      this.fertilizer = null
+      this.temperature = null
+      this.fertilizerRate = null
+      this.manufacturerPra = null
+      this.plantProtectionAgent = null
+      this.fertilizerManufacturer = null
     },
     closeForm() {
       this.clearForm()
@@ -215,22 +224,22 @@ export default {
     },
     async addCart() {
       const data = {
-        startWork: this.startWork,
+        year: this.year,
+        notes: this.notes,
+        square: this.square,
+        idField: this.idField,
+        weather: this.weather,
+        praRate: this.praRate,
         endWork: this.endWork,
         typeWork: this.typeWork,
-        weather: this.weather,
-        temperature: this.temperature,
-        square: this.square,
-        fertilizer: this.fertilizer,
-        fertilizerManufacturer: this.fertilizerManufacturer,
-        fertilizerRate: this.fertilizerRate,
-        plantProtectionAgent: this.plantProtectionAgent,
-        manufacturerPra: this.manufacturerPra,
         technics: this.technics,
-        praRate: this.praRate,
-        notes: this.notes,
-        year: this.year,
-        idField: this.idField,
+        startWork: this.startWork,
+        fertilizer: this.fertilizer,
+        temperature: this.temperature,
+        fertilizerRate: this.fertilizerRate,
+        manufacturerPra: this.manufacturerPra,
+        plantProtectionAgent: this.plantProtectionAgent,
+        fertilizerManufacturer: this.fertilizerManufacturer,
       }
       await this.$store.dispatch('addAdditional', data)
       this.loadCart()

@@ -1,6 +1,6 @@
-import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 import {v4 as uuidv4} from 'uuid'
 import {db} from '../../firebase'
+import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 export default {
   state: {
     additional: [],
@@ -18,27 +18,27 @@ export default {
     async addAdditional(
       {commit, dispatch},
       {
-        startWork,
+        year,
+        notes,
+        square,
+        idField,
         endWork,
         weather,
-        square,
-        temperature,
+        praRate,
         technics,
         typeWork,
+        startWork,
         fertilizer,
-        fertilizerManufacturer,
+        temperature,
         fertilizerRate,
-        plantProtectionAgent,
         manufacturerPra,
-        praRate,
-        notes,
-        year,
-        idField,
+        plantProtectionAgent,
+        fertilizerManufacturer,
       },
     ) {
       commit('saveLoading', true)
-      const uid = await dispatch('getUid')
       const idCart = uuidv4()
+      const uid = await dispatch('getUid')
       const path = await doc(
         db,
         'fields',
@@ -52,22 +52,22 @@ export default {
         path,
         {
           [`${idCart}`]: {
-            id: idCart,
-            dateCreation: Date.now(),
-            startWork,
+            notes,
+            square,
+            weather,
+            praRate,
             endWork,
             typeWork,
-            weather,
-            square,
-            temperature,
             technics,
+            startWork,
+            id: idCart,
             fertilizer,
-            fertilizerManufacturer,
+            temperature,
             fertilizerRate,
-            plantProtectionAgent,
             manufacturerPra,
-            praRate,
-            notes,
+            plantProtectionAgent,
+            fertilizerManufacturer,
+            dateCreation: Date.now(),
           },
         },
         {merge: true},
@@ -89,11 +89,9 @@ export default {
         `${year}`,
       )
       const dataAdditional = await getDoc(path)
-      if (dataAdditional.exists()) {
-        commit('saveAdditional', dataAdditional.data())
-      } else {
-        commit('saveAdditional', [])
-      }
+      dataAdditional.exists()
+        ? commit('saveAdditional', dataAdditional.data())
+        : commit('saveAdditional', [])
       commit('saveLoading', false)
     },
 
@@ -120,23 +118,23 @@ export default {
     async changeAdditional(
       {dispatch, commit},
       {
-        idField,
+        year,
+        notes,
+        square,
         idCart,
-        startWork,
+        praRate,
+        idField,
         endWork,
         weather,
-        square,
-        temperature,
         technics,
         typeWork,
+        startWork,
         fertilizer,
-        fertilizerManufacturer,
+        temperature,
         fertilizerRate,
-        plantProtectionAgent,
         manufacturerPra,
-        praRate,
-        notes,
-        year,
+        plantProtectionAgent,
+        fertilizerManufacturer,
       },
     ) {
       commit('saveLoading', true)
