@@ -58,20 +58,14 @@
         </button>
       </div>
     </div>
-    <form class="sowing__form" v-if="showForm" @submit.prevent="addSowing">
+    <form class="sowing__form" v-if="showForm" @submit.prevent="addCart">
       <div class="sowing__form-block">
         <div class="sowing__form-date">
-          <Hinput
-            name="Начало сева"
-            type="date"
-            v-model.trim="startSowing"
-          ></Hinput>
+          <Hinput name="Начало сева" type="date" v-model.trim="startSowing">
+          </Hinput>
           <div class="sowing__dash"></div>
-          <Hinput
-            name="Окончание сева"
-            type="date"
-            v-model.trim="endSowing"
-          ></Hinput>
+          <Hinput name="Окончание сева" type="date" v-model.trim="endSowing">
+          </Hinput>
         </div>
         <Hinput
           class="middleInput sowing__square"
@@ -79,10 +73,8 @@
           v-model.trim="square"
         >
         </Hinput>
-        <Hinput
-          name="Укажите используемую технику"
-          v-model.trim="technics"
-        ></Hinput>
+        <Hinput name="Укажите используемую технику" v-model.trim="technics">
+        </Hinput>
       </div>
 
       <div class="sowing__form-block">
@@ -91,11 +83,10 @@
           class="middleInput"
           name="Наименование сорта"
           v-model.trim="variety"
-        ></Hinput>
-        <Hinput
-          name="Укажите норму высева в кг/га"
-          v-model.trim="seedingRate"
-        ></Hinput>
+        >
+        </Hinput>
+        <Hinput name="Укажите норму высева в кг/га" v-model.trim="seedingRate">
+        </Hinput>
       </div>
       <div class="sowing__form-block">
         <Hinput name="Удобрение" v-model.trim="fertilizer"></Hinput>
@@ -103,20 +94,19 @@
           class="middleInput"
           name="Норма высева удобрения в кг/га"
           v-model.trim="fertilizerRate"
-        ></Hinput>
+        >
+        </Hinput>
         <Hinput name="Погодные условия" v-model.trim="weather"></Hinput>
       </div>
       <div class="sowing__form-areaBlock">
         <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
-        <textarea
-          class="sowing__form-areaBlock-area"
-          v-model.trim="notes"
-        ></textarea>
+        <textarea class="sowing__form-areaBlock-area" v-model.trim="notes">
+        </textarea>
       </div>
       <button
         class="sowing__btn sowing__btnAdd"
         v-if="showChangeForm"
-        @click.prevent="changeSowingCart"
+        @click.prevent="changeCart"
       >
         Сохранить
       </button>
@@ -150,116 +140,116 @@ export default {
   },
   data() {
     return {
-      showForm: false,
-      startSowing: null,
-      endSowing: null,
-      square: null,
-      technics: null,
       crop: null,
-      variety: null,
-      seedingRate: null,
-      fertilizer: null,
-      fertilizerRate: null,
-      weather: null,
       notes: null,
       idCart: null,
+      square: null,
+      weather: null,
+      variety: null,
+      technics: null,
+      showForm: false,
+      endSowing: null,
+      fertilizer: null,
+      startSowing: null,
+      seedingRate: null,
+      fertilizerRate: null,
       showChangeForm: false,
     }
   },
   mounted() {
     this.idField = this.$route.query.id
-    this.loadSowingCart()
+    this.loadCart()
   },
   methods: {
     clearForm() {
-      this.startSowing = null
-      this.endSowing = null
-      this.square = null
-      this.technics = null
       this.crop = null
-      this.variety = null
-      this.seedingRate = null
-      this.fertilizer = null
-      this.fertilizerRate = null
-      this.weather = null
       this.notes = null
+      this.square = null
+      this.variety = null
+      this.weather = null
+      this.technics = null
+      this.endSowing = null
+      this.fertilizer = null
+      this.seedingRate = null
+      this.startSowing = null
+      this.fertilizerRate = null
     },
     closeForm() {
       this.clearForm()
       this.showForm = false
       this.showChangeForm = false
     },
-    async loadSowingCart() {
-      let form = {
+    async loadCart() {
+      let data = {
         idField: this.idField,
         year: this.year,
       }
-      await this.$store.dispatch('loadSowingCart', form)
+      await this.$store.dispatch('loadSowingCart', data)
     },
-    async addSowing() {
+    async addCart() {
       const dataSowing = {
-        idField: this.idField,
-        startSowing: this.startSowing,
-        endSowing: this.endSowing,
-        square: this.square,
-        technics: this.technics,
         crop: this.crop,
-        variety: this.variety,
-        seedingRate: this.seedingRate,
-        fertilizer: this.fertilizer,
-        fertilizerRate: this.fertilizerRate,
-        weather: this.weather,
-        notes: this.notes,
         year: this.year,
+        notes: this.notes,
+        square: this.square,
+        weather: this.weather,
+        variety: this.variety,
+        idField: this.idField,
+        technics: this.technics,
+        endSowing: this.endSowing,
+        fertilizer: this.fertilizer,
+        startSowing: this.startSowing,
+        seedingRate: this.seedingRate,
+        fertilizerRate: this.fertilizerRate,
       }
       await this.$store.dispatch('addSowing', dataSowing)
-      this.loadSowingCart()
+      this.loadCart()
       this.closeForm()
     },
     async removeSowingCart(idCart) {
       const data = {
-        idField: this.idField,
         idCart,
         year: this.year,
+        idField: this.idField,
       }
       await this.$store.dispatch('removeSowing', data)
-      await this.loadSowingCart()
+      await this.loadCart()
     },
     openRedactionForm(item) {
-      this.startSowing = item.startSowing
-      this.endSowing = item.endSowing
-      this.square = item.square
-      this.technics = item.technics
       this.crop = item.crop
-      this.variety = item.variety
-      this.seedingRate = item.seedingRate
-      this.fertilizer = item.fertilizer
-      this.fertilizerRate = item.fertilizerRate
-      this.weather = item.weather
-      this.notes = item.notes
       this.idCart = item.id
+      this.notes = item.notes
+      this.square = item.square
+      this.weather = item.weather
+      this.variety = item.variety
+      this.technics = item.technics
+      this.endSowing = item.endSowing
+      this.fertilizer = item.fertilizer
+      this.startSowing = item.startSowing
+      this.seedingRate = item.seedingRate
+      this.fertilizerRate = item.fertilizerRate
       this.showForm = true
       this.showChangeForm = true
     },
-    async changeSowingCart() {
+    async changeCart() {
       const data = {
-        idField: this.idField,
-        idCart: this.idCart,
-        startSowing: this.startSowing,
-        endSowing: this.endSowing,
-        square: this.square,
-        technics: this.technics,
         crop: this.crop,
-        variety: this.variety,
-        seedingRate: this.seedingRate,
-        fertilizer: this.fertilizer,
-        fertilizerRate: this.fertilizerRate,
-        weather: this.weather,
-        notes: this.notes,
         year: this.year,
+        notes: this.notes,
+        idCart: this.idCart,
+        square: this.square,
+        idField: this.idField,
+        variety: this.variety,
+        weather: this.weather,
+        technics: this.technics,
+        endSowing: this.endSowing,
+        fertilizer: this.fertilizer,
+        startSowing: this.startSowing,
+        seedingRate: this.seedingRate,
+        fertilizerRate: this.fertilizerRate,
       }
       await this.$store.dispatch('changeSowing', data)
-      await this.loadSowingCart()
+      await this.loadCart()
       this.closeForm()
     },
   },
@@ -270,7 +260,7 @@ export default {
   },
   watch: {
     year() {
-      this.loadSowingCart()
+      this.loadCart()
     },
   },
 }

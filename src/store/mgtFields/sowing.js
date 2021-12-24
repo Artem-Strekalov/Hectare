@@ -1,6 +1,6 @@
-import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 import {v4 as uuidv4} from 'uuid'
 import {db} from '../../firebase'
+import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 export default {
   state: {
     sowing: [],
@@ -17,19 +17,19 @@ export default {
     async addSowing(
       {commit, dispatch},
       {
-        idField,
-        startSowing,
-        endSowing,
-        square,
-        technics,
         crop,
-        variety,
-        seedingRate,
-        fertilizer,
-        fertilizerRate,
-        weather,
-        notes,
         year,
+        notes,
+        square,
+        weather,
+        variety,
+        idField,
+        technics,
+        endSowing,
+        fertilizer,
+        startSowing,
+        seedingRate,
+        fertilizerRate,
       },
     ) {
       commit('saveLoading', true)
@@ -48,19 +48,19 @@ export default {
         path,
         {
           [`${idCart}`]: {
-            id: idCart,
-            dateCreation: Date.now(),
-            startSowing,
-            endSowing,
-            square,
-            technics,
             crop,
-            variety,
-            seedingRate,
-            fertilizer,
-            fertilizerRate,
-            weather,
             notes,
+            square,
+            variety,
+            weather,
+            technics,
+            endSowing,
+            fertilizer,
+            id: idCart,
+            startSowing,
+            seedingRate,
+            fertilizerRate,
+            dateCreation: Date.now(),
           },
         },
         {merge: true},
@@ -82,11 +82,9 @@ export default {
         `${year}`,
       )
       const dataSowing = await getDoc(path)
-      if (dataSowing.exists()) {
-        commit('saveSowing', dataSowing.data())
-      } else {
-        commit('saveSowing', [])
-      }
+      dataSowing.exists()
+        ? commit('saveSowing', dataSowing.data())
+        : commit('saveSowing', [])
       commit('saveLoading', false)
     },
 
@@ -112,20 +110,20 @@ export default {
     async changeSowing(
       {dispatch, commit},
       {
-        idCart,
-        idField,
-        startSowing,
-        endSowing,
-        square,
-        technics,
         crop,
-        variety,
-        seedingRate,
-        fertilizer,
-        fertilizerRate,
-        weather,
-        notes,
         year,
+        notes,
+        idCart,
+        square,
+        idField,
+        variety,
+        weather,
+        technics,
+        endSowing,
+        fertilizer,
+        startSowing,
+        seedingRate,
+        fertilizerRate,
       },
     ) {
       commit('saveLoading', true)

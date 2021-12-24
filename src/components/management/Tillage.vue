@@ -269,19 +269,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .tillage {
-  font-family: 'Inter', Arial;
-  width: calc(100% - 15px);
   max-height: inherit;
+  width: calc(100% - 15px);
+  font-family: 'Inter', Arial;
 
   &__cart {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #5ca450;
-    display: flex;
-    flex-wrap: wrap;
     margin-bottom: 30px;
-    position: relative;
     margin-right: 30px;
 
     .tillage__close {

@@ -1,6 +1,6 @@
-import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 import {v4 as uuidv4} from 'uuid'
 import {db} from '../../firebase'
+import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
 export default {
   state: {
     tillage: [],
