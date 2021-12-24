@@ -133,7 +133,6 @@ export default {
       },
     ) {
       commit('saveLoading', true)
-      console.log(idCart);
       const uid = await dispatch('getUid')
       const path = await doc(
         db,

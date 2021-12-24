@@ -6,39 +6,42 @@
       </span>
       <h2 class="harvest__cart-name">Уборка урожая</h2>
       <div class="harvest__cart-content">
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.square">
           <span class="harvest__span">Площадь уборки:</span>
           {{ item.square }} га
         </p>
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.crop">
           <span class="harvest__span">Культура:</span> {{ item.crop }}
         </p>
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.variety">
           <span class="harvest__span">Сорт:</span> {{ item.variety }}
         </p>
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.averageYield">
           <span class="harvest__span">Средняя урожайность:</span>
           {{ item.averageYield }} ц/га
         </p>
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.quality">
           <span class="harvest__span">Качество:</span> {{ item.quality }}
         </p>
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.nature">
           <span class="harvest__span">Натура:</span> {{ item.nature }}
         </p>
-        <p class="harvest__cart-content-item">
-          <span class="harvest__span">Средняя влажность на участке</span>
+        <p class="harvest__cart-content-item" v-if="item.humidity">
+          <span class="harvest__span">Средняя влажность на участке:</span>
           {{ item.humidity }}
         </p>
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.threshed">
           <span class="harvest__span">Итоговый намолот</span>
           {{ item.threshed }}
         </p>
-        <p class="harvest__cart-content-item">
+        <p class="harvest__cart-content-item" v-if="item.technics">
           <span class="harvest__span">Используемая техника:</span>
           {{ item.technics }}
         </p>
-        <p class="harvest__cart-content-item">
+        <p
+          class="harvest__cart-content-item"
+          v-if="item.startHarvest || item.endHarvest"
+        >
           <span class="harvest__span">Период уборки:</span> c
           {{ item.startHarvest }} по {{ item.endHarvest }} г
         </p>
@@ -217,6 +220,7 @@ export default {
       this.loadCart()
     },
     openRedactionForm(item) {
+      this.idCart = item.id
       this.startHarvest = item.startHarvest
       this.endHarvest = item.endHarvest
       this.crop = item.crop
