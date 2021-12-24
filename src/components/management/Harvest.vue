@@ -80,12 +80,7 @@
         <Hinput name="Качество" v-model.trim="quality"></Hinput>
         <Hinput class="middleInput" name="Натура" v-model.trim="nature">
         </Hinput>
-        <Hinput
-          class="harvest__sort"
-          name="Средняя влажность"
-          v-model.trim="humidity"
-        >
-        </Hinput>
+        <Hinput name="Средняя влажность" v-model.trim="humidity"> </Hinput>
       </div>
       <div class="harvest__form-block">
         <Hinput name="Используемая техника" v-model.trim="technics"></Hinput>
@@ -93,7 +88,6 @@
         </Hinput>
         <Hinput name="Итоговый намолот" v-model.trim="threshed"></Hinput>
       </div>
-      <div class="harvest__form-block"></div>
       <div class="harvest__form-areaBlock">
         <p class="harvest__form-areaBlock-name">Ваши заметки:</p>
         <textarea

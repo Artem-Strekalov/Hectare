@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" v-click-outside="onClickOutside">
     <div class="content__select" @click.prevent="showOptions = !showOptions">
       <span>{{ option }}</span>
       <img
@@ -24,10 +24,14 @@
 </template>
 <script>
 import vuescroll from 'vuescroll'
+import vClickOutside from 'v-click-outside'
 export default {
   name: 'SelectYears',
   components: {
     vuescroll,
+  },
+  directives: {
+    clickOutside: vClickOutside.directive,
   },
   data() {
     return {
@@ -67,6 +71,12 @@ export default {
     }
   },
   methods: {
+    onClickOutside(event) {
+      if (event) {
+        this.showOptions = false
+      }
+    },
+
     selectedOption(item) {
       this.$emit('select', item)
       this.option = item

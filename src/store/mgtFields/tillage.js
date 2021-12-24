@@ -14,24 +14,27 @@ export default {
     },
   },
   actions: {
-    //добаление данных tillage
+    //добаление данных
     async addTillage(
       {commit, dispatch},
       {
-        idField,
-        typeTillage,
-        weather,
-        tillageDepth,
-        technics,
-        startTillage,
-        endTillage,
-        notes,
         year,
+        notes,
+        square,
+        idField,
+        technics,
+        endTillage,
+        fertilizer,
+        typeTillage,
+        tillageDepth,
+        startTillage,
+        fertilizerRate,
+        fertilizerManufacturer,
       },
     ) {
       commit('saveLoading', true)
-      const uid = await dispatch('getUid')
       const idCart = uuidv4()
+      const uid = await dispatch('getUid')
       const path = await doc(
         db,
         'fields',
@@ -45,15 +48,18 @@ export default {
         path,
         {
           [`${idCart}`]: {
-            id: idCart,
-            dateCreation: Date.now(),
-            typeTillage,
-            weather,
-            tillageDepth,
-            technics,
-            startTillage,
-            endTillage,
             notes,
+            square,
+            technics,
+            id: idCart,
+            endTillage,
+            fertilizer,
+            typeTillage,
+            tillageDepth,
+            startTillage,
+            fertilizerRate,
+            fertilizerManufacturer,
+            dateCreation: Date.now(),
           },
         },
         {merge: true},
@@ -61,7 +67,7 @@ export default {
       commit('saveLoading', false)
     },
 
-    //получение данных tillage
+    //получение данных
     async loadTillageCart({dispatch, commit}, {idField, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
@@ -75,15 +81,13 @@ export default {
         `${year}`,
       )
       const dataTillage = await getDoc(path)
-      if (dataTillage.exists()) {
-        commit('saveTillage', dataTillage.data())
-      } else {
-        commit('saveTillage', [])
-      }
+      dataTillage.exists()
+        ? commit('saveTillage', dataTillage.data())
+        : commit('saveTillage', [])
       commit('saveLoading', false)
     },
 
-    //удаление данных tillage
+    //удаление данных
     async removeTillage({dispatch, commit}, {idField, idTillage, year}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
@@ -101,20 +105,24 @@ export default {
       })
       commit('saveLoading', false)
     },
-    // изменение данных tillage
+
+    // изменение данных
     async changeTillage(
       {dispatch, commit},
       {
-        idTillage,
-        idField,
-        typeTillage,
-        weather,
-        tillageDepth,
-        technics,
-        startTillage,
-        endTillage,
-        notes,
         year,
+        notes,
+        square,
+        idField,
+        technics,
+        idTillage,
+        endTillage,
+        fertilizer,
+        typeTillage,
+        tillageDepth,
+        startTillage,
+        fertilizerRate,
+        fertilizerManufacturer,
       },
     ) {
       commit('saveLoading', true)
@@ -130,12 +138,15 @@ export default {
       )
       await updateDoc(path, {
         [`${idTillage}.notes`]: notes,
-        [`${idTillage}.weather`]: weather,
+        [`${idTillage}.square`]: square,
         [`${idTillage}.technics`]: technics,
         [`${idTillage}.endTillage`]: endTillage,
+        [`${idTillage}.fertilizer`]: fertilizer,
         [`${idTillage}.typeTillage`]: typeTillage,
         [`${idTillage}.tillageDepth`]: tillageDepth,
         [`${idTillage}.startTillage`]: startTillage,
+        [`${idTillage}.fertilizerRate`]: fertilizerRate,
+        [`${idTillage}.fertilizerManufacturer`]: fertilizerManufacturer,
       })
       commit('saveLoading', false)
     },
