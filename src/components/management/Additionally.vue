@@ -76,32 +76,6 @@
 
     <form class="additional__form" v-if="showForm" @submit.prevent="addCart">
       <div class="additional__form-block">
-        <div class="additional__form-date">
-          <Hinput
-            name="Начало работы"
-            type="date"
-            v-model.trim="startWork"
-          ></Hinput>
-          <div class="additional__dash"></div>
-          <Hinput name="Окончание работы" type="date" v-model.trim="endWork">
-          </Hinput>
-        </div>
-        <Hinput
-          class="middleInput"
-          name="Погодные условия"
-          v-model.trim="weather"
-        >
-        </Hinput>
-        <Hinput
-          class="additional__temp"
-          name="Температура воздуха"
-          v-model.trim="temperature"
-        >
-        </Hinput>
-        <Hinput name="Обработано в га" v-model.trim="square"> </Hinput>
-      </div>
-
-      <div class="additional__form-block">
         <Hinput
           class="additional__leftInput"
           name="Тип работы"
@@ -130,12 +104,39 @@
         <Hinput name="Расход СЗР на га" v-model.trim="praRate"></Hinput>
         <Hinput
           class="additional__rightInput"
+          name="Температура воздуха"
+          v-model.trim="temperature"
+        >
+        </Hinput>
+      </div>
+      <div class="additional__form-block">
+        <div class="additional__form-date">
+          <Hinput
+            name="Начало работы"
+            type="date"
+            v-model.trim="startWork"
+          ></Hinput>
+          <div class="additional__dash"></div>
+          <Hinput name="Окончание работы" type="date" v-model.trim="endWork">
+          </Hinput>
+        </div>
+
+        <Hinput
+          class="additional__rightInput"
           name="Используемая техника"
           v-model.trim="technics"
-        ></Hinput>
+        >
+        </Hinput>
       </div>
-
-      <div class="additional__form-block"></div>
+      <div class="additional__form-block">
+        <Hinput name="Обработано в га" v-model.trim="square"> </Hinput>
+        <Hinput
+          class="additional__rightInput"
+          name="Погодные условия"
+          v-model.trim="weather"
+        >
+        </Hinput>
+      </div>
       <div class="additional__form-areaBlock">
         <p class="additional__form-areaBlock-name">Ваши заметки:</p>
         <textarea class="additional__form-areaBlock-area" v-model.trim="notes">
@@ -283,23 +284,23 @@ export default {
     },
     async changeCart() {
       const data = {
-        idCart: this.idCart,
-        startWork: this.startWork,
-        endWork: this.endWork,
-        typeWork: this.typeWork,
-        weather: this.weather,
-        temperature: this.temperature,
-        square: this.square,
-        fertilizer: this.fertilizer,
-        fertilizerManufacturer: this.fertilizerManufacturer,
-        fertilizerRate: this.fertilizerRate,
-        plantProtectionAgent: this.plantProtectionAgent,
-        manufacturerPra: this.manufacturerPra,
-        technics: this.technics,
-        praRate: this.praRate,
-        notes: this.notes,
         year: this.year,
+        notes: this.notes,
+        square: this.square,
+        idCart: this.idCart,
+        praRate: this.praRate,
         idField: this.idField,
+        endWork: this.endWork,
+        weather: this.weather,
+        typeWork: this.typeWork,
+        technics: this.technics,
+        startWork: this.startWork,
+        fertilizer: this.fertilizer,
+        temperature: this.temperature,
+        fertilizerRate: this.fertilizerRate,
+        manufacturerPra: this.manufacturerPra,
+        plantProtectionAgent: this.plantProtectionAgent,
+        fertilizerManufacturer: this.fertilizerManufacturer,
       }
       await this.$store.dispatch('changeAdditional', data)
       this.closeForm()

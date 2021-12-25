@@ -62,16 +62,8 @@
 
     <form class="harvest__form" v-if="showForm" @submit.prevent="addCart">
       <div class="harvest__form-block">
-        <div class="harvest__form-date">
-          <Hinput name="Начало уборки" type="date" v-model.trim="startHarvest">
-          </Hinput>
-          <div class="harvest__dash"></div>
-          <Hinput name="Окончание уборки" type="date" v-model.trim="endHarvest">
-          </Hinput>
-        </div>
-        <Hinput class="middleInput" name="Культура" v-model.trim="crop">
-        </Hinput>
-        <Hinput class="harvest__sort" name="Сорт" v-model.trim="variety">
+        <Hinput name="Культура" v-model.trim="crop"> </Hinput>
+        <Hinput class="middleInput" name="Сорт" v-model.trim="variety">
         </Hinput>
         <Hinput name="Средняя урожайность" v-model.trim="averageYield"></Hinput>
       </div>
@@ -87,6 +79,17 @@
         <Hinput class="middleInput" name="Площадь уборки" v-model.trim="square">
         </Hinput>
         <Hinput name="Итоговый намолот" v-model.trim="threshed"></Hinput>
+      </div>
+      <div class="harvest__form-block">
+        <Calendar v-model="startHarvest"></Calendar>
+        {{ startHarvest }}
+        <!--  <div class="harvest__form-date">
+          <Hinput name="Начало уборки" type="date" v-model.trim="startHarvest">
+          </Hinput>
+          <div class="harvest__dash"></div>
+          <Hinput name="Окончание уборки" type="date" v-model.trim="endHarvest">
+          </Hinput>
+        </div> -->
       </div>
       <div class="harvest__form-areaBlock">
         <p class="harvest__form-areaBlock-name">Ваши заметки:</p>
@@ -123,10 +126,12 @@
 </template>
 <script>
 import Hinput from '../Hinput.vue'
+import Calendar from '../Calendar.vue'
 export default {
   name: 'Harvest',
   components: {
     Hinput,
+    Calendar,
   },
   props: {
     year: {
@@ -135,20 +140,20 @@ export default {
   },
   data() {
     return {
-      startHarvest: null,
-      endHarvest: null,
       crop: null,
-      variety: null,
-      averageYield: null,
-      quality: null,
+      notes: null,
+      idCart: null,
       nature: null,
+      square: null,
+      quality: null,
+      variety: null,
       humidity: null,
       technics: null,
-      square: null,
       threshed: null,
-      notes: null,
       showForm: false,
-      idCart: null,
+      endHarvest: null,
+      startHarvest: null,
+      averageYield: null,
       showBtnSave: false,
     }
   },
@@ -165,18 +170,18 @@ export default {
       await this.$store.dispatch('loadHarvestCart', data)
     },
     clearForm() {
-      this.startHarvest = null
-      this.endHarvest = null
       this.crop = null
-      this.variety = null
-      this.averageYield = null
-      this.quality = null
+      this.notes = null
       this.nature = null
+      this.square = null
+      this.variety = null
+      this.quality = null
       this.humidity = null
       this.technics = null
-      this.square = null
       this.threshed = null
-      this.notes = null
+      this.endHarvest = null
+      this.startHarvest = null
+      this.averageYield = null
     },
     closeForm() {
       this.clearForm()
@@ -185,20 +190,20 @@ export default {
     },
     async addCart() {
       const data = {
-        idField: this.idField,
-        startHarvest: this.startHarvest,
-        endHarvest: this.endHarvest,
         crop: this.crop,
-        variety: this.variety,
-        averageYield: this.averageYield,
-        quality: this.quality,
+        year: this.year,
+        notes: this.notes,
         nature: this.nature,
+        square: this.square,
+        variety: this.variety,
+        idField: this.idField,
+        quality: this.quality,
         humidity: this.humidity,
         technics: this.technics,
-        square: this.square,
         threshed: this.threshed,
-        notes: this.notes,
-        year: this.year,
+        endHarvest: this.endHarvest,
+        startHarvest: this.startHarvest,
+        averageYield: this.averageYield,
       }
       await this.$store.dispatch('addHarvest', data)
       this.loadCart()
@@ -214,39 +219,39 @@ export default {
       this.loadCart()
     },
     openRedactionForm(item) {
-      this.idCart = item.id
-      this.startHarvest = item.startHarvest
-      this.endHarvest = item.endHarvest
       this.crop = item.crop
-      this.variety = item.variety
-      this.averageYield = item.averageYield
-      this.quality = item.quality
+      this.idCart = item.id
+      this.notes = item.notes
       this.nature = item.nature
+      this.square = item.square
+      this.variety = item.variety
+      this.quality = item.quality
       this.humidity = item.humidity
       this.technics = item.technics
-      this.square = item.square
       this.threshed = item.threshed
-      this.notes = item.notes
+      this.endHarvest = item.endHarvest
+      this.startHarvest = item.startHarvest
+      this.averageYield = item.averageYield
       this.showForm = true
       this.showBtnSave = true
     },
     async changeCart() {
       const data = {
-        idField: this.idField,
-        startHarvest: this.startHarvest,
-        endHarvest: this.endHarvest,
         crop: this.crop,
-        variety: this.variety,
-        averageYield: this.averageYield,
-        quality: this.quality,
+        year: this.year,
+        notes: this.notes,
         nature: this.nature,
+        square: this.square,
+        idCart: this.idCart,
+        idField: this.idField,
+        variety: this.variety,
+        quality: this.quality,
         humidity: this.humidity,
         technics: this.technics,
-        square: this.square,
         threshed: this.threshed,
-        notes: this.notes,
-        year: this.year,
-        idCart: this.idCart,
+        endHarvest: this.endHarvest,
+        startHarvest: this.startHarvest,
+        averageYield: this.averageYield,
       }
       await this.$store.dispatch('changeHarvest', data)
       this.loadCart()

@@ -60,24 +60,6 @@
     </div>
     <form class="sowing__form" v-if="showForm" @submit.prevent="addCart">
       <div class="sowing__form-block">
-        <div class="sowing__form-date">
-          <Hinput name="Начало сева" type="date" v-model.trim="startSowing">
-          </Hinput>
-          <div class="sowing__dash"></div>
-          <Hinput name="Окончание сева" type="date" v-model.trim="endSowing">
-          </Hinput>
-        </div>
-        <Hinput
-          class="middleInput sowing__square"
-          name="Посеянная площадь в га"
-          v-model.trim="square"
-        >
-        </Hinput>
-        <Hinput name="Укажите используемую технику" v-model.trim="technics">
-        </Hinput>
-      </div>
-
-      <div class="sowing__form-block">
         <Hinput name="Культура" v-model.trim="crop"></Hinput>
         <Hinput
           class="middleInput"
@@ -97,6 +79,25 @@
         >
         </Hinput>
         <Hinput name="Погодные условия" v-model.trim="weather"></Hinput>
+      </div>
+      <div class="sowing__form-block">
+        <div class="sowing__form-date">
+          <Hinput name="Начало сева" type="date" v-model.trim="startSowing">
+          </Hinput>
+          <div class="sowing__dash"></div>
+          <Hinput name="Окончание сева" type="date" v-model.trim="endSowing">
+          </Hinput>
+        </div>
+        <Hinput
+          class="sowing__rightInput"
+          name="Посеянная площадь в га"
+          v-model.trim="square"
+        >
+        </Hinput>
+      </div>
+      <div class="sowing__form-block">
+        <Hinput name="Укажите используемую технику" v-model.trim="technics">
+        </Hinput>
       </div>
       <div class="sowing__form-areaBlock">
         <p class="sowing__form-areaBlock-name">Ваши заметки:</p>
@@ -332,6 +333,7 @@ export default {
       .sowing__form-date {
         display: flex;
         align-items: center;
+        width: 100%;
       }
       .sowing__dash {
         width: 20px;
@@ -344,6 +346,9 @@ export default {
       .sowing__square {
         max-width: 200px;
         width: 100%;
+      }
+      .sowing__rightInput {
+        margin-left: 30px;
       }
     }
     &-areaBlock {
