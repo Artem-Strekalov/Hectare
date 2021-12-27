@@ -43,7 +43,8 @@
           v-if="item.startHarvest || item.endHarvest"
         >
           <span class="harvest__span">Период уборки:</span> c
-          {{ item.startHarvest }} по {{ item.endHarvest }} г
+          {{ changeFormatDate(item.startHarvest) }} по
+          {{ changeFormatDate(item.endHarvest) }}
         </p>
       </div>
       <div class="harvest__cart-content">
@@ -81,20 +82,14 @@
         <Hinput name="Итоговый намолот" v-model.trim="threshed"></Hinput>
       </div>
       <div class="harvest__form-block">
+        <Calendar :selectedDate.sync="startHarvest" name="Начало уборки">
+        </Calendar>
         <Calendar
-          :selectedDate.sync="startHarvest"
-          @selectedDate="selectedStartHarvest"
-          name="Начало уборки"
-          
-        ></Calendar>
-        {{ startHarvest }}
-        <!--  <div class="harvest__form-date">
-          <Hinput name="Начало уборки" type="date" v-model.trim="startHarvest">
-          </Hinput>
-          <div class="harvest__dash"></div>
-          <Hinput name="Окончание уборки" type="date" v-model.trim="endHarvest">
-          </Hinput>
-        </div> -->
+          class="rightInput"
+          :selectedDate.sync="endHarvest"
+          name="Конец уборки"
+        >
+        </Calendar>
       </div>
       <div class="harvest__form-areaBlock">
         <p class="harvest__form-areaBlock-name">Ваши заметки:</p>
@@ -166,8 +161,13 @@ export default {
     this.loadCart()
   },
   methods: {
-    selectedStartHarvest(value) {
-      this.startHarvest = value
+    changeFormatDate(date) {
+      if (!date) {
+        return null
+      }
+      return moment(date)
+        .locale('ru')
+        .format('LL')
     },
     async loadCart() {
       const data = {
@@ -212,6 +212,7 @@ export default {
         startHarvest: this.startHarvest,
         averageYield: this.averageYield,
       }
+      console.log(data)
       await this.$store.dispatch('addHarvest', data)
       this.loadCart()
       this.closeForm()
@@ -367,6 +368,9 @@ export default {
       .harvest__square {
         max-width: 200px;
         width: 100%;
+      }
+      .rightInput {
+        margin-left: 30px;
       }
     }
 
