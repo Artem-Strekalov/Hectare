@@ -1,18 +1,56 @@
 <template>
-  <div class="date" @click.prevent="test = !test">
-    <p class="name">{{ name }}</p>
-
-    <input :value="date" @input="$emit('input', $event)" />
-    <div class="test1">
-      <v-date-picker v-if="test" v-model="date"></v-date-picker>
-    </div>
-  </div>
+  <v-dialog
+    ref="dialog"
+    v-model="modal"
+    :return-value.sync="selectedDateComputed"
+    persistent
+    width="290px"
+  >
+    <template v-slot:activator="{on, attrs}">
+      <div class="date" v-bind="attrs" v-on="on">
+        <p class="name">{{ name }}</p>
+        <div class="date__select">
+          <v-icon aria-hidden="false">
+            mdi-calendar
+          </v-icon>
+          <input
+      
+            class="dataPicker"
+            v-model="selectedDate"
+            label="Picker in dialog"
+            readonly
+          />
+        </div>
+      </div>
+    </template>
+    <v-date-picker
+      locale="ru-ru"
+      v-model="selectedDateComputed"
+      scrollable
+      color="#5ca450"
+    >
+      <v-btn text color="#5ca450" @click="modal = false">
+        Отмена
+      </v-btn>
+      <v-btn
+        text
+        color="#5ca450"
+        @click="$refs.dialog.save(selectedDateComputed)"
+      >
+        Сохранить
+      </v-btn>
+    </v-date-picker>
+  </v-dialog>
 </template>
 
 <script>
+import moment, {locale} from 'moment'
 export default {
   name: 'Calendar',
   props: {
+    selectedDate: {
+      default: moment(new Date()).locale('en').format('L'),
+    },
     name: {
       default: 'Календарь',
       type: String,
@@ -20,14 +58,26 @@ export default {
   },
   data() {
     return {
-      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
-      menu: false,
-      modal: false,
-      menu2: false,
       test: false,
+      modal: false,
+      
+      /* placeholder: moment(new Date())
+        .locale('en')
+        .format('L'), */
     }
+  },
+
+  computed: {
+    selectedDateComputed: {
+      get: function() {
+        console.log('get')
+        return this.selectedDate
+      },
+      set: function(newDate) {
+        console.log('set')
+        this.$emit('update:selectedDate', newDate)
+      },
+    },
   },
 }
 </script>
@@ -47,9 +97,10 @@ export default {
   border-radius: 10px;
   padding: 0 10px;
   background: #f1f1f1;
+  margin-left: 10px;
+  cursor: pointer;
 }
-.test1 {
-  position: absolute;
-  z-index: 1;
+.date__select {
+  display: flex;
 }
 </style>

@@ -91,7 +91,7 @@ export default {
   &__select {
     display: flex;
     align-items: center;
-    margin-top: 4px;
+    margin-top: 3px;
     cursor: pointer;
     img {
       width: 15px;
@@ -111,7 +111,7 @@ export default {
     padding: 10px 0;
     border-radius: 0 0 10px 10px;
     z-index: 1;
-    top: 20px;
+    top: 25px;
     &-item {
       cursor: pointer;
       margin-bottom: 10px;

@@ -81,7 +81,12 @@
         <Hinput name="Итоговый намолот" v-model.trim="threshed"></Hinput>
       </div>
       <div class="harvest__form-block">
-        <Calendar v-model="startHarvest"></Calendar>
+        <Calendar
+          :selectedDate.sync="startHarvest"
+          @selectedDate="selectedStartHarvest"
+          name="Начало уборки"
+          
+        ></Calendar>
         {{ startHarvest }}
         <!--  <div class="harvest__form-date">
           <Hinput name="Начало уборки" type="date" v-model.trim="startHarvest">
@@ -93,10 +98,8 @@
       </div>
       <div class="harvest__form-areaBlock">
         <p class="harvest__form-areaBlock-name">Ваши заметки:</p>
-        <textarea
-          class="harvest__form-areaBlock-area"
-          v-model.trim="notes"
-        ></textarea>
+        <textarea class="harvest__form-areaBlock-area" v-model.trim="notes">
+        </textarea>
       </div>
       <button
         class="harvest__btn harvest__btnAdd"
@@ -125,6 +128,7 @@
   </div>
 </template>
 <script>
+import moment, {locale} from 'moment'
 import Hinput from '../Hinput.vue'
 import Calendar from '../Calendar.vue'
 export default {
@@ -151,10 +155,10 @@ export default {
       technics: null,
       threshed: null,
       showForm: false,
-      endHarvest: null,
-      startHarvest: null,
       averageYield: null,
       showBtnSave: false,
+      endHarvest: null,
+      startHarvest: null,
     }
   },
   mounted() {
@@ -162,6 +166,9 @@ export default {
     this.loadCart()
   },
   methods: {
+    selectedStartHarvest(value) {
+      this.startHarvest = value
+    },
     async loadCart() {
       const data = {
         idField: this.idField,
@@ -259,6 +266,11 @@ export default {
     },
   },
   computed: {
+    defaultDate() {
+      return moment(new Date())
+        .locale('ru')
+        .format('LL')
+    },
     cart() {
       return this.$store.getters.getHarvest
     },

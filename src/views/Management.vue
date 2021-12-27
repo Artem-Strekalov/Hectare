@@ -46,8 +46,8 @@
             Уборка урожая
           </li>
         </ul>
-        <div class="mgt__years">
-          <p class="mgt__years-title">Выберите год:</p>
+        <div class="mgt__year">
+          <p class="mgt__year-title">Выберите год:</p>
           <SelectYears @select="optionSelect"></SelectYears>
         </div>
       </div>
@@ -232,15 +232,15 @@ export default {
       .mgt__first-item {
         margin: 0 10px 0 0;
       }
-      .mgt__years {
+      .mgt__year {
         display: flex;
-        align-items: center;
         max-width: 200px;
         width: 100%;
         &-title {
           color: #999999;
           white-space: nowrap;
           font-size: 16px;
+          margin: 0;
         }
       }
     }
