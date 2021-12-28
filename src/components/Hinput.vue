@@ -30,12 +30,11 @@ export default {
 .hinput {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
   width: 100%;
   &__label {
     font-size: 12px;
     margin-bottom: 5px;
-    color: #999999;
+    color: #646464;
   }
   &__input {
     font-size: 14px;
@@ -43,7 +42,7 @@ export default {
     height: 40px;
     border-radius: 10px;
     padding: 0 10px;
-    background: #f5f5f5;
+    background: #f1f1f1;
   }
 }
 </style>

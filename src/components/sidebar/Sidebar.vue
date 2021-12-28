@@ -79,9 +79,8 @@ export default {
 
   &__header {
     text-align: center;
-    padding: 10px;
+    padding-top: 10px;
     width: 100%;
-    height: 55px;
     border-bottom: 1px solid #999999;
   }
   &__title {

@@ -1,27 +1,51 @@
 <template>
   <div class="tillage">
-    <div class="tillage__cart" v-for="item in tillage" :key="item.id">
+    <div class="tillage__cart" v-for="item in cart" :key="item.id">
       <span class="tillage__close" @click.prevent="removeTillage(item.id)">
         <i class="material-icons">close</i>
       </span>
       <h2 class="tillage__cart-name">{{ item.typeTillage }}</h2>
       <div class="tillage__cart-content">
-        <p class="tillage__cart-content-item">
-          Период обработки: c {{ item.startTillage }} по
-          {{ item.endTillage }}
+        <p class="tillage__cart-content-item" v-if="item.square">
+          <span class="tillage__span"> Площадь обработки:</span>
+          {{ item.square }}
         </p>
-        <p class="tillage__cart-content-item">
-          Погодные условия: {{ item.weather }}
+        <p class="tillage__cart-content-item" v-if="item.tillageDepth">
+          <span class="tillage__span"> Глубина обработки:</span>
+          {{ item.tillageDepth }}
         </p>
-        <p class="tillage__cart-content-item">
-          Используемая техника: {{ item.technics }}
+        <p class="tillage__cart-content-item" v-if="item.fertilizer">
+          <span class="tillage__span">Удобрение:</span>
+          {{ item.fertilizer }}
         </p>
-        <p class="tillage__cart-content-item">
-          Глубина обработки: {{ item.tillageDepth }}
+        <p
+          class="tillage__cart-content-item"
+          v-if="item.fertilizerManufacturer"
+        >
+          <span class="tillage__span"> Производитель удобрения:</span>
+          {{ item.fertilizerManufacturer }}
+        </p>
+        <p class="tillage__cart-content-item" v-if="item.fertilizerRate">
+          <span class="tillage__span"> Норма внесения удобрения:</span>
+          {{ item.fertilizerRate }}
+        </p>
+        <p class="tillage__cart-content-item" v-if="item.technics">
+          <span class="tillage__span"> Используемая техника:</span>
+          {{ item.technics }}
+        </p>
+        <p
+          class="tillage__cart-content-item"
+          v-if="item.startTillage || item.endTillage"
+        >
+          <span class="tillage__span"> Период обработки: </span>
+          c {{ changeFormatDate(item.startTillage) }} по
+          {{ changeFormatDate(item.endTillage) }}
         </p>
       </div>
       <div class="tillage__cart-content">
-        <p class="tillage__cart-content-item">Ваши заметки:</p>
+        <p class="tillage__cart-content-item">
+          <span class="tillage__span"> Ваши заметки: </span>
+        </p>
         <div class="tillage__cart-area">
           {{ item.notes }}
         </div>
@@ -34,45 +58,53 @@
       </div>
     </div>
     <form class="tillage__form" v-if="showForm" @submit.prevent="addTillage">
-      <div class="tillage__form-content-left">
+      <div class="tillage__form-block">
+        <Hinput name="Укажите тип обработки" v-model="typeTillage"> </Hinput>
         <Hinput
-          class="tillage__form-left"
-          name="Укажите тип обработки"
-          v-model="typeTillage"
-        ></Hinput>
-        <div class="tillage__form-section">
-          <Hinput
-            class="tillage__form-left"
-            name="Погодные условия"
-            v-model="weather"
-          ></Hinput>
-          <div class="tillage__dashCart"></div>
-          <Hinput
-            class="tillage__form-left"
-            name="Глубина обработки"
-            v-model="tillageDepth"
-          ></Hinput>
-        </div>
+          class="inputRight"
+          name="Обработанная площадь в га"
+          v-model="square"
+        >
+        </Hinput>
+        <Hinput
+          class="inputRight"
+          name="Глубина обработки"
+          v-model="tillageDepth"
+        >
+        </Hinput>
       </div>
-      <div class="tillage__form-content-right">
+      <div class="tillage__form-block">
+        <Hinput name="Наименование удобрений" v-model="fertilizer"> </Hinput>
         <Hinput
-          class="tillage__form-left"
+          class="inputRight"
+          name="Производитель удобрения"
+          v-model="fertilizerManufacturer"
+        >
+        </Hinput>
+        <Hinput
+          class="inputRight"
+          name="Норма внесения удобрений"
+          v-model="fertilizerRate"
+        >
+        </Hinput>
+      </div>
+      <div class="tillage__form-block">
+        <div class="tillage__form-date">
+          <Calendar :selectedDate.sync="startTillage" name="Начало обработки">
+          </Calendar>
+          <Calendar
+            class="inputRight"
+            :selectedDate.sync="endTillage"
+            name="Завершение обработки"
+          >
+          </Calendar>
+        </div>
+        <Hinput
+          class="inputRight"
           name="Укажите используемую технику"
           v-model="technics"
-        ></Hinput>
-        <div class="tillage__form-section">
-          <Hinput
-            name="Начало обработки"
-            type="date"
-            v-model="startTillage"
-          ></Hinput>
-          <div class="tillage__dash"></div>
-          <Hinput
-            name="Окончание обработки"
-            type="date"
-            v-model="endTillage"
-          ></Hinput>
-        </div>
+        >
+        </Hinput>
       </div>
       <div class="tillage__form-areaBlock">
         <p class="tillage__form-areaBlock-name">Ваши заметки:</p>
@@ -110,40 +142,68 @@
 <script>
 import Hinput from '../Hinput.vue'
 import vuescroll from 'vuescroll'
+import moment, {locale} from 'moment'
+import Calendar from '../Calendar.vue'
 export default {
   name: 'Tillage',
   components: {
+    Calendar,
     Hinput,
     vuescroll,
   },
-
+  props: {
+    year: {
+      type: [Number, String],
+    },
+  },
   data() {
     return {
-      cartId: null,
-      showForm: false,
-      showChangeForm: false,
-      typeTillage: '',
-      weather: null,
-      tillageDepth: null,
-      technics: null,
-      startTillage: null,
-      endTillage: null,
       notes: null,
+      square: null,
+      cartId: null,
+      technics: null,
+      showForm: false,
+      endTillage: null,
+      fertilizer: null,
+      typeTillage: null,
+      tillageDepth: null,
+      startTillage: null,
+      fertilizerRate: null,
+      showChangeForm: false,
+      fertilizerManufacturer: null,
     }
   },
-  async mounted() {
+  mounted() {
     this.idField = this.$route.query.id
-    await this.$store.dispatch('loadTillageCart', this.idField)
+    this.loadCart()
   },
   methods: {
+    changeFormatDate(date) {
+      if (!date) {
+        return null
+      }
+      return moment(date)
+        .locale('ru')
+        .format('LL')
+    },
+    async loadCart() {
+      const form = {
+        idField: this.idField,
+        year: this.year,
+      }
+      await this.$store.dispatch('loadTillageCart', form)
+    },
     clearForm() {
-      this.typeTillage = null
-      this.weather = null
-      this.tillageDepth = null
-      this.technics = null
-      this.startTillage = null
-      this.endTillage = null
       this.notes = null
+      this.square = null
+      this.technics = null
+      this.endTillage = null
+      this.fertilizer = null
+      this.typeTillage = null
+      this.tillageDepth = null
+      this.startTillage = null
+      this.fertilizerRate = null
+      this.fertilizerManufacturer = null
     },
     closeForm() {
       this.clearForm()
@@ -152,80 +212,98 @@ export default {
     },
     async addTillage() {
       const dataTillage = {
-        idField: this.idField,
-        typeTillage: this.typeTillage,
-        weather: this.weather,
-        tillageDepth: this.tillageDepth,
-        technics: this.technics,
-        startTillage: this.startTillage,
-        endTillage: this.endTillage,
+        year: this.year,
         notes: this.notes,
+        square: this.square,
+        idField: this.idField,
+        technics: this.technics,
+        fertilizer: this.fertilizer,
+        endTillage: this.endTillage,
+        typeTillage: this.typeTillage,
+        tillageDepth: this.tillageDepth,
+        startTillage: this.startTillage,
+        fertilizerRate: this.fertilizerRate,
+        fertilizerManufacturer: this.fertilizerManufacturer,
       }
       await this.$store.dispatch('addTillage', dataTillage)
-      await this.$store.dispatch('loadTillageCart', this.idField)
+      await this.loadCart()
       this.closeForm()
     },
     async removeTillage(idTillage) {
       const dataId = {
         idField: this.idField,
         idTillage,
+        year: this.year,
       }
       await this.$store.dispatch('removeTillage', dataId)
-      await this.$store.dispatch('loadTillageCart', this.idField)
+      await this.loadCart()
     },
     openRedactionForm(item) {
-      this.typeTillage = item.typeTillage
-      this.weather = item.weather
-      this.tillageDepth = item.tillageDepth
-      this.technics = item.technics
-      this.startTillage = item.startTillage
-      this.endTillage = item.endTillage
-      this.notes = item.notes
       this.cartId = item.id
-      this.showChangeForm = true
+      this.notes = item.notes
+      this.square = item.square
+      this.technics = item.technics
+      this.endTillage = item.endTillage
+      this.fertilizer = item.fertilizer
+      this.typeTillage = item.typeTillage
+      this.tillageDepth = item.tillageDepth
+      this.startTillage = item.startTillage
+      this.fertilizerRate = item.fertilizerRate
+      this.fertilizerManufacturer = item.fertilizerManufacturer
       this.showForm = true
+      this.showChangeForm = true
     },
 
     async changeTillage() {
       const dataTillage = {
-        idTillage: this.cartId,
-        idField: this.idField,
-        typeTillage: this.typeTillage,
-        weather: this.weather,
-        tillageDepth: this.tillageDepth,
-        technics: this.technics,
-        startTillage: this.startTillage,
-        endTillage: this.endTillage,
+        year: this.year,
         notes: this.notes,
+        square: this.square,
+        idField: this.idField,
+        idTillage: this.cartId,
+        technics: this.technics,
+        endTillage: this.endTillage,
+        fertilizer: this.fertilizer,
+        typeTillage: this.typeTillage,
+        tillageDepth: this.tillageDepth,
+        startTillage: this.startTillage,
+        fertilizerRate: this.fertilizerRate,
+        fertilizerManufacturer: this.fertilizerManufacturer,
       }
       await this.$store.dispatch('changeTillage', dataTillage)
-      await this.$store.dispatch('loadTillageCart', this.idField)
+      await this.loadCart()
       this.closeForm()
     },
   },
   computed: {
-    tillage() {
+    cart() {
       return this.$store.getters.getTillage
+    },
+  },
+  watch: {
+    year() {
+      this.loadCart()
     },
   },
 }
 </script>
 <style lang="scss" scoped>
 .tillage {
-  font-family: 'Inter', Arial;
-  width: calc(100% - 15px);
   max-height: inherit;
+  width: calc(100% - 15px);
+  font-family: 'Inter', Arial;
 
   &__cart {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #5ca450;
-    display: flex;
-    flex-wrap: wrap;
     margin-bottom: 30px;
-    position: relative;
     margin-right: 30px;
+
     .tillage__close {
       position: absolute;
       right: 10px;
@@ -240,6 +318,7 @@ export default {
     &-name {
       width: 100%;
       font-weight: 500;
+      font-size: 16px;
       margin-bottom: 20px;
     }
     &-content {
@@ -248,13 +327,14 @@ export default {
       width: 50%;
       &-item {
         color: #5a5a5a;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
     }
     &-area {
       margin-top: 5px;
       width: 100%;
       border-radius: 5px;
+      margin-bottom: 10px;
     }
     &-btn {
       margin: auto 0 0 auto;
@@ -271,25 +351,32 @@ export default {
     flex-wrap: wrap;
     margin-top: 30px;
     width: 100%;
-    &-content-right {
-      padding-left: 10px;
-      width: 50%;
-    }
-    &-content-left {
-      padding-right: 10px;
-      width: 50%;
-    }
-    &-left {
+    &-block {
+      width: 100%;
+      display: flex;
       margin-bottom: 20px;
-    }
-    &-right {
-      margin-top: 20px;
+      .tillage__form-date {
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+      .tillage__dash {
+        width: 20px;
+        margin: 10px 10px 0 10px;
+        border-top: 2px solid #999;
+      }
+      .middleInput {
+        margin: 0 30px;
+      }
+      .inputRight {
+        margin-left: 30px;
+      }
     }
     &-areaBlock {
       display: flex;
       width: 50%;
       &-name {
-        color: #999;
+        color: #646464;
         font-size: 12px;
         white-space: nowrap;
         margin-right: 10px;
@@ -313,9 +400,6 @@ export default {
       margin: 15px 10px 0 10px;
       width: 20px;
       border-top: 2px solid #999;
-    }
-    .tillage__dashCart {
-      margin: 10px;
     }
   }
   .tillage__btn {

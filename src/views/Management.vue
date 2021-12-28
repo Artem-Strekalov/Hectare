@@ -26,8 +26,8 @@
           </li>
           <li
             class="mgt__main-nav-item"
-            :class="{mgt__itemActive: navItem === 'sawing'}"
-            @click.prevent="navItem = 'sawing'"
+            :class="{mgt__itemActive: navItem === 'sowing'}"
+            @click.prevent="navItem = 'sowing'"
           >
             Сев
           </li>
@@ -46,29 +46,45 @@
             Уборка урожая
           </li>
         </ul>
+        <div class="mgt__year">
+          <p class="mgt__year-title">Выберите год:</p>
+          <SelectYears @select="optionSelect"></SelectYears>
+        </div>
       </div>
 
-      <div class="test">
+      <div class="mgt__content">
         <vuescroll :ops="ops">
-          <Tillage v-if="navItem === 'tillage'"></Tillage>
+          <Tillage v-if="navItem === 'tillage'" :year="currentYear"></Tillage>
+          <Sowing v-if="navItem === 'sowing'" :year="currentYear"></Sowing>
+          <Additionally
+            v-if="navItem === 'additionally'"
+            :year="currentYear"
+          ></Additionally>
+          <Harvest v-if="navItem === 'harvest'" :year="currentYear"></Harvest>
         </vuescroll>
       </div>
-
-      <!-- <Tillage v-if="navItem === 'tillage'"></Tillage> -->
     </div>
     <Loader v-if="loading"></Loader>
   </div>
 </template>
 <script>
 import Tillage from '@/components/management/Tillage.vue'
+import Sowing from '@/components/management/Sowing.vue'
+import Harvest from '@/components/management/Harvest.vue'
+import Additionally from '@/components/management/Additionally.vue'
 import Loader from '@/components/loader/Loader.vue'
+import SelectYears from '@/components/SelectYears.vue'
 import vuescroll from 'vuescroll'
 import {db} from '../firebase'
 import {doc, getDoc} from 'firebase/firestore'
 export default {
   components: {
+    Sowing,
     Loader,
     Tillage,
+    Harvest,
+    Additionally,
+    SelectYears,
     vuescroll,
   },
   data() {
@@ -77,6 +93,7 @@ export default {
       idField: null,
       nameField: '',
       squareField: '',
+      currentYear: new Date().getFullYear(),
       ops: {
         bar: {
           onlyShowBarOnScroll: true,
@@ -99,6 +116,9 @@ export default {
     this.$store.commit('clearTillage')
   },
   methods: {
+    optionSelect(option) {
+      this.currentYear = option
+    },
     async getField() {
       this.$store.commit('saveLoading', true)
       const uid = await this.$store.dispatch('getUid')
@@ -124,7 +144,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.test {
+.mgt__content {
   width: 100%;
   height: inherit;
 }
@@ -184,12 +204,15 @@ export default {
     border-radius: 10px;
     padding: 25px 10px 25px 25px;
     &-nav {
-      width: 100%;
+      display: flex;
+      justify-content: space-between;
       border-bottom: 1px solid #f1f1f1;
       margin-bottom: 20px;
+      margin-right: 20px;
       &-list {
         display: flex;
         height: 25px;
+        padding: 0;
       }
       &-item {
         box-sizing: border-box;
@@ -209,6 +232,15 @@ export default {
       }
       .mgt__first-item {
         margin: 0 10px 0 0;
+      }
+      .mgt__year {
+        display: flex;
+        &-title {
+          color: #999999;
+          white-space: nowrap;
+          font-size: 16px;
+          margin: 0;
+        }
       }
     }
   }

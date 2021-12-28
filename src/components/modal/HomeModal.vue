@@ -1,6 +1,7 @@
 <template>
   <Modal @closeModal="closeModalWindow">
     <form class="form" @submit.prevent="addNewField">
+      <h1 class="form__newSquare">Новый участок</h1>
       <div class="form__name">
         <p>Название участка:</p>
         <input
@@ -87,6 +88,13 @@ export default {
   flex-direction: column;
   box-sizing: border-box;
   width: 300px;
+  .form__newSquare{
+    position: absolute;
+    top: 20px;
+    font-weight: 600;
+    font-size: 16px;
+   border-bottom: 1px solid #5ca450;
+  }
   &__btn {
     margin-left: auto;
     margin-top: 20px;
