@@ -6,34 +6,40 @@
       </span>
       <h2 class="tillage__cart-name">{{ item.typeTillage }}</h2>
       <div class="tillage__cart-content">
-        <p class="tillage__cart-content-item">
+        <p class="tillage__cart-content-item" v-if="item.square">
           <span class="tillage__span"> Площадь обработки:</span>
           {{ item.square }}
         </p>
-        <p class="tillage__cart-content-item">
+        <p class="tillage__cart-content-item" v-if="item.tillageDepth">
           <span class="tillage__span"> Глубина обработки:</span>
           {{ item.tillageDepth }}
         </p>
-        <p class="tillage__cart-content-item">
+        <p class="tillage__cart-content-item" v-if="item.fertilizer">
           <span class="tillage__span">Удобрение:</span>
           {{ item.fertilizer }}
         </p>
-        <p class="tillage__cart-content-item">
+        <p
+          class="tillage__cart-content-item"
+          v-if="item.fertilizerManufacturer"
+        >
           <span class="tillage__span"> Производитель удобрения:</span>
           {{ item.fertilizerManufacturer }}
         </p>
-        <p class="tillage__cart-content-item">
+        <p class="tillage__cart-content-item" v-if="item.fertilizerRate">
           <span class="tillage__span"> Норма внесения удобрения:</span>
-          {{ item.technics }}
+          {{ item.fertilizerRate }}
         </p>
-        <p class="tillage__cart-content-item">
+        <p class="tillage__cart-content-item" v-if="item.technics">
           <span class="tillage__span"> Используемая техника:</span>
           {{ item.technics }}
         </p>
-        <p class="tillage__cart-content-item">
+        <p
+          class="tillage__cart-content-item"
+          v-if="item.startTillage || item.endTillage"
+        >
           <span class="tillage__span"> Период обработки: </span>
-          c {{ item.startTillage }} по
-          {{ item.endTillage }}
+          c {{ changeFormatDate(item.startTillage) }} по
+          {{ changeFormatDate(item.endTillage) }}
         </p>
       </div>
       <div class="tillage__cart-content">
@@ -84,11 +90,14 @@
       </div>
       <div class="tillage__form-block">
         <div class="tillage__form-date">
-          <Hinput name="Начало обработки" type="date" v-model="startTillage">
-          </Hinput>
-          <div class="tillage__dash"></div>
-          <Hinput name="Окончание обработки" type="date" v-model="endTillage">
-          </Hinput>
+          <Calendar :selectedDate.sync="startTillage" name="Начало обработки">
+          </Calendar>
+          <Calendar
+            class="inputRight"
+            :selectedDate.sync="endTillage"
+            name="Завершение обработки"
+          >
+          </Calendar>
         </div>
         <Hinput
           class="inputRight"
@@ -133,9 +142,12 @@
 <script>
 import Hinput from '../Hinput.vue'
 import vuescroll from 'vuescroll'
+import moment, {locale} from 'moment'
+import Calendar from '../Calendar.vue'
 export default {
   name: 'Tillage',
   components: {
+    Calendar,
     Hinput,
     vuescroll,
   },
@@ -166,6 +178,14 @@ export default {
     this.loadCart()
   },
   methods: {
+    changeFormatDate(date) {
+      if (!date) {
+        return null
+      }
+      return moment(date)
+        .locale('ru')
+        .format('LL')
+    },
     async loadCart() {
       const form = {
         idField: this.idField,

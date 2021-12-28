@@ -14,13 +14,14 @@
             <v-icon aria-hidden="false">
               mdi-calendar
             </v-icon>
-            <input
-              class="dataPicker"
-              v-model="selectedDate"
-              :placeholder="placeholder"
-              label="Picker in dialog"
-              readonly
-            />
+            <div class="input__calendar">
+              <p v-if="!selectedDate" class="default__date">
+                {{ defaultDate }}
+              </p>
+              <p v-else>{{ changeDate(selectedDate) }}</p>
+            </div>
+            <!-- Инпут скрыт для вычисления -->
+            <input class="dataPicker" v-model="selectedDate" readonly />
           </div>
         </div>
       </template>
@@ -60,15 +61,20 @@ export default {
   },
   data() {
     return {
-      test: false,
       modal: false,
       newFormatDate: null,
-      placeholder: moment(new Date())
+      defaultDate: moment(new Date())
         .locale('ru')
         .format('LL'),
     }
   },
-
+  methods: {
+    changeDate(item) {
+      return moment(item)
+        .locale('ru')
+        .format('LL')
+    },
+  },
   computed: {
     selectedDateComputed: {
       get: function() {
@@ -105,6 +111,24 @@ export default {
   background: #f1f1f1;
   margin-left: 10px;
   cursor: pointer;
+  display: none;
+}
+.input__calendar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  padding: 0 10px;
+  background: #f1f1f1;
+  margin-left: 10px;
+  cursor: pointer;
+  p {
+    margin: 0;
+  }
+  .default__date{
+    opacity: 0.4;
+  }
 }
 .date__select {
   display: flex;

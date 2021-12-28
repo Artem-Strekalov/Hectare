@@ -204,14 +204,15 @@ export default {
     border-radius: 10px;
     padding: 25px 10px 25px 25px;
     &-nav {
-      width: 100%;
-      border-bottom: 1px solid #f1f1f1;
-      margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px solid #f1f1f1;
+      margin-bottom: 20px;
+      margin-right: 20px;
       &-list {
         display: flex;
         height: 25px;
+        padding: 0;
       }
       &-item {
         box-sizing: border-box;
@@ -234,8 +235,6 @@ export default {
       }
       .mgt__year {
         display: flex;
-        max-width: 200px;
-        width: 100%;
         &-title {
           color: #999999;
           white-space: nowrap;

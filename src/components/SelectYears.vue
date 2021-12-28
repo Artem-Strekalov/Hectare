@@ -94,7 +94,7 @@ export default {
     margin-top: 3px;
     cursor: pointer;
     img {
-      width: 15px;
+      width: 12px;
     }
     .upendArrow {
       transform: rotate(180deg);

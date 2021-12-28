@@ -39,7 +39,8 @@
           v-if="cart.startSowing || cart.endSowing"
         >
           <span class="sowing__span">Период сева:</span> c
-          {{ cart.startSowing }} по {{ cart.endSowing }} г
+          {{ changeFormatDate(cart.startSowing) }} по
+          {{ changeFormatDate(cart.endSowing) }}
         </p>
       </div>
       <div class="sowing__cart-content">
@@ -82,11 +83,14 @@
       </div>
       <div class="sowing__form-block">
         <div class="sowing__form-date">
-          <Hinput name="Начало сева" type="date" v-model.trim="startSowing">
-          </Hinput>
-          <div class="sowing__dash"></div>
-          <Hinput name="Окончание сева" type="date" v-model.trim="endSowing">
-          </Hinput>
+          <Calendar :selectedDate.sync="startSowing" name="Начало сева">
+          </Calendar>
+          <Calendar
+            :selectedDate.sync="endSowing"
+            class="sowing__rightInput"
+            name="Завершение сева"
+          >
+          </Calendar>
         </div>
         <Hinput
           class="sowing__rightInput"
@@ -129,10 +133,13 @@
 </template>
 <script>
 import Hinput from '../Hinput.vue'
+import moment, {locale} from 'moment'
+import Calendar from '../Calendar.vue'
 export default {
   name: 'Sowing',
   components: {
     Hinput,
+    Calendar,
   },
   props: {
     year: {
@@ -162,6 +169,14 @@ export default {
     this.loadCart()
   },
   methods: {
+    changeFormatDate(date) {
+      if (!date) {
+        return null
+      }
+      return moment(date)
+        .locale('ru')
+        .format('LL')
+    },
     clearForm() {
       this.crop = null
       this.notes = null

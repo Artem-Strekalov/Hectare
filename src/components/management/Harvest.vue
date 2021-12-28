@@ -87,7 +87,7 @@
         <Calendar
           class="rightInput"
           :selectedDate.sync="endHarvest"
-          name="Конец уборки"
+          name="Завершение уборки"
         >
         </Calendar>
       </div>
@@ -124,8 +124,8 @@
 </template>
 <script>
 import moment, {locale} from 'moment'
-import Hinput from '../Hinput.vue'
 import Calendar from '../Calendar.vue'
+import Hinput from '../Hinput.vue'
 export default {
   name: 'Harvest',
   components: {

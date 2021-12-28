@@ -55,7 +55,8 @@
           v-if="item.startWork || item.endWork"
         >
           <span class="additional__span">Период работы:</span> c
-          {{ item.startWork }} по {{ item.endWork }} г
+          {{ changeFormatDate(item.startWork) }} по
+          {{ changeFormatDate(item.endWork) }}
         </p>
       </div>
       <div class="additional__cart-content">
@@ -111,14 +112,14 @@
       </div>
       <div class="additional__form-block">
         <div class="additional__form-date">
-          <Hinput
-            name="Начало работы"
-            type="date"
-            v-model.trim="startWork"
-          ></Hinput>
-          <div class="additional__dash"></div>
-          <Hinput name="Окончание работы" type="date" v-model.trim="endWork">
-          </Hinput>
+          <Calendar
+            class="additional__leftInput"
+            name="Начало работ"
+            :selectedDate.sync="startWork"
+          >
+          </Calendar>
+          <Calendar name="Завершение работ" :selectedDate.sync="endWork">
+          </Calendar>
         </div>
 
         <Hinput
@@ -165,11 +166,14 @@
   </div>
 </template>
 <script>
+import moment, {locale} from 'moment'
+import Calendar from '../Calendar.vue'
 import Hinput from '../Hinput.vue'
 export default {
   name: 'Additionally',
   components: {
     Hinput,
+    Calendar,
   },
   props: {
     year: {
@@ -202,6 +206,14 @@ export default {
     this.loadCart()
   },
   methods: {
+    changeFormatDate(date) {
+      if (!date) {
+        return null
+      }
+      return moment(date)
+        .locale('ru')
+        .format('LL')
+    },
     clearForm() {
       this.notes = null
       this.square = null
