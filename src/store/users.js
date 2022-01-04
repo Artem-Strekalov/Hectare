@@ -1,5 +1,5 @@
 import {db, authApp} from '../firebase'
-import {doc, setDoc, getDoc} from 'firebase/firestore'
+import {doc, setDoc, getDoc, startAt} from 'firebase/firestore'
 export default {
   state: {
     user: {},
@@ -40,6 +40,12 @@ export default {
   getters: {
     getUser(state) {
       return state.user
+    },
+    getCompany(state) {
+      if (state.user) {
+        return state.user.nameCompany
+      }
+      return null
     },
   },
 }

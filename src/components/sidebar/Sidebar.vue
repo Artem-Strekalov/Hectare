@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     nameCompany() {
-      return this.$store.getters.getUser.nameCompany
+      return this.$store.getters.getCompany
     },
   },
 }
