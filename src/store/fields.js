@@ -35,7 +35,7 @@ export default {
     },
 
     //добавление участка
-    async addField({commit, dispatch}, {name, status, square}) {
+    async addField({commit, dispatch}, {name,  square}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const idField = uuidv4()
@@ -47,7 +47,6 @@ export default {
             id: idField,
             dateCreation: Date.now(),
             name,
-            status,
             square,
           },
         },

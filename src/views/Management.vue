@@ -9,9 +9,13 @@
           </span>
           <span class="back-title">Назад</span>
         </div>
-        <span class="mgt__header-back-name">
+        <span class="mgt__header-back-name" v-if="nameField">
           {{ nameField }}, {{ squareField }} га
         </span>
+        <div class="mgt__year">
+          <span class="mgt__year-title">Выберите год:</span>
+          <SelectYears @select="optionSelect"></SelectYears>
+        </div>
       </div>
     </div>
     <div class="mgt__main">
@@ -46,20 +50,15 @@
             Уборка урожая
           </li>
         </ul>
-        <div class="mgt__year">
-          <p class="mgt__year-title">Выберите год:</p>
-          <SelectYears @select="optionSelect"></SelectYears>
-        </div>
+        <Download></Download>
       </div>
 
       <div class="mgt__content">
         <vuescroll :ops="ops">
           <Tillage v-if="navItem === 'tillage'" :year="currentYear"></Tillage>
           <Sowing v-if="navItem === 'sowing'" :year="currentYear"></Sowing>
-          <Additionally
-            v-if="navItem === 'additionally'"
-            :year="currentYear"
-          ></Additionally>
+          <Additionally v-if="navItem === 'additionally'" :year="currentYear">
+          </Additionally>
           <Harvest v-if="navItem === 'harvest'" :year="currentYear"></Harvest>
         </vuescroll>
       </div>
@@ -72,6 +71,7 @@ import Tillage from '@/components/management/Tillage.vue'
 import Sowing from '@/components/management/Sowing.vue'
 import Harvest from '@/components/management/Harvest.vue'
 import Additionally from '@/components/management/Additionally.vue'
+import Download from '@/components/management/Download.vue'
 import Loader from '@/components/loader/Loader.vue'
 import SelectYears from '@/components/SelectYears.vue'
 import vuescroll from 'vuescroll'
@@ -86,6 +86,7 @@ export default {
     Additionally,
     SelectYears,
     vuescroll,
+    Download,
   },
   data() {
     return {
@@ -94,6 +95,11 @@ export default {
       nameField: '',
       squareField: '',
       currentYear: new Date().getFullYear(),
+      json_data: [
+        {
+          name: 'naveen',
+        },
+      ],
       ops: {
         bar: {
           onlyShowBarOnScroll: true,
@@ -179,6 +185,7 @@ export default {
       padding: 0 10px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       .arrow {
         cursor: pointer;
         color: #999;
@@ -191,9 +198,15 @@ export default {
         margin-left: 5px;
       }
       &-name {
-        margin: 0 auto;
         font-size: 18px;
       }
+    }
+    .mgt__year {
+      display: flex;
+    }
+    .mgt__year-title {
+      color: #999;
+      font-size: 16px;
     }
   }
   &__main {
@@ -232,15 +245,6 @@ export default {
       }
       .mgt__first-item {
         margin: 0 10px 0 0;
-      }
-      .mgt__year {
-        display: flex;
-        &-title {
-          color: #999999;
-          white-space: nowrap;
-          font-size: 16px;
-          margin: 0;
-        }
       }
     }
   }

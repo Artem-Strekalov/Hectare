@@ -17,8 +17,8 @@
           <span class="harvest__span">Сорт:</span> {{ item.variety }}
         </p>
         <p class="harvest__cart-content-item" v-if="item.averageYield">
-          <span class="harvest__span">Средняя урожайность:</span>
-          {{ item.averageYield }} ц/га
+          <span class="harvest__span">Урожайность:</span>
+          {{ item.averageYield }} 
         </p>
         <p class="harvest__cart-content-item" v-if="item.quality">
           <span class="harvest__span">Качество:</span> {{ item.quality }}
@@ -27,7 +27,7 @@
           <span class="harvest__span">Натура:</span> {{ item.nature }}
         </p>
         <p class="harvest__cart-content-item" v-if="item.humidity">
-          <span class="harvest__span">Средняя влажность на участке:</span>
+          <span class="harvest__span">Влажность на участке:</span>
           {{ item.humidity }}
         </p>
         <p class="harvest__cart-content-item" v-if="item.threshed">

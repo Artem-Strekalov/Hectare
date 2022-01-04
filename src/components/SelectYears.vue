@@ -111,7 +111,7 @@ export default {
     padding: 10px 0;
     border-radius: 0 0 10px 10px;
     z-index: 1;
-    top: 25px;
+    top: 36px;
     &-item {
       cursor: pointer;
       margin-bottom: 10px;

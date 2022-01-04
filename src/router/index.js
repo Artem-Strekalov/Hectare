@@ -30,13 +30,11 @@ const routes = [
     name: 'management',
     component: () => import('../views/Management.vue'),
     meta: {auth: true},
-  
   },
   {
     path: '/welcome',
     name: 'welcome',
     component: () => import('../views/WelcomeScreen.vue'),
-    meta: {auth: true},
   },
 ]
 

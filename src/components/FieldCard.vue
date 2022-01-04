@@ -7,7 +7,6 @@
           <i class="modal__close material-icons">close</i>
         </span>
         <p class="content__block-square">Площадь: {{ field.square }} га</p>
-        <p class="cars__block-status">Состояние: {{ field.status }}</p>
       </div>
       <button class="content__btn" @click.prevent="goManagement">
         Управление
