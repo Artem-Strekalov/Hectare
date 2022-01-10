@@ -63,7 +63,7 @@
         <template v-if="item.notes">
           <p class="additional__cart-content-item">Ваши заметки:</p>
           <div class="additional__cart-area">
-            {{ notes }}
+            {{ item.notes }}
           </div>
         </template>
         <button

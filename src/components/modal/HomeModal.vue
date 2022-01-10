@@ -22,17 +22,6 @@
           placeholder="Введите площадь"
         />
       </div>
-      <div class="form__name">
-        <p>Состояние:</p>
-        <input
-          min="0"
-          v-model="form.status"
-          :class="{errorInput: $v.form.status.$error}"
-          class="form__input"
-          type="text"
-          placeholder="Укажите состояние участка"
-        />
-      </div>
       <button type="submit" class="form__btn">Добавить</button>
     </form>
   </Modal>
@@ -65,7 +54,6 @@ export default {
       if (this.$v.form.$error) return
       let field = {
         name: this.form.name,
-        status: this.form.status,
         square: this.form.square,
       }
       await this.$store.dispatch('addField', field)
@@ -76,7 +64,6 @@ export default {
   validations: {
     form: {
       name: {required},
-      status: {required},
       square: {required},
     },
   },

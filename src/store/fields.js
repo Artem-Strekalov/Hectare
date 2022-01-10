@@ -1,5 +1,12 @@
 import {db} from '../firebase'
-import {doc, setDoc, getDoc, updateDoc, deleteField} from 'firebase/firestore'
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  deleteField,
+  deleteDoc,
+} from 'firebase/firestore'
 import {v4 as uuidv4} from 'uuid'
 
 export default {
@@ -18,7 +25,6 @@ export default {
     clearFields(state) {
       state.fields = []
     },
-   
   },
 
   actions: {
@@ -35,7 +41,7 @@ export default {
     },
 
     //добавление участка
-    async addField({commit, dispatch}, {name, status, square}) {
+    async addField({commit, dispatch}, {name, square}) {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const idField = uuidv4()
@@ -47,7 +53,6 @@ export default {
             id: idField,
             dateCreation: Date.now(),
             name,
-            status,
             square,
           },
         },
@@ -61,13 +66,11 @@ export default {
       commit('saveLoading', true)
       const uid = await dispatch('getUid')
       const path = doc(db, 'fields', `${uid}`)
-
       await updateDoc(path, {
         [`${idField}`]: deleteField(),
       })
       commit('saveLoading', true)
     },
-
   },
 
   getters: {
@@ -77,6 +80,5 @@ export default {
     getLoading(state) {
       return state.loading
     },
-    
   },
 }
