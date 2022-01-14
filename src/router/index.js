@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Auth',
+    name: 'auth',
     component: () => import('../views/auth/Auth.vue'),
   },
   {
@@ -29,6 +29,12 @@ const routes = [
     path: '/management',
     name: 'management',
     component: () => import('../views/Management.vue'),
+    meta: {auth: true},
+  },
+  {
+    path: '/resources',
+    name: 'resources',
+    component: () => import('../views/Resources.vue'),
     meta: {auth: true},
   },
   {

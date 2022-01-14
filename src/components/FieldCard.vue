@@ -29,9 +29,6 @@ export default {
     goManagement() {
       this.$router.push({name: 'management', query: {id: this.field.id}})
     },
-    test() {
-      console.log(this.field)
-    },
   },
 }
 </script>

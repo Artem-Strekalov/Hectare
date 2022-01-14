@@ -5,12 +5,17 @@
     </div>
 
     <ul class="sidebar__menu">
-      <li class="sidebar__menu-item" :class="{active: activeLink === 'fields'}">
+      <li
+        class="sidebar__menu-item"
+        :class="{active: activeLink === 'fields'}"
+        @click.prevent="goHome"
+      >
         <img src="@/assets/image/svg/field-icon.svg" alt="" />Мои поля
       </li>
       <li
         class="sidebar__menu-item"
-        :class="{active: activeLink === 'resourse'}"
+        :class="{active: activeLink === 'resources'}"
+        @click.prevent="goResourse"
       >
         <img src="@/assets/image/svg/resource-icon.svg" alt="" /> Ресурсы
       </li>
@@ -43,7 +48,6 @@
 <script>
 export default {
   name: 'Sidebar',
-
   props: {
     activeLink: {
       type: String,
@@ -56,6 +60,12 @@ export default {
     async logout() {
       await this.$router.push('/')
       this.$store.dispatch('logout')
+    },
+    goResourse() {
+      this.$router.push({name: 'resources'})
+    },
+    goHome() {
+      this.$router.push({name: 'home'})
     },
   },
   computed: {
@@ -70,18 +80,16 @@ export default {
   box-sizing: border-box;
   max-width: 260px;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 0 15px 15px 15px;
-  position: fixed;
-  float: left;
+  /*   position: fixed;
+  float: left; */
   display: flex;
   flex-direction: column;
-
   &__header {
     text-align: center;
     padding-top: 10px;
     width: 100%;
-    border-bottom: 1px solid #999999;
   }
   &__title {
     font-family: Montserrat;
