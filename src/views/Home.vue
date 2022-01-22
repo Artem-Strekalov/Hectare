@@ -99,7 +99,6 @@ export default {
   }
   &__main {
     width: 100%;
-    /*  background: #EFF2E7; */
     padding: 10px;
     background: #e3e8e2;
 
@@ -115,6 +114,7 @@ export default {
     position: relative;
     border: 10px solid #e3e8e2;
     width: 33.3333333%;
+    min-width: 328px;
     height: 200px;
     background: #e3e8e2;
     p {

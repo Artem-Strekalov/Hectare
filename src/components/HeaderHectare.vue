@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h2 class="header__title">ГЕКТАР</h2>
+    <h2 class="header__title" @click.prevent="goHome" >ГЕКТАР</h2>
     <img class="header__logo" src="@/assets/image/svg/logo.svg" alt="" />
   </div>
 </template>
@@ -14,6 +14,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    goHome() {
+      this.$router.push({name: 'home'})
+    },
   },
 }
 </script>
@@ -32,6 +37,7 @@ export default {
     font-size: 36px;
     color: #5ca450;
     letter-spacing: 9px;
+    cursor: pointer;
   }
 }
 </style>

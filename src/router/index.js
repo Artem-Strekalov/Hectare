@@ -36,7 +36,11 @@ const routes = [
     path: '/welcome',
     name: 'welcome',
     component: () => import('../views/WelcomeScreen.vue'),
-    meta: {auth: true},
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/About.vue'),
   },
 ]
 

@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div class="sidebar__header">
-      <h1 class="sidebar__title">ГЕКТАР</h1>
+      <h1 class="sidebar__title">ГЕКТАР </h1>
     </div>
 
     <ul class="sidebar__menu">
@@ -26,8 +26,14 @@
       <li
         class="sidebar__menu-item"
         :class="{active: activeLink === 'warehouse'}"
+        @click.prevent="goAbout"
       >
-        <img src="@/assets/image/svg/infoMenu.svg" alt="" />О портале
+        <img
+          src="@/assets/image/svg/infoMenu.svg"
+          alt=""
+          :class="{active: activeLink === 'about'}"
+        />
+        О портале
       </li>
     </ul>
 
@@ -56,6 +62,9 @@ export default {
     async logout() {
       await this.$router.push('/')
       this.$store.dispatch('logout')
+    },
+    goAbout() {
+      this.$router.push({name: 'about'})
     },
   },
   computed: {
@@ -157,7 +166,7 @@ export default {
     transition: 400ms;
     cursor: pointer;
     &:hover {
-      transform: scale(1.2);
+      transform: scale(1.15);
       transition: 400ms;
     }
   }

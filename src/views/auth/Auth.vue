@@ -34,7 +34,6 @@
           </p>
         </div>
       </form>
-      <div class="auth__angle"></div>
     </div>
   </div>
 </template>
@@ -124,11 +123,15 @@ export default {
   &__left {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
+    max-width: 572px;
     width: 100%;
     position: absolute;
-    background: #fff;
-    opacity: 0.9;
+    background: linear-gradient(
+      93deg,
+      #ffffffde 89%,
+      rgba(255, 255, 255, 0) 89.2%
+    );
+    opacity: 0.999;
     bottom: 0;
     top: 0;
     .auth__name {
@@ -147,6 +150,8 @@ export default {
     flex-direction: column;
     align-items: center;
     padding: 0 60px;
+    max-width: 485px;
+    width: 100%;
     &-name {
       font-size: 16px;
       color: #222222;
@@ -171,15 +176,6 @@ export default {
       text-decoration: underline;
       color: #999999;
     }
-  }
-  &__angle {
-    position: absolute;
-    background-color: #fff;
-    transform: rotate(4deg);
-    width: 70px;
-    right: -35px;
-    top: -4px;
-    height: 100.3%;
   }
 }
 </style>
