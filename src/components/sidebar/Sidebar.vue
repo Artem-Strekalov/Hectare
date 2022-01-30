@@ -18,6 +18,7 @@
         <img src="@/assets/image/svg/tehnic-icon.svg" alt="" />Техника
       </li>
       <li
+        @click.prevent="goWarehouse"
         class="sidebar__menu-item"
         :class="{active: activeLink === 'warehouse'}"
       >
@@ -25,7 +26,7 @@
       </li>
       <li
         class="sidebar__menu-item"
-        :class="{active: activeLink === 'warehouse'}"
+        :class="{active: activeLink === 'about'}"
       >
         <img src="@/assets/image/svg/infoMenu.svg" alt="" />О портале
       </li>
@@ -57,6 +58,9 @@ export default {
       await this.$router.push('/')
       this.$store.dispatch('logout')
     },
+    goWarehouse() {
+      this.$router.push({name: 'warehouse'})
+    },
   },
   computed: {
     nameCompany() {
@@ -73,7 +77,6 @@ export default {
   height: 100%;
   padding: 0 15px 15px 15px;
   position: fixed;
-  float: left;
   display: flex;
   flex-direction: column;
 
