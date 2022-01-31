@@ -9,14 +9,14 @@
           <li
             class="warehouse__main-nav-item warehouse__first-item"
             :class="{warehouse__itemActive: tabItem === 'loading'}"
-            @click="tabItem = 'loading'"
+            @click=";(tabItem = 'loading'), itCards()"
           >
             Загрузка
           </li>
           <li
             class="warehouse__main-nav-item"
             :class="{warehouse__itemActive: tabItem === 'unloading'}"
-            @click="tabItem = 'unloading'"
+            @click=";(tabItem = 'unloading'), itCards()"
           >
             Выгрузка
           </li>
@@ -24,6 +24,14 @@
       </div>
 
       <div class="warehouse__content">
+        <div
+          class="warehouse__addCart"
+          v-if="!showForm"
+          @click="showForm = true"
+        >
+          <img src="@/assets/image/svg/plus.svg" alt="" />
+        </div>
+
         <WarehouseCard
           v-for="warehouseCard in warehouseCards"
           :key="warehouseCard.id"
@@ -50,7 +58,7 @@ export default {
   data() {
     return {
       tabItem: 'loading',
-      warehouseCards: itCards(),
+      warehouseCards: [],
       unloadCards: [
         {
           warehouseNumber: 1,
@@ -103,18 +111,17 @@ export default {
     }
   },
   computed: {
-    // !! itCards() {
-    //   if (this.tabItem === 'loading') {
-    //     this.warehouseCards = this.loadCards
-    //   } else {
-    //     this.warehouseCards = this.unloadCards
-    //   }
-    //   return this.warehouseCards
-    // !! },
+    itCards() {
+      if (this.tabItem === 'loading') {
+        this.warehouseCards = this.loadCards
+      } else {
+        this.warehouseCards = this.unloadCards
+      }
+      return this.warehouseCards
+    },
   },
   async mounted() {},
   methods: {},
-  computed: {},
 }
 </script>
 <style lang="scss" scoped>
@@ -163,6 +170,24 @@ export default {
       }
       .warehouse__first-item {
       }
+    }
+  }
+  &__conten{
+    display: flex;
+    flex-direction: column;
+
+  }
+  &__addCart {
+    background: #5ca450;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    img {
+      margin: auto;
     }
   }
 }

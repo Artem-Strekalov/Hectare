@@ -60,7 +60,7 @@ export default {
 .warehouseCard {
   min-width: 328px;
   /* измени здесь ширину на 100% когда будешь делать адаптив */
-  width: 33.3333333%;
+  width: 100%;
   height: 200px;
   background: #e3e8e2;
   border: 10px solid #e3e8e2;
