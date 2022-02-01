@@ -58,12 +58,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .warehouseCard {
-  min-width: 328px;
+  min-width: 318px;
   /* измени здесь ширину на 100% когда будешь делать адаптив */
   width: 100%;
-  height: 200px;
+  height: 190px;
   background: #e3e8e2;
-  border: 10px solid #e3e8e2;
+  margin: 9px 10px 9px 0;
   position: relative;
   &__content {
     position: absolute;
