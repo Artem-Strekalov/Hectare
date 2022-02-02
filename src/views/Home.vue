@@ -99,10 +99,8 @@ export default {
   }
   &__main {
     width: 100%;
-    /*  background: #EFF2E7; */
     padding: 10px;
     background: #e3e8e2;
-
     &-content {
       width: 100%;
       display: flex;

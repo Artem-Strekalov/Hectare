@@ -36,6 +36,11 @@ const routes = [
     name: 'welcome',
     component: () => import('../views/WelcomeScreen.vue'),
   },
+   {
+    path: '/warehouse',
+    name: 'warehouse',
+    component: () => import('../views/Warehouse.vue'),
+  },
 ]
 
 const router = new VueRouter({
