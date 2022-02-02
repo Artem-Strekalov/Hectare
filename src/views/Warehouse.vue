@@ -51,7 +51,7 @@
                 min="0"
                 v-model="gluten"
               />
-              <Hinput name="Белок" type="number" min="0" v-model="proteuin" />
+              <Hinput name="Белок" type="number" min="0" v-model="protein" />
               <Hinput name="Натура" type="number" min="0" v-model="nature" />
               <Hinput
                 name="Масличность"
@@ -62,7 +62,7 @@
             </div>
             <div class="warehouse__form-block">
               <Hinput name="Номер Машины" v-model="numberCar" />
-              <Calendar name="Дата разгрузки машины" v-model="date" />
+              <Calendar name="Дата разгрузки машины"  :selectedDate.sync="date"/>
             </div>
             <div class="warehouse__form-block">
               <Hinput
@@ -95,6 +95,7 @@ import CornLoading from '@/components/CornLoading.vue'
 import WarehouseCard from '@/components/WarehouseCard.vue'
 import Hinput from '../components/Hinput.vue'
 import Calendar from '../components/Calendar.vue'
+import { v4 as uuidv4 } from 'uuid'
 
 export default {
   name: 'warehouse',
@@ -116,7 +117,7 @@ export default {
       variety: null,
       weight: null,
       gluten: null,
-      proteuin: null,
+      protein: null,
       nature: null,
       oilContent: null,
       numberCar: null,
@@ -149,16 +150,21 @@ export default {
           cartId: 1,
           nature: 750,
           weight: 15.45,
-          cornLoadingNumberCar: 'Т255ЖК 126RUS',
+          numberCar: 'Т255ЖК 126RUS',
           protein: 12,
           gluten: 22,
+          culture: 'пшеница',
+          variety: 'Княгиня Ольга',
+          oilContent: '-',
+          date: '22.08.2021',
+          time: '12:01',
         },
         {
           warehouseNumber: 1,
           cartId: 2,
           nature: 750,
           weight: 15.45,
-          cornLoadingNumberCar: 'Т255ЖК 126RUS',
+          numberCar: 'Т255ЖК 126RUS',
           protein: 12,
           gluten: 22,
         },
@@ -167,7 +173,7 @@ export default {
           cartId: 3,
           nature: 750,
           weight: 15.45,
-          cornLoadingNumberCar: 'Т255ЖК 126RUS',
+          numberCar: 'Т255ЖК 126RUS',
           protein: 12,
           gluten: 22,
         },
@@ -208,13 +214,13 @@ export default {
         variety: this.variety,
         weight: this.weight,
         gluten: this.gluten,
-        proteuin: this.proteuin,
+        protein: this.protein,
         nature: this.nature,
         oilContent: this.oilContent,
         numberCar: this.numberCar,
         date: this.date,
         time: this.time,
-        cartId: 1,
+        cartId: this.getId(),
       }
       if (this.tabItem === 'loading') {
         this.loadCards.push(card)
@@ -222,6 +228,10 @@ export default {
         this.unloadCards.push(card)
       }
       this.clearForm()
+    },
+    getId() {
+      const id = uuidv4()
+      return id
     },
   },
 }
@@ -274,8 +284,10 @@ export default {
   }
   &__content {
     display: flex;
-    flex-direction: column;
     padding: 0 5px;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-start;
   }
   &__addCart {
     background: #5ca450;
